@@ -1,0 +1,392 @@
+/* =========================
+   GLOBAL RESET
+========================= */
+
+.containerReset {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   TOP SECTION
+========================= */
+
+.topGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #000;
+    padding: 60px;
+    align-items: center;
+    gap: 20px;
+}
+
+.leftImage img {
+    max-width: 80%;
+    width: 100%;
+    height: auto;
+}
+
+.rightImage img {
+    max-width: 260px;
+    width: 100%;
+    height: auto;
+}
+
+
+/* =========================
+   TOP ROW
+========================= */
+
+.topRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #f5f0e8;
+    border-bottom: 1px solid #000;
+}
+
+
+/* SLOGAN */
+
+.sloganSection {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid #000;
+}
+
+.sloganText {
+    font-size: 30px;
+    font-style: italic;
+}
+
+
+/* PALETTE */
+
+.paletteSide {
+    padding: 40px;
+}
+
+.colorItem {
+    text-align: center;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.colorItem span {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: block;
+    margin: auto;
+    margin-bottom: 8px;
+    transition: transform 0.4s ease;
+}
+
+.colorItem span:hover {
+    transform: scale(1.2);
+}
+
+
+/* =========================
+   IMAGE SIDE
+========================= */
+
+.imageSide {
+    height: 100%;
+}
+
+.imageSide img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    transition: filter 0.5s ease;
+}
+
+
+/* =========================
+   MAIN GRID
+========================= */
+
+.mainGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+
+/* LEFT SIDE */
+
+.leftSide {
+    border-right: 1px solid #000;
+    background: #f5f0e8;
+}
+
+
+/* LOGO SECTION */
+
+.altLogoSection {
+    padding: 30px 40px 5px;
+    border-bottom: 1px solid #000;
+}
+
+.logoGrid {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.logoGrid img {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+    transition: 0.4s;
+}
+
+.logoGrid img:hover {
+    transform: scale(1.05);
+}
+
+
+/* TYPO + VIBE */
+
+.typoVibeRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.typoBox {
+    padding: 40px;
+    border-right: 1px solid #000;
+}
+
+.vibeBox {
+    padding: 40px;
+}
+
+
+/* VIBE GRID */
+
+.vibe {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.vibe div {
+    padding: 20px;
+    background: white;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.vibe svg {
+    font-size: 28px;
+    color: #D4AF37;
+}
+
+.vibe div:hover {
+    transform: translateY(-5px);
+}
+
+
+/* =========================
+   RIGHT PALETTE SIDE
+========================= */
+
+.paletteSide {
+    background: #f5f0e8;
+    padding: 40px;
+}
+
+.paletteImage img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+
+/* COLORS WRAPPER */
+
+.colors {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.colors div {
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.colors div span {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: block;
+    margin: auto;
+    margin-bottom: 8px;
+    border: 2px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.colors div:hover span {
+    transform: scale(1.2);
+}
+
+.colors div:active span {
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   STRIP
+========================= */
+
+.strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: #000;
+    color: white;
+}
+
+.strip div {
+    padding: 20px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.strip svg {
+    color: #D4AF37;
+    margin-right: 5px;
+}
+
+.strip div:hover {
+    background: #111;
+    transform: translateY(-3px);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    background: #000;
+    color: #aaa;
+    text-align: center;
+    padding: 25px;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+.reveal {
+    opacity: 0;
+    transform: translateX(-90px);
+    transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.revealRight {
+    opacity: 0;
+    transform: translateX(90px);
+    transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.revealScale {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: all 0.9s ease;
+}
+
+.show {
+    opacity: 1 !important;
+    transform: translateX(0) scale(1) !important;
+}
+
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+
+/* TABLET */
+
+@media (max-width: 1024px) {
+    .topGrid {
+        grid-template-columns: 1fr;
+        padding: 40px;
+        text-align: center;
+    }
+    .mainGrid {
+        grid-template-columns: 1fr;
+    }
+    .typoVibeRow {
+        grid-template-columns: 1fr;
+    }
+    .leftSide {
+        border-right: none;
+    }
+    .sloganSection {
+        border-right: none;
+        border-bottom: 1px solid #000;
+    }
+    .strip {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+    .topGrid {
+        padding: 25px;
+    }
+    .sloganText {
+        font-size: 22px;
+    }
+    .paletteSide {
+        padding: 20px;
+    }
+    .typoBox,
+    .vibeBox {
+        padding: 20px;
+    }
+    .logoGrid img {
+        width: 100px;
+        height: 100px;
+    }
+    .strip {
+        grid-template-columns: 1fr;
+    }
+    .imageSide img {
+        height: 60vh;
+    }
+}
+
+
+/* SMALL MOBILE */
+
+@media (max-width: 480px) {
+    .sloganText {
+        font-size: 18px;
+    }
+    .colors {
+        justify-content: center;
+    }
+    .colors div span {
+        width: 45px;
+        height: 45px;
+    }
+    .paletteImage img {
+        height: 250px;
+    }
+}

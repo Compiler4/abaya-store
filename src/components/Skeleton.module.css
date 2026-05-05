@@ -1,0 +1,31 @@
+.skeleton {
+    height: 300px;
+    width: 100%;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    background-color: #e6e6e6;
+}
+
+
+/* Shimmer layer */
+
+.skeleton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    height: 100%;
+    width: 150%;
+    background: linear-gradient( 90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: shimmer 1.6s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -150%;
+    }
+    100% {
+        left: 150%;
+    }
+}

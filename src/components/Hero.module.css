@@ -1,0 +1,12 @@
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: 600;
+    color: gold;
+    background: black;
+    transform: translateY(var(--parallax, 0px));
+    transition: transform 0.1s linear;
+}

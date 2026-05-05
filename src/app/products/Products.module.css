@@ -1,0 +1,327 @@
+.page {
+    background: #fff;
+    padding-top: 70px;
+}
+
+
+/* NAVBAR */
+
+.navbarFixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+
+/* HEADER */
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    position: sticky;
+    top: 70px;
+    margin-top: 40px;
+    /* ✅ ADD THIS */
+    background: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+
+/* SEARCH */
+
+.search {
+    width: 260px;
+    padding: 10px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+
+/* CART */
+
+.cartButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #111;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* GRID */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    padding: 20px;
+}
+
+@media (max-width: 1200px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* CARD */
+
+.card {
+    text-align: center;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+
+/* IMAGE */
+
+.productImage {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+
+/* NAME */
+
+.productName {
+    font-weight: 600;
+    padding: 6px;
+}
+
+
+/* DESCRIPTION */
+
+.desc {
+    font-size: 12px;
+    color: #666;
+    padding: 0 6px;
+}
+
+
+/* BUTTONS */
+
+.actions {
+    display: flex;
+    gap: 6px;
+    padding: 8px;
+}
+
+.btn {
+    flex: 1;
+    padding: 6px;
+    font-size: 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.addBtn {
+    background: black;
+    color: white;
+}
+
+.waBtn {
+    background: #25D366;
+    color: white;
+}
+
+
+/* DRAWER */
+
+.drawerOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 3000;
+}
+
+.drawer {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 340px;
+    height: 100%;
+    background: #fff;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+
+/* ORDER BUTTON */
+
+.orderBtn {
+    width: 100%;
+    padding: 10px;
+    background: black;
+    color: white;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+
+/* INPUTS */
+
+.input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.total {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+
+/* ===== CARD HOVER EFFECT ===== */
+
+.card {
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+/* IMAGE CLICK ZOOM MODAL */
+
+.imageModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+    animation: fadeIn 0.3s ease;
+}
+
+.modalImage {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+    transform: scale(1);
+    animation: zoomIn 0.3s ease;
+}
+
+
+/* CART CLOSE BUTTON */
+
+.closeBtn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    float: right;
+    cursor: pointer;
+}
+
+
+/* CART ITEM */
+
+.cartItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.removeBtn {
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 4px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+/* CART WHATSAPP BUTTON */
+
+.cartWaBtn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: #25D366;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
+/* ANIMATIONS */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.6);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.navBtn {
+    background: black;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.navBtn:hover {
+    transform: scale(1.1);
+}
+
+.navBtn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.pageInfo {
+    font-weight: 500;
+}

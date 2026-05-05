@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String
+  contact   String
+  location  String?
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  address   String?
+  role      String   @default("USER")
+  image     String?
+  createdAt DateTime @default(now())
+
+  profile   Profile?
+  orders    Order[]
+  carts     Cart[]
+}
+
+model Profile {
+  id        Int     @id @default(autoincrement())
+  phone     String?
+  otp       String?
+  verified  Boolean @default(false)
+
+  userId    Int     @unique
+  user      User    @relation(fields: [userId], references: [id])
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  price       Float
+  image       String
+  description String
+  category    String?
+  sizes       Json
+  colors      Json
+  stock       Int
+  createdAt   DateTime @default(now())
+
+  orderItems  OrderItem[]
+  cartItems   CartItem[]
+}
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  total     Float
+  status    String   @default("PENDING")
+
+  address   String
+  customer  String
+  phone     String
+  location  String
+
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+
+  quantity  Int
+  createdAt DateTime @default(now())
+
+  payment   Payment?
+  items     OrderItem[]
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+
+  orderId   Int
+  productId Int
+  quantity  Int     @default(1)
+  price     Float
+
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  orderId   Int      @unique
+  method    String
+  status    String   @default("UNPAID")
+  createdAt DateTime @default(now())
+
+  order     Order    @relation(fields: [orderId], references: [id])
+}
+
+model Cart {
+  id     String @id @default(cuid())
+
+  userId Int
+  user   User   @relation(fields: [userId], references: [id])
+
+  items  CartItem[]
+}
+
+model CartItem {
+  id        String @id @default(cuid())
+
+  cartId    String
+  productId Int
+  quantity  Int @default(1)
+
+  cart      Cart     @relation(fields: [cartId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+}

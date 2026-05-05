@@ -1,0 +1,120 @@
+/* CONTAINER */
+
+.container {
+    padding: 40px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+
+/* TITLE */
+
+.title {
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+
+/* REVENUE CARD */
+
+.revenueCard {
+    padding: 25px;
+    background: linear-gradient(135deg, #000, #1a1a1a);
+    color: white;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.revenueCard h2 {
+    font-size: 16px;
+    color: #bbb;
+}
+
+.revenueCard h1 {
+    font-size: 32px;
+    margin-top: 10px;
+    color: #d4af37;
+}
+
+
+/* ORDERS LIST */
+
+.orders {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* ORDER ITEM */
+
+.orderItem {
+    border: 1px solid #e5e5e5;
+    padding: 14px;
+    border-radius: 8px;
+    background: white;
+    transition: 0.3s ease;
+}
+
+.orderItem:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ===================== */
+
+
+/* 📱 MOBILE */
+
+
+/* ===================== */
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+    .title {
+        font-size: 22px;
+    }
+    .revenueCard {
+        padding: 20px;
+    }
+    .revenueCard h1 {
+        font-size: 26px;
+    }
+    .orderItem {
+        font-size: 14px;
+    }
+}
+
+
+/* ===================== */
+
+
+/* 📲 TABLET */
+
+
+/* ===================== */
+
+@media (min-width: 601px) and (max-width: 900px) {
+    .container {
+        padding: 30px;
+    }
+}
+
+
+/* ===================== */
+
+
+/* 🖥️ LARGE SCREENS */
+
+
+/* ===================== */
+
+@media (min-width: 1200px) {
+    .revenueCard h1 {
+        font-size: 36px;
+    }
+}

@@ -1,0 +1,85 @@
+.page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 15px;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+.container {
+    width: 100%;
+    min-width: 1300px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.saved {
+    text-align: center;
+    color: #4ade80;
+    margin-bottom: 10px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.card label {
+    color: #fff;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.card input,
+.card select {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+.cardRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+.cardRow button {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+    }
+    .cardRow {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+}

@@ -1,0 +1,240 @@
+/* =========================
+   NAVBAR (LUXURY GLASS STYLE)
+========================= */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    background: rgba(0, 0, 0, 0.65);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 35px;
+    z-index: 1000;
+}
+
+
+/* =========================
+   LOGO SECTION
+========================= */
+
+.logoSection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logoCircle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, gold, #f5e6a3);
+    animation: pulse 3s infinite ease-in-out;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.25);
+}
+
+.brand {
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: white;
+}
+
+
+/* =========================
+   NAV LINKS
+========================= */
+
+.links {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+
+
+/* NAV LINK STYLE */
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+    position: relative;
+}
+
+
+/* HOVER */
+
+.link:hover {
+    color: gold;
+    transform: translateY(-2px);
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+
+/* ACTIVE LINK */
+
+.active {
+    background: rgba(255, 215, 0, 0.1);
+    color: gold;
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.loginBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: gold;
+    color: black;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+
+/* LOGIN HOVER */
+
+.loginBtn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.45);
+}
+
+.registerBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: transparent;
+    color: white;
+    border: 1px solid gold;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+
+/* HOVER EFFECT */
+
+.registerBtn:hover {
+    background: rgba(255, 215, 0, 0.1);
+    color: gold;
+    transform: scale(1.08);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+    .links {
+        gap: 10px;
+        font-size: 12px;
+    }
+    .navbar {
+        padding: 12px 18px;
+    }
+}
+
+
+/* 🍔 MOBILE BUTTON */
+
+.menuBtn {
+    display: none;
+    color: white;
+    cursor: pointer;
+}
+
+
+/* 🧊 DRAWER */
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 75%;
+    height: 100vh;
+    background: black;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: 0.4s ease;
+    z-index: 2000;
+}
+
+.drawer a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+
+/* OPEN STATE */
+
+.open {
+    right: 0;
+}
+
+
+/* CLOSE BUTTON */
+
+.close {
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+
+/* 📱 RESPONSIVE */
+
+@media (max-width: 768px) {
+    .links {
+        display: none;
+    }
+    .menuBtn {
+        display: block;
+    }
+}
+
+.logoImg {
+    border-radius: 50%;
+    object-fit: cover;
+}

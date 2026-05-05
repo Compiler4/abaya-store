@@ -1,0 +1,350 @@
+.page {
+    min-height: 100vh;
+    background: #fffef5;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+
+/* ================= HEADER ================= */
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    background: #0b1b3a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    color: white;
+    z-index: 1000;
+    transition: 0.3s ease;
+}
+
+
+/* PROFILE */
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar,
+.avatarImg {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar {
+    background: cyan;
+    font-weight: bold;
+    color: black;
+}
+
+
+/* ================= NAV ================= */
+
+.nav {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.flexGrow {
+    flex: 1;
+}
+
+
+/* ICON BUTTON */
+
+.iconBtn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+    transition: 0.25s ease;
+}
+
+.iconBtn small {
+    font-size: 10px;
+    opacity: 0.8;
+}
+
+.iconBtn:hover {
+    transform: scale(1.15);
+    color: cyan;
+}
+
+
+/* ================= RIGHT ACTIONS ================= */
+
+.right {
+    display: flex;
+    gap: 10px;
+}
+
+.logout {
+    background: red;
+    border: none;
+    padding: 6px 12px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin-right: 50px;
+}
+
+.logout:hover {
+    transform: scale(1.08);
+    background: darkred;
+}
+
+
+/* ================= CONTENT ================= */
+
+.content {
+    margin-top: 90px;
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    width: 60%;
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.4s ease;
+}
+
+
+/* ================= INPUT ================= */
+
+.input {
+    width: 95%;
+    padding: 10px;
+    margin: 6px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: 0.3s ease;
+}
+
+.input:focus {
+    border-color: cyan;
+    box-shadow: 0 0 6px cyan;
+    outline: none;
+}
+
+
+/* ================= BUTTON ================= */
+
+.primaryBtn {
+    background: #00cfe6;
+    color: #000;
+    border: none;
+    padding: 10px 14px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.3s ease;
+    font-weight: bold;
+}
+
+.primaryBtn:hover {
+    background: #00a9c0;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+
+/* ================= PRODUCT GRID ================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+}
+
+.product {
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.product:focus-within {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+/* ================= CART ================= */
+
+.cartItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #eee;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.cartItem:hover {
+    transform: scale(1.01);
+}
+
+.cartItem img {
+    width: 50px;
+    border-radius: 6px;
+}
+
+
+/* ================= CHAT ================= */
+
+.chatModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #111;
+    width: 350px;
+    color: white;
+    border-radius: 12px;
+    z-index: 2000;
+    animation: pop 0.3s ease;
+}
+
+.chatHeader,
+.chatInput {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.chatBody {
+    height: 220px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+.msg {
+    background: #2a2a2a;
+    margin: 8px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+
+/* ================= ACCESSIBILITY FOCUS ================= */
+
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid #00bcd4;
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+.iconBtn:focus-visible {
+    outline: 2px solid cyan;
+    outline-offset: 3px;
+    transform: scale(1.08);
+}
+
+.iconBtn {
+    outline: none;
+}
+
+.iconBtn:focus-visible small {
+    color: cyan;
+    opacity: 1;
+}
+
+
+/* ================= ANIMATIONS ================= */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pop {
+    from {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1024px) {
+    .card {
+        width: 80%;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        height: auto;
+        gap: 10px;
+        padding: 10px;
+    }
+    .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .card {
+        width: 92%;
+    }
+    .chatModal {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 96%;
+        padding: 15px;
+    }
+    .iconBtn {
+        font-size: 10px;
+    }
+    .chatModal {
+        width: 95%;
+    }
+}

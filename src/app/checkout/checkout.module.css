@@ -1,0 +1,21 @@
+.page {
+    padding: 30px;
+    background: white;
+    min-height: 100vh;
+}
+
+.box {
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.button {
+    width: 100%;
+    padding: 12px;
+    background: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+}

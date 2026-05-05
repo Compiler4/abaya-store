@@ -1,0 +1,251 @@
+/* PAGE BACKGROUND WITH SOFT ANIMATION */
+
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(120deg, #ffffff 50%, #0d6efd 50%);
+}
+
+
+/* CENTER */
+
+.container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    perspective: 1000px;
+}
+
+
+/* CARD (GLASS + DEPTH + FLOAT) */
+
+.card {
+    width: 400px;
+    max-width: 95%;
+    padding: 35px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    /* ✅ Safari support */
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2), 0 0 0 rgba(13, 110, 253, 0);
+    animation: floatIn 0.7s ease;
+    transition: all 0.4s ease;
+}
+
+
+/* CARD HOVER FLOAT */
+
+.card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25), 0 0 25px rgba(13, 110, 253, 0.25);
+}
+
+
+/* CARD ENTRY */
+
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(60px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* TEXT */
+
+.title {
+    text-align: center;
+    color: #0d6efd;
+    font-size: 26px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+
+/* FLOATING INPUT GROUP */
+
+.inputBox {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 14px;
+    border-radius: 12px;
+    margin-top: 18px;
+    background: #fff;
+    transition: all 0.3s ease;
+}
+
+
+/* ICON */
+
+.icon {
+    margin-right: 10px;
+    color: #0d6efd;
+    transition: 0.3s;
+}
+
+
+/* INPUT */
+
+.input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    background: transparent;
+}
+
+
+/* FLOATING LABEL */
+
+.inputBox label {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    color: #888;
+    pointer-events: none;
+    transition: 0.3s ease;
+    background: #fff;
+    padding: 0 5px;
+}
+
+
+/* ACTIVE FLOAT LABEL */
+
+.input:focus+label,
+.input:not(:placeholder-shown)+label {
+    top: -8px;
+    font-size: 11px;
+    color: #0d6efd;
+}
+
+
+/* FOCUS EFFECT */
+
+.inputBox:focus-within {
+    border-color: #0d6efd;
+    box-shadow: 0 0 15px rgba(13, 110, 253, 0.25);
+    transform: translateY(-2px) scale(1.02);
+}
+
+
+/* ICON ANIMATION */
+
+.inputBox:focus-within .icon {
+    transform: scale(1.2) rotate(5deg);
+    color: #0b5ed7;
+}
+
+
+/* BUTTON */
+
+.button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+/* BUTTON HOVER */
+
+.button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(13, 110, 253, 0.4);
+}
+
+
+/* BUTTON CLICK */
+
+.button:active {
+    transform: scale(0.97);
+}
+
+
+/* SPINNER */
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* LINK */
+
+.linkText {
+    text-align: center;
+    margin-top: 18px;
+}
+
+.link {
+    color: #0d6efd;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.link:hover {
+    text-decoration: underline;
+    color: #0b5ed7;
+}
+
+
+/* 📱 MOBILE */
+
+@media (max-width: 480px) {
+    .card {
+        padding: 25px;
+    }
+    .title {
+        font-size: 22px;
+    }
+}
+
+
+/* 💻 TABLET */
+
+@media (min-width: 768px) {
+    .card {
+        width: 420px;
+    }
+}
+
+
+/* 🖥 DESKTOP */
+
+@media (min-width: 1200px) {
+    .card {
+        width: 450px;
+    }
+}
