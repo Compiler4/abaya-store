@@ -18,7 +18,6 @@ export default function ProductPage({ params }: any) {
   return (
     <div className={styles.container}>
       
-      {/* IMAGE */}
       <div className={styles.imageWrapper}>
         <img
           src={product.image}
@@ -27,7 +26,6 @@ export default function ProductPage({ params }: any) {
         />
       </div>
 
-      {/* DETAILS */}
       <div className={styles.details}>
         <h1 className={styles.title}>{product.name}</h1>
 
