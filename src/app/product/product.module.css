@@ -77,55 +77,17 @@
 }
 
 
-/* CARD EFFECT (if reused) */
-
-.card {
-    transition: 0.4s;
-    transform: translateY(0);
-}
-
-.card:hover {
-    transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-
 /* NOT FOUND */
 
 .notFound {
     padding: 80px 20px;
     text-align: center;
-    color: red;
+    color: #aaa;
     font-size: 18px;
 }
 
 
-/* ========================= */
-
-
-/* 📱 RESPONSIVE DESIGN */
-
-
-/* ========================= */
-
-
-/* LARGE TABLETS */
-
-@media (max-width: 1024px) {
-    .container {
-        gap: 40px;
-        padding: 40px;
-    }
-    .title {
-        font-size: 34px;
-    }
-    .image {
-        max-width: 320px;
-    }
-}
-
-
-/* TABLETS */
+/* RESPONSIVE */
 
 @media (max-width: 768px) {
     .container {
@@ -133,8 +95,8 @@
         text-align: center;
         padding: 30px 20px;
     }
-    .details {
-        align-items: center;
+    .image {
+        max-width: 280px;
     }
     .title {
         font-size: 30px;
@@ -142,50 +104,8 @@
     .price {
         font-size: 20px;
     }
-    .image {
-        max-width: 280px;
-    }
     .button {
         width: 100%;
         max-width: 250px;
-    }
-}
-
-
-/* MOBILE */
-
-@media (max-width: 480px) {
-    .container {
-        padding: 20px 15px;
-        gap: 25px;
-    }
-    .title {
-        font-size: 24px;
-    }
-    .price {
-        font-size: 18px;
-    }
-    .description {
-        font-size: 14px;
-    }
-    .image {
-        max-width: 220px;
-    }
-    .button {
-        width: 100%;
-        font-size: 14px;
-        padding: 12px;
-    }
-}
-
-
-/* EXTRA SMALL DEVICES */
-
-@media (max-width: 350px) {
-    .title {
-        font-size: 20px;
-    }
-    .image {
-        max-width: 180px;
     }
 }
