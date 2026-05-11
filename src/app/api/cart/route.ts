@@ -1,53 +1,60 @@
-import { prisma } from "@/lib/prisma";
-import { getUser } from "@/lib/getUser";
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export async function GET() {
-  const user = await getUser();
-
-  // ✅ must be logged in AND must be normal user
-  if (!user?.id || user.role !== "user") {
-    return NextResponse.json({ items: [] }, { status: 401 });
-  }
-
-  const cart = await prisma.cart.findFirst({
-    where: { userId: user.id },
-    include: { items: { include: { product: true } } },
+  const carts = await prisma.cart.findMany({
+    include: {
+      user: {
+        include: {
+          profile: true,
+        },
+      },
+      items: {
+        include: {
+          product: true,
+        },
+      },
+    },
   });
 
-  return NextResponse.json(cart ?? { items: [] });
+  const cart = carts.flatMap((c) =>
+    c.items.map((item) => ({
+      id: item.id,
+      cartId: c.id,
+      userId: c.userId,
+      customer: c.user.email,
+      phone: c.user.profile?.phone,
+      productId: item.productId,
+      name: item.product.name,
+      price: item.product.price,
+      image: item.product.image,
+      quantity: item.quantity,
+    }))
+  );
+
+  return NextResponse.json({ cart });
 }
 
 export async function POST(req: Request) {
-  const user = await getUser();
-
-  // ✅ same protection
-  if (!user?.id || user.role !== "user") {
-    return NextResponse.json(
-      { error: "Only users can access cart" },
-      { status: 401 }
-    );
-  }
-
-  const { productId, quantity } = await req.json();
+  const body = await req.json();
 
   let cart = await prisma.cart.findFirst({
-    where: { userId: user.id },
+    where: { userId: Number(body.userId) },
   });
 
-  if (!cart) {
-    cart = await prisma.cart.create({
-      data: { userId: user.id },
-    });
-  }
+  cart ??= await prisma.cart.create({
+    data: {
+      userId: Number(body.userId),
+    },
+  });
 
   const item = await prisma.cartItem.create({
     data: {
       cartId: cart.id,
-      productId,
-      quantity,
+      productId: Number(body.productId),
+      quantity: Number(body.quantity || 1),
     },
   });
 
-  return NextResponse.json(item);
+  return NextResponse.json({ item }, { status: 201 });
 }

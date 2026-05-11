@@ -1,107 +1,147 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import styles from "./orders.module.css";
+import {
+  CheckCircle2,
+  Clock3,
+  Filter,
+  MapPin,
+  PackageCheck,
+  PackageOpen,
+  Phone,
+  ReceiptText,
+  Truck,
+  User,
+  Wallet,
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import styles from "../sharedAdmin.module.css";
 
 type Order = {
-  id: number;
-  userId: number;
+  id: string | number;
   customer: string;
-  status: "Pending" | "Delivered" | "Completed" | "Not Complete";
+  phone?: string;
+  location?: string;
   total: number;
-  date: string;
+  status: "pending" | "delivered" | "completed";
+  orderedAt?: string;
+  completedAt?: string;
 };
 
-type User = {
-  id: number;
-  name: string;
-  role: "admin" | "user";
-};
+function StatusIcon({ status }: { status: Order["status"] }) {
+  if (status === "completed") return <CheckCircle2 size={14} />;
+  if (status === "delivered") return <Truck size={14} />;
+  return <Clock3 size={14} />;
+}
 
-export default function Orders() {
-  // 👤 Mock logged-in user (replace with auth later)
-  const currentUser: User = {
-    id: 1,
-    name: "John Doe",
-    role: "user", // change to "admin" to see all orders
-  };
+export default function OrdersPage() {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [filter, setFilter] = useState("all");
 
-  // 📦 Mock orders (replace with API later)
-  const [orders] = useState<Order[]>([
-    { id: 1, userId: 1, customer: "John Doe", status: "Pending", total: 120, date: "2026-05-01" },
-    { id: 2, userId: 2, customer: "Mary Jane", status: "Delivered", total: 340, date: "2026-05-02" },
-    { id: 3, userId: 1, customer: "John Doe", status: "Completed", total: 80, date: "2026-05-03" },
-    { id: 4, userId: 3, customer: "Alex Kim", status: "Not Complete", total: 210, date: "2026-05-04" },
-  ]);
+  useEffect(() => {
+    fetch("/api/orders", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) =>
+        setOrders(Array.isArray(data) ? data : data.orders || data.data || [])
+      );
+  }, []);
 
-  const [filter, setFilter] = useState("All");
-
-  // 🔐 Role-based filtering
-  const visibleOrders = useMemo(() => {
-    let data =
-      currentUser.role === "admin"
-        ? orders
-        : orders.filter((o) => o.userId === currentUser.id);
-
-    switch (filter) {
-      case "Pending":
-        return data.filter((o) => o.status === "Pending");
-      case "Delivered":
-        return data.filter((o) => o.status === "Delivered");
-      case "Completed":
-        return data.filter((o) => o.status === "Completed");
-      case "Not Complete":
-        return data.filter((o) => o.status === "Not Complete");
-      default:
-        return data;
-    }
-  }, [filter, orders, currentUser]);
+  const filtered = useMemo(() => {
+    return filter === "all"
+      ? orders
+      : orders.filter((o) => o.status === filter);
+  }, [orders, filter]);
 
   return (
-    <div className={styles.page}>
-      {/* HEADER */}
+    <main className={styles.page}>
       <div className={styles.header}>
-        <h1>📦 Orders Dashboard</h1>
-        <p>Welcome, {currentUser.name}</p>
-      </div>
+        <div>
+          <p className={styles.kicker}>Orders</p>
+          <h1>
+            <ReceiptText size={30} /> Customer Orders
+          </h1>
+        </div>
 
-      {/* FILTER BUTTONS */}
-      <div className={styles.filters}>
-        {["All", "Pending", "Delivered", "Completed", "Not Complete"].map((f) => (
-          <button
-            key={f}
-            className={`${styles.filterBtn} ${filter === f ? styles.active : ""}`}
-            onClick={() => setFilter(f)}
+        <div className={styles.filterBox}>
+          <label className={styles.fieldLabel} htmlFor="order-status-filter">
+            <Filter size={14} /> Filter orders by status
+          </label>
+
+          <select
+            id="order-status-filter"
+            className={styles.inputSmall}
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
           >
-            {f}
-          </button>
-        ))}
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="delivered">Delivered</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
       </div>
 
-      {/* ORDERS GRID */}
-      <div className={styles.grid}>
-        {visibleOrders.map((order) => (
-          <div key={order.id} className={styles.card}>
-            <div className={styles.top}>
-              <h3>Order #{order.id}</h3>
-              <span className={`${styles.badge} ${styles[order.status.replace(" ", "")]}`}>
-                {order.status}
+      <section className={styles.grid}>
+        {filtered.map((o) => (
+          <div key={o.id} className={styles.card}>
+            <div className={styles.rowBetween}>
+              <h2>
+                <PackageOpen size={21} /> Order #{o.id}
+              </h2>
+
+              <span className={`${styles.status} ${styles[o.status]}`}>
+                <StatusIcon status={o.status} />
+                {o.status}
               </span>
             </div>
 
-            <div className={styles.body}>
-              <p><b>Customer:</b> {order.customer}</p>
-              <p><b>Date:</b> {order.date}</p>
-              <p><b>Total:</b> ${order.total}</p>
-            </div>
+            <p>
+              <User size={15} />
+              <strong>Customer:</strong> {o.customer}
+            </p>
 
-            <div className={styles.footer}>
-              <button className={styles.viewBtn}>View</button>
-              <button className={styles.actionBtn}>Update</button>
-            </div>
+            <p>
+              <Phone size={15} />
+              <strong>Phone:</strong> {o.phone || "Not added"}
+            </p>
+
+            <p>
+              <MapPin size={15} />
+              <strong>Location:</strong> {o.location || "Not added"}
+            </p>
+
+            <p>
+              <Wallet size={15} />
+              <strong>Total:</strong>{" "}
+              {Number(o.total || 0).toLocaleString()} TZS
+            </p>
+
+            <small className={styles.metaLine}>
+              <Clock3 size={14} />
+              Ordered:{" "}
+              {o.orderedAt
+                ? new Date(o.orderedAt).toLocaleString()
+                : "Recent"}
+            </small>
+
+            <small className={styles.metaLine}>
+              <PackageCheck size={14} />
+              Completed:{" "}
+              {o.completedAt
+                ? new Date(o.completedAt).toLocaleString()
+                : "Not completed"}
+            </small>
           </div>
         ))}
-      </div>
-    </div>
+
+        {filtered.length === 0 && (
+          <div className={styles.card}>
+            <h2>
+              <PackageOpen size={22} /> No orders found
+            </h2>
+            <p>No orders match the selected status.</p>
+          </div>
+        )}
+      </section>
+    </main>
   );
 }

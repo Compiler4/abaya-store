@@ -1,50 +1,58 @@
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { writeFile, mkdir } from "fs/promises";
+import path from "path";
 
-let products = [
-  {
-    id: 1,
-    name: "Nike Shoes",
-    stock: 10,
-    price: 50,
-    description: "Comfortable running shoes",
-    image: "https://via.placeholder.com/80"
-  }
-];
-
-// GET ALL
 export async function GET() {
-  return NextResponse.json(products);
+  const products = await prisma.product.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+
+  return NextResponse.json({ products });
 }
 
-// CREATE
 export async function POST(req: Request) {
-  const body = await req.json();
+  const form = await req.formData();
 
-  const newProduct = {
-    id: Date.now(),
-    ...body
-  };
+  const name = String(form.get("name") || "");
+  const price = Number(form.get("price") || 0);
+  const description = String(form.get("description") || "");
+  const category = String(form.get("category") || "");
+  const stock = Number(form.get("stock") || 0);
+  const sizes = String(form.get("sizes") || "[]");
+  const colors = String(form.get("colors") || "[]");
+  const imageFile = form.get("image") as File | null;
 
-  products.push(newProduct);
-  return NextResponse.json(newProduct);
-}
+  if (!name || !price || !imageFile) {
+    return NextResponse.json(
+      { error: "Name, price and image are required" },
+      { status: 400 }
+    );
+  }
 
-// UPDATE
-export async function PUT(req: Request) {
-  const body = await req.json();
+  await mkdir(path.join(process.cwd(), "public", "uploads"), {
+    recursive: true,
+  });
 
-  products = products.map((p) =>
-    p.id === body.id ? { ...p, ...body } : p
-  );
+  const bytes = await imageFile.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+  const fileName = `${Date.now()}-${imageFile.name.replace(/\s+/g, "-")}`;
+  const filePath = path.join(process.cwd(), "public", "uploads", fileName);
 
-  return NextResponse.json({ success: true });
-}
+  await writeFile(filePath, buffer);
 
-// DELETE
-export async function DELETE(req: Request) {
-  const body = await req.json();
+  const product = await prisma.product.create({
+    data: {
+      name,
+      price,
+      description,
+      category,
+      stock,
+      image: `/uploads/${fileName}`,
+      sizes: JSON.parse(sizes),
+      colors: JSON.parse(colors),
+    },
+  });
 
-  products = products.filter((p) => p.id !== body.id);
-
-  return NextResponse.json({ success: true });
+  return NextResponse.json({ product }, { status: 201 });
 }

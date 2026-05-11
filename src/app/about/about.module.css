@@ -1,27 +1,54 @@
 .page {
+    min-height: 100vh;
     background: #f5f0e8;
+    color: #111;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
-
-/* 🌐 LANGUAGE */
+.page * {
+    box-sizing: border-box;
+}
 
 .langWrap {
     position: fixed;
     top: 85px;
     right: 15px;
     z-index: 999;
-    border-radius: 36px;
+    display: flex;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.8);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
+.langBtn {
+    border: none;
+    border-radius: 999px;
+    padding: 8px 11px;
+    background: transparent;
+    color: #0f3d2e;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+}
 
-/* 🌐 MARQUEE HERO */
+.activeLang {
+    background: #0f3d2e;
+    color: #fff;
+}
 
 .heroText {
-    padding-top: 90px;
+    padding-top: 92px;
     text-align: center;
-    padding-bottom: 60px;
+    padding-bottom: clamp(42px, 7vw, 76px);
+    background: radial-gradient(circle at top left, rgba(212, 175, 55, 0.22), transparent 34%), linear-gradient(135deg, #f5f0e8, #fff8ec);
 }
 
 .marquee {
@@ -34,9 +61,285 @@
 
 .marquee span {
     display: inline-block;
+    min-width: 100%;
     animation: scroll 20s linear infinite;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 2px;
+}
+
+.heroCenter {
+    width: min(860px, calc(100% - 32px));
+    margin: 0 auto;
+}
+
+.heroCenter h1 {
+    font-size: clamp(30px, 6vw, 64px);
+    line-height: 1.05;
+    margin: clamp(34px, 6vw, 58px) 0 16px;
+    color: #0f3d2e;
+    overflow-wrap: anywhere;
+}
+
+.heroCenter p {
+    max-width: 720px;
+    margin: auto;
+    color: #444;
+    font-size: clamp(14px, 2vw, 18px);
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.counters {
+    width: min(1100px, calc(100% - 32px));
+    margin: -34px auto 0;
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.counterCard {
+    background: #0f3d2e;
+    color: white;
+    border-radius: 18px;
+    padding: 24px 16px;
+    text-align: center;
+    box-shadow: 0 18px 42px rgba(15, 61, 46, 0.24);
+    cursor: pointer;
+    min-width: 0;
+}
+
+.counterCard h2 {
+    margin: 0;
+    font-size: clamp(28px, 4vw, 42px);
+}
+
+.counterCard p {
+    margin: 6px 0 0;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    padding: clamp(42px, 7vw, 76px) 0;
+    width: min(1100px, calc(100% - 32px));
+    margin: auto;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid rgba(15, 61, 46, 0.12);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.08);
+    padding: clamp(22px, 4vw, 34px);
+    text-align: center;
+    min-height: 175px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    min-width: 0;
+    overflow: hidden;
+    transition: border-color 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+}
+
+.card:hover {
+    background: #fffdf7;
+    border-color: rgba(212, 175, 55, 0.72);
+    box-shadow: 0 24px 58px rgba(0, 0, 0, 0.15);
+}
+
+.cardIcon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(15, 61, 46, 0.08);
+    color: #0f3d2e;
+    transition: background 0.28s ease, color 0.28s ease;
+}
+
+.card:hover .cardIcon {
+    background: #0f3d2e;
+    color: #d4af37;
+}
+
+.card svg {
+    font-size: 28px;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: clamp(17px, 2vw, 22px);
+    overflow-wrap: anywhere;
+}
+
+.section {
+    width: min(900px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: clamp(50px, 8vw, 90px) 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 22px;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.06);
+}
+
+.section h2 {
+    font-size: clamp(24px, 4vw, 38px);
+    color: #0f3d2e;
+    margin: 0 0 15px;
+}
+
+.section p {
+    max-width: 750px;
+    margin: auto;
+    color: #444;
+    line-height: 1.7;
+    font-size: clamp(14px, 2vw, 17px);
+}
+
+.faq {
+    padding: clamp(48px, 7vw, 74px) 16px;
+    width: min(900px, 100%);
+    margin: auto;
+    text-align: center;
+}
+
+.faq h2 {
+    color: #0f3d2e;
+    font-size: clamp(24px, 4vw, 36px);
+    margin: 0 0 30px;
+}
+
+.faqItem {
+    margin-bottom: 12px;
+    min-width: 0;
+}
+
+.faqItem button {
+    width: 100%;
+    padding: 16px 18px;
+    background: linear-gradient(135deg, #0f3d2e, #145c3b);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 10px 25px rgba(15, 61, 46, 0.25);
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.faqItem button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(15, 61, 46, 0.36);
+}
+
+.faqItem button span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.rotateIcon {
+    transform: rotate(180deg);
+}
+
+.faqItem button svg {
+    flex: 0 0 auto;
+    transition: transform 0.25s ease;
+}
+
+.faqItem p {
+    overflow: hidden;
+    background: #ffffff;
+    color: #333;
+    padding: 15px 18px;
+    border-radius: 12px;
+    margin: 8px 0 0;
+    border-left: 4px solid #0f3d2e;
+    text-align: left;
+    line-height: 1.6;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
+}
+
+.chatBtn,
+.whatsapp {
+    position: fixed;
+    right: 20px;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+}
+
+.chatBtn {
+    bottom: 92px;
+    background: #111;
+    width: 55px;
+    height: 55px;
+    font-size: 22px;
+}
+
+.whatsapp {
+    bottom: 22px;
+    background: #25d366;
+    width: 60px;
+    height: 60px;
+    font-size: 25px;
+}
+
+.chatBox {
+    position: fixed;
+    bottom: 154px;
+    right: 20px;
+    width: min(280px, calc(100vw - 32px));
+    background: white;
+    padding: 16px;
+    border-radius: 16px;
+    z-index: 1000;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.22);
+}
+
+.chatBox p {
+    margin: 0 0 10px;
+    color: #0f3d2e;
+    font-weight: 600;
+}
+
+.chatBox input {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 999px;
+    padding: 11px 13px;
+    outline: none;
+}
+
+.chatBox input:focus {
+    border-color: #d4af37;
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.16);
+}
+
+.footer {
+    background: #0f3d2e;
+    color: white;
+    text-align: center;
+    padding: 22px;
 }
 
 @keyframes scroll {
@@ -48,382 +351,91 @@
     }
 }
 
-.heroCenter h1 {
-    font-size: 36px;
-    margin-top: 40px;
-    color: #0f3d2e;
-}
-
-.heroCenter p {
-    max-width: 700px;
-    margin: auto;
-    color: #444;
-}
-
-
-/* COUNTERS */
-
-.counters {
-    display: flex;
-    justify-content: space-around;
-    background: #0f3d2e;
-    color: white;
-    padding: 30px;
-}
-
-
-/* GRID */
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 60px 40px;
-    max-width: 1100px;
-    margin: auto;
-}
-
-
-/* 🧱 CARD (CENTERED + PREMIUM ANIMATION) */
-
-.card {
-    background: #ffffff;
-    border-radius: 16px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    padding: 30px;
-    text-align: center;
-    /* IMPORTANT: remove margin inside grid (clean layout) */
-    margin: 0;
-    min-height: 170px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* 🔥 CENTER CONTENT PERFECTLY */
-    gap: 10px;
-    transition: all 0.35s ease;
-    cursor: pointer;
-}
-
-
-/* 🔥 PREMIUM HOVER EFFECT */
-
-.card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
-    border-color: rgba(15, 61, 46, 0.35);
-}
-
-
-/* ICON */
-
-.card svg {
-    font-size: 28px;
-    color: #0f3d2e;
-}
-
-
-/* ABOUT SECTION (CENTER FIXED) */
-
-.section {
-    padding: 80px 20px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.section h2 {
-    font-size: 28px;
-    color: #0f3d2e;
-    margin-bottom: 15px;
-}
-
-.section p {
-    max-width: 750px;
-    color: #444;
-    line-height: 1.6;
-}
-
-
-/* CHAT */
-
-.chatBtn {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    background: black;
-    color: white;
-    border-radius: 50%;
-    width: 55px;
-    height: 55px;
-    border: none;
-    cursor: pointer;
-}
-
-.chatBox {
-    position: fixed;
-    bottom: 150px;
-    right: 20px;
-    background: white;
-    padding: 15px;
-    width: 220px;
-    border-radius: 10px;
-}
-
-
-/* WHATSAPP */
-
-.whatsapp {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #25D366;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
-    color: white;
-    font-size: 25px;
-    cursor: pointer;
-}
-
-
-/* FOOTER */
-
-.footer {
-    background: #0f3d2e;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-
-
-/* RESPONSIVE */
-
-@media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr;
-        padding: 30px 15px;
-    }
-    .counters {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
-    }
-}
-
-.faq {
-    padding: 60px 20px;
-    max-width: 900px;
-    margin: auto;
-    text-align: center;
-}
-
-.faq h2 {
-    color: #0f3d2e;
-    font-size: 28px;
-    margin-bottom: 30px;
-}
-
-
-/* 🟢 FAQ ITEM (GREEN LUXURY BLOCK) */
-
-.faqItem {
-    margin-bottom: 12px;
-}
-
-
-/* BUTTON */
-
-.faqItem button {
-    width: 100%;
-    padding: 16px 18px;
-    background: linear-gradient(135deg, #0f3d2e, #145c3b);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    text-align: left;
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 25px rgba(15, 61, 46, 0.25);
-}
-
-
-/* 🔥 HOVER EFFECT */
-
-.faqItem button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 15px 35px rgba(15, 61, 46, 0.35);
-}
-
-
-/* ANSWER BOX */
-
-.faqItem p {
-    background: #ffffff;
-    color: #333;
-    padding: 15px 18px;
-    border-radius: 10px;
-    margin-top: 8px;
-    border-left: 4px solid #0f3d2e;
-    text-align: left;
-    line-height: 1.6;
-}
-
-
-/* =========================
-   📱 RESPONSIVE BREAKPOINTS
-   ========================= */
-
-
-/* 💻 LARGE TABLETS / SMALL LAPTOPS */
-
 @media (max-width: 1024px) {
     .grid {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 50px 30px;
-    }
-    .heroCenter h1 {
-        font-size: 32px;
-    }
-    .heroCenter p {
-        padding: 0 20px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .counters {
-        flex-wrap: wrap;
-        gap: 20px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
-
-
-/* 📱 TABLETS */
-
-@media (max-width: 900px) {
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 18px;
-    }
-    .heroCenter h1 {
-        font-size: 28px;
-    }
-    .section {
-        padding: 60px 15px;
-    }
-    .card {
-        padding: 25px;
-    }
-    .chatBox {
-        width: 200px;
-    }
-}
-
-
-/* 📱 SMALL TABLETS / LARGE PHONES */
 
 @media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr;
-        padding: 30px 15px;
-    }
-    .counters {
-        flex-direction: column;
-        text-align: center;
-        gap: 15px;
+    .langWrap {
+        top: 72px;
+        right: 10px;
     }
     .heroText {
-        padding-top: 70px;
+        padding-top: 78px;
     }
-    .heroCenter h1 {
-        font-size: 24px;
+    .counters,
+    .grid {
+        grid-template-columns: 1fr;
+        width: min(520px, calc(100% - 24px));
     }
-    .heroCenter p {
-        font-size: 14px;
+    .counterCard {
+        padding: 20px 14px;
     }
-    .section h2 {
-        font-size: 24px;
+    .card {
+        min-height: 150px;
     }
-    .faq h2 {
-        font-size: 24px;
+    .section {
+        width: calc(100% - 24px);
+        border-radius: 16px;
+    }
+    .faq {
+        padding-left: 12px;
+        padding-right: 12px;
     }
 }
 
-
-/* 📱 MOBILE PHONES */
-
-@media (max-width: 600px) {
-    .heroCenter h1 {
-        font-size: 22px;
+@media (max-width: 480px) {
+    .langWrap {
+        top: 68px;
+        right: 8px;
+        gap: 4px;
+        padding: 5px;
+    }
+    .langBtn {
+        padding: 7px 9px;
+        font-size: 11px;
     }
     .marquee span {
-        font-size: 13px;
+        font-size: 12px;
         letter-spacing: 1px;
     }
-    .card {
-        padding: 20px;
-        min-height: 150px;
+    .heroCenter {
+        width: calc(100% - 22px);
     }
-    .section p {
-        font-size: 14px;
-        padding: 0 10px;
+    .counters,
+    .grid {
+        width: calc(100% - 20px);
     }
     .faqItem button {
         font-size: 14px;
         padding: 14px;
     }
-    .faqItem p {
-        font-size: 14px;
-    }
-}
-
-
-/* 📱 SMALL MOBILE PHONES */
-
-@media (max-width: 480px) {
-    .heroCenter h1 {
-        font-size: 20px;
-    }
-    .heroCenter p {
-        font-size: 13px;
-    }
-    .grid {
-        padding: 20px 10px;
-    }
-    .card {
-        padding: 18px;
-    }
     .chatBtn {
         width: 48px;
         height: 48px;
-        bottom: 80px;
+        bottom: 82px;
+        right: 14px;
     }
     .whatsapp {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
+        width: 52px;
+        height: 52px;
+        font-size: 21px;
+        right: 14px;
     }
-    .langWrap {
-        top: 70px;
+    .chatBox {
         right: 10px;
+        bottom: 140px;
     }
 }
 
-
-/* 📺 LARGE DESKTOPS */
-
 @media (min-width: 1440px) {
-    .grid {
+    .grid,
+    .counters {
         max-width: 1200px;
-        margin: auto;
-    }
-    .heroCenter h1 {
-        font-size: 40px;
-    }
-    .heroCenter p {
-        font-size: 18px;
     }
 }

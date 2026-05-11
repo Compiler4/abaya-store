@@ -1,105 +1,127 @@
 "use client";
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./sidebar.module.css";
 
 type SidebarProps = {
   setPage: Dispatch<SetStateAction<string>>;
-  open?: boolean; // ✅ NEW
+  activePage: string;
 };
 
-export default function Sidebar({ setPage, open }: SidebarProps) {
-  const [active, setActive] = useState("dashboard");
+const PROFILE_PHOTO_KEY = "admin_profile_photo";
+
+const menuItems = [
+  { name: "dashboard", label: "Dashboard", icon: "📊" },
+  { name: "products", label: "Products", icon: "🛍️" },
+  { name: "orders", label: "Orders", icon: "📦" },
+  { name: "users", label: "Users", icon: "👥" },
+  { name: "customers", label: "Customers", icon: "📍" },
+  { name: "messages", label: "Messages", icon: "💬" },
+  { name: "cart", label: "Cart", icon: "🛒" },
+  { name: "analytics", label: "Analytics", icon: "📈" },
+  { name: "payments", label: "Payments", icon: "💳" },
+  { name: "settings", label: "Settings", icon: "⚙️" },
+  { name: "profile", label: "Profile", icon: "👤" },
+];
+
+export default function Sidebar({ setPage, activePage }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [image, setImage] = useState<string | null>(null);
 
   const router = useRouter();
 
-  // 🎯 FINAL STATE CONTROL
-  const finalOpen = open ?? !collapsed;
+  useEffect(() => {
+    const savedPhoto = localStorage.getItem(PROFILE_PHOTO_KEY);
 
-  // 📸 HANDLE IMAGE UPLOAD
+    if (savedPhoto) {
+      setImage(savedPhoto);
+    }
+
+    const handleProfileUpdate = (event: Event) => {
+      const customEvent = event as CustomEvent<{ photo: string }>;
+
+      if (customEvent.detail?.photo) {
+        setImage(customEvent.detail.photo);
+        localStorage.setItem(PROFILE_PHOTO_KEY, customEvent.detail.photo);
+      }
+    };
+
+    window.addEventListener("admin-profile-updated", handleProfileUpdate);
+
+    return () => {
+      window.removeEventListener("admin-profile-updated", handleProfileUpdate);
+    };
+  }, []);
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setImage(url);
-    }
+
+    if (!file) return;
+
+    const url = URL.createObjectURL(file);
+
+    setImage(url);
+    localStorage.setItem(PROFILE_PHOTO_KEY, url);
   };
 
-  // 🚪 LOGOUT
   const handleLogout = () => {
+    const savedProfilePhoto = localStorage.getItem(PROFILE_PHOTO_KEY);
+
     localStorage.clear();
+
+    if (savedProfilePhoto) {
+      localStorage.setItem(PROFILE_PHOTO_KEY, savedProfilePhoto);
+    }
+
     router.push("/login");
   };
 
-  // 🔘 MENU BUTTON
-  const MenuBtn = ({
-    name,
-    label,
-    icon,
-  }: {
-    name: string;
-    label: string;
-    icon: string;
-  }) => (
-    <button
-      className={active === name ? styles.active : ""}
-      onClick={() => {
-        setActive(name);
-        setPage(name);
-      }}
-    >
-      <span className={styles.icon}>{icon}</span>
-      {finalOpen && <span>{label}</span>}
-    </button>
-  );
-
   return (
-    <div
-      className={`${styles.sidebar} ${
-        !finalOpen ? styles.sidebarClosed : ""
-      }`}
-    >
-      {/* TOP */}
+    <div className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""}`}>
       <div className={styles.top}>
-        {/* PROFILE */}
         <label className={styles.profile}>
           <input type="file" onChange={handleImageUpload} hidden />
-          <img src={image || "/default-avatar.png"} alt="profile" />
+          <img src={image || "/default-avatar.png"} alt="Admin profile" />
         </label>
 
-        {finalOpen && <h2 className={styles.title}>🛒 Admin</h2>}
-
-        {/* TOGGLE (only if open is not controlled externally) */}
-        {open === undefined && (
-          <button
-            className={styles.toggle}
-            onClick={() => setCollapsed(!collapsed)}
-          >
-            ☰
-          </button>
+        {!collapsed && (
+          <div className={styles.titleBox}>
+            <h2>Rify Admin</h2>
+            <p>E-commerce Control</p>
+          </div>
         )}
+
+        <button
+          className={styles.toggle}
+          onClick={() => setCollapsed((v) => !v)}
+          type="button"
+          aria-label="Toggle sidebar"
+          title="Toggle sidebar"
+        >
+          ☰
+        </button>
       </div>
 
-      {/* MENU */}
-      <div className={styles.menu}>
-        <MenuBtn name="dashboard" label="Dashboard" icon="📊" />
-        <MenuBtn name="products" label="Products" icon="🛍️" />
-        <MenuBtn name="orders" label="Orders" icon="📦" />
-        <MenuBtn name="users" label="Users" icon="👥" />
-        <MenuBtn name="cart" label="Cart" icon="🛒" />
-        <MenuBtn name="analytics" label="Analytics" icon="📊" />
-        <MenuBtn name="payments" label="Payments" icon="💳" />
-        <MenuBtn name="settings" label="Settings" icon="⚙️" />
-        <MenuBtn name="profile" label="Profile" icon="👤" />
-      </div>
+      <nav className={styles.menu}>
+        {menuItems.map((item) => (
+          <button
+            key={item.name}
+            className={activePage === item.name ? styles.active : ""}
+            onClick={() => setPage(item.name)}
+            type="button"
+            aria-label={item.label}
+            title={item.label}
+          >
+            <span className={styles.icon}>{item.icon}</span>
+            {!collapsed && <span>{item.label}</span>}
+          </button>
+        ))}
+      </nav>
 
-      {/* LOGOUT */}
-      <button className={styles.logout} onClick={handleLogout}>
+      <button className={styles.logout} onClick={handleLogout} type="button">
         <span>🚪</span>
-        {finalOpen && <span>Logout</span>}
+        {!collapsed && <span>Logout</span>}
       </button>
     </div>
   );

@@ -1,93 +1,183 @@
 "use client";
 
-import styles from "./cart.module.css";
-import { FaShoppingCart, FaTrash, FaPlus, FaMinus } from "react-icons/fa";
+import {
+  Boxes,
+  Calculator,
+  Layers,
+  Search,
+  ShoppingCart,
+  Trash2,
+  Wallet,
+} from "lucide-react";
+import { useEffect, useId, useMemo, useState } from "react";
+import styles from "../sharedAdmin.module.css";
 
-export default function Cart() {
-  const cart = [
-    { id: 1, product: "Nike Shoes", qty: 2, price: 120 },
-    { id: 2, product: "Adidas Hoodie", qty: 1, price: 80 },
-    { id: 3, product: "Puma Cap", qty: 3, price: 25 },
-  ];
+type CartItem = {
+  id: string | number;
+  name: string;
+  price: number;
+  image?: string;
+  quantity?: number;
+  customer?: string;
+  phone?: string;
+};
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+export default function CartPage() {
+  const searchId = useId();
+
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [search, setSearch] = useState("");
+
+  const fetchCart = async () => {
+    const res = await fetch("/api/cart", { cache: "no-store" });
+    const data = await res.json();
+
+    setCart(Array.isArray(data) ? data : data.cart || data.data || []);
+  };
+
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
+  const filteredCart = useMemo(() => {
+    const term = search.toLowerCase().trim();
+
+    if (!term) return cart;
+
+    return cart.filter((item) => {
+      return (
+        item.name?.toLowerCase().includes(term) ||
+        item.customer?.toLowerCase().includes(term) ||
+        item.phone?.toLowerCase().includes(term) ||
+        String(item.price || "").includes(term) ||
+        String(item.quantity || "").includes(term)
+      );
+    });
+  }, [cart, search]);
+
+  const total = filteredCart.reduce(
+    (sum, item) => sum + Number(item.price || 0) * Number(item.quantity || 1),
+    0
+  );
+
+  const totalItems = filteredCart.reduce(
+    (sum, item) => sum + Number(item.quantity || 1),
+    0
+  );
+
+  const deleteCartItem = async (id: string | number) => {
+    const confirmed = confirm("Remove this item from cart?");
+
+    if (!confirmed) return;
+
+    await fetch(`/api/cart/${id}`, {
+      method: "DELETE",
+    });
+
+    await fetchCart();
+  };
 
   return (
-    <div className={styles.page}>
-      <div className={styles.container}>
-        
-        {/* TITLE */}
-        <h1 className={styles.title}>
-          <FaShoppingCart /> Your Cart
-        </h1>
+    <main className={styles.page}>
+      <div className={styles.header}>
+        <div>
+          <p className={styles.kicker}>Cart</p>
+          <h1>
+            <ShoppingCart size={30} /> Customer Cart Items
+          </h1>
+        </div>
 
-        {/* CART ITEMS */}
-        <div className={styles.cartGrid}>
-          {cart.map((c) => (
-            <div key={c.id} className={styles.card}>
-              
-              {/* HEADER */}
-              <div className={styles.cardHeader}>
-                <h2>{c.product}</h2>
+        <span className={styles.status}>
+          <Wallet size={14} /> {total.toLocaleString()} TZS
+        </span>
+      </div>
+
+      <section className={styles.grid}>
+        <div className={styles.card}>
+          <h2>
+            <Boxes size={22} /> Cart Products
+          </h2>
+          <p>{filteredCart.length} product rows</p>
+        </div>
+
+        <div className={styles.card}>
+          <h2>
+            <Layers size={22} /> Total Quantity
+          </h2>
+          <p>{totalItems} items</p>
+        </div>
+
+        <div className={styles.card}>
+          <h2>
+            <Calculator size={22} /> Total Value
+          </h2>
+          <p>{total.toLocaleString()} TZS</p>
+        </div>
+      </section>
+
+      <section className={styles.card}>
+        <label className={styles.fieldLabel} htmlFor={searchId}>
+          <Search size={14} /> Search cart
+        </label>
+
+        <input
+          id={searchId}
+          className={styles.input}
+          placeholder="Search by product, customer, phone, price, or quantity..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+
+        <div className={styles.productGrid}>
+          {filteredCart.map((item, index) => (
+            <div key={item.id} className={styles.productCard}>
+              <div className={styles.rowBetween}>
+                <span className={styles.status}>#{index + 1}</span>
 
                 <button
-                  className={styles.deleteBtn}
-                  aria-label="Remove item"
-                  title="Remove item"
+                  className={`${styles.iconAction} ${styles.dangerAction}`}
+                  onClick={() => deleteCartItem(item.id)}
+                  aria-label={`Delete ${item.name}`}
+                  title="Delete item"
                   type="button"
                 >
-                  <FaTrash />
+                  <Trash2 size={16} />
                 </button>
               </div>
 
-              {/* BODY */}
-              <div className={styles.cardBody}>
-                <p className={styles.price}>${c.price}</p>
+              <img src={item.image || "/placeholder.png"} alt={item.name} />
 
-                <div className={styles.qtyControl}>
-                  <button
-                    type="button"
-                    aria-label="Decrease quantity"
-                    title="Decrease quantity"
-                  >
-                    <FaMinus />
-                  </button>
+              <h3>{item.name}</h3>
 
-                  <span>{c.qty}</span>
+              <p>
+                <Layers size={14} /> Quantity: {item.quantity || 1}
+              </p>
 
-                  <button
-                    type="button"
-                    aria-label="Increase quantity"
-                    title="Increase quantity"
-                  >
-                    <FaPlus />
-                  </button>
-                </div>
-              </div>
+              <p>
+                <Wallet size={14} /> Price:{" "}
+                {Number(item.price || 0).toLocaleString()} TZS
+              </p>
 
-              {/* FOOTER */}
-              <div className={styles.cardFooter}>
-                <span>Total: ${c.price * c.qty}</span>
-              </div>
+              {item.customer && <p>Customer: {item.customer}</p>}
+              {item.phone && <p>Phone: {item.phone}</p>}
 
+              <strong>
+                {(Number(item.price || 0) * Number(item.quantity || 1)).toLocaleString()}{" "}
+                TZS
+              </strong>
             </div>
           ))}
+
+          {filteredCart.length === 0 && (
+            <div className={styles.card}>
+              <h2>
+                <ShoppingCart size={22} /> Empty cart
+              </h2>
+              <p>No cart items match your search.</p>
+            </div>
+          )}
         </div>
-
-        {/* SUMMARY */}
-        <div className={styles.summary}>
-          <h2>Total: ${total}</h2>
-
-          <button
-            className={styles.checkoutBtn}
-            type="button"
-            aria-label="Proceed to checkout"
-          >
-            Checkout
-          </button>
-        </div>
-
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

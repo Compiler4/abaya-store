@@ -1,12 +1,37 @@
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
-// 🔥 SIMPLE MOCK PAYMENT (replace with Stripe later)
-export async function POST(req: Request) {
-  const { amount } = await req.json();
+export async function GET() {
+  const payments = await prisma.payment.findMany({
+    orderBy: { createdAt: "desc" },
+    include: {
+      order: true,
+    },
+  });
 
   return NextResponse.json({
-    success: true,
-    message: "Payment simulated",
-    amount,
+    payments: payments.map((p) => ({
+      id: p.id,
+      orderId: p.orderId,
+      customer: p.order.customer,
+      method: p.method,
+      status: p.status,
+      amount: p.order.total,
+      createdAt: p.createdAt,
+    })),
   });
+}
+
+export async function POST(req: Request) {
+  const body = await req.json();
+
+  const payment = await prisma.payment.create({
+    data: {
+      orderId: Number(body.orderId),
+      method: body.method,
+      status: body.status || "UNPAID",
+    },
+  });
+
+  return NextResponse.json({ payment }, { status: 201 });
 }

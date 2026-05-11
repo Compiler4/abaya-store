@@ -4,7 +4,17 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import styles from "./register.module.css";
-import { FaEnvelope, FaLock, FaPhone, FaTimes } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaEnvelope,
+  FaEye,
+  FaEyeSlash,
+  FaLock,
+  FaPhone,
+  FaShieldAlt,
+  FaTimes,
+  FaUserPlus,
+} from "react-icons/fa";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -12,9 +22,13 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
-  const [msg, setMsg] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [msg, setMsg] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
 
   const register = async () => {
     if (loading) return;
@@ -25,26 +39,26 @@ export default function RegisterPage() {
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ email, password, phone }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        setMsg({ type: "error", text: data.error });
+        setMsg({ type: "error", text: data.error || "Registration failed" });
         setLoading(false);
         return;
       }
 
       localStorage.setItem("token", data.token);
-
-      setMsg({ type: "success", text: "Account created successfully 🎉" });
+      setMsg({ type: "success", text: "Account created successfully" });
 
       setTimeout(() => {
         router.push("/dashboard");
-      }, 2000);
-
+      }, 1600);
     } catch {
       setMsg({ type: "error", text: "Network error" });
     }
@@ -53,76 +67,177 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className={styles.page}>
+    <main className={styles.page}>
       <Navbar />
 
-      <div className={styles.background}></div>
+      <div className={styles.background} />
+      <div className={styles.glowOne} />
+      <div className={styles.glowTwo} />
 
       {msg && (
-        <div className={`${styles.toast} ${msg.type === "success" ? styles.success : styles.error}`}>
+        <div
+          className={`${styles.toast} ${
+            msg.type === "success" ? styles.success : styles.error
+          }`}
+        >
+          {msg.type === "success" ? <FaCheckCircle /> : <FaTimes />}
           {msg.text}
         </div>
       )}
 
-      <div className={styles.container}>
-        {/* ANIMATED CARD */}
-        <div className={styles.card}>
-          <h1 className={styles.title}>Create Account</h1>
-          <p className={styles.subtitle}>Join us and start now</p>
+      <section className={styles.container}>
+        <div className={styles.visualPanel}>
+          <span className={styles.badge}>
+            <FaShieldAlt />
+            Secure Registration
+          </span>
 
-          {/* EMAIL */}
-          <label className={styles.label}>Email</label>
+          <h1>Join Rify Luxe Abaya</h1>
+
+          <p>
+            Create your account to shop premium modest fashion, track orders,
+            and receive personalized support.
+          </p>
+
+          <div className={styles.featureGrid}>
+            <div>
+              <FaCheckCircle />
+              Fast checkout
+            </div>
+
+            <div>
+              <FaCheckCircle />
+              Order tracking
+            </div>
+
+            <div>
+              <FaCheckCircle />
+              Premium support
+            </div>
+          </div>
+        </div>
+
+        <form
+          className={styles.card}
+          onSubmit={(e) => {
+            e.preventDefault();
+            register();
+          }}
+        >
+          <div className={styles.cardHeader}>
+            <div className={styles.cardIcon}>
+              <FaUserPlus />
+            </div>
+
+            <div>
+              <h2 className={styles.title}>Create Account</h2>
+              <p className={styles.subtitle}>Start your elegant journey</p>
+            </div>
+          </div>
+
+          <label className={styles.label} htmlFor="email">
+            Email
+          </label>
           <div className={styles.inputBox}>
             <FaEnvelope className={styles.icon} />
             <input
+              id="email"
               className={styles.input}
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter email"
+              required
             />
-            {email && <FaTimes className={styles.clear} onClick={() => setEmail("")} />}
+            {email && (
+              <button
+                className={styles.clearBtn}
+                type="button"
+                onClick={() => setEmail("")}
+                aria-label="Clear email"
+              >
+                <FaTimes />
+              </button>
+            )}
           </div>
 
-          {/* PHONE */}
-          <label className={styles.label}>Phone</label>
+          <label className={styles.label} htmlFor="phone">
+            Phone
+          </label>
           <div className={styles.inputBox}>
             <FaPhone className={styles.icon} />
             <input
+              id="phone"
               className={styles.input}
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Enter phone"
             />
-            {phone && <FaTimes className={styles.clear} onClick={() => setPhone("")} />}
+            {phone && (
+              <button
+                className={styles.clearBtn}
+                type="button"
+                onClick={() => setPhone("")}
+                aria-label="Clear phone"
+              >
+                <FaTimes />
+              </button>
+            )}
           </div>
 
-          {/* PASSWORD */}
-          <label className={styles.label}>Password</label>
+          <label className={styles.label} htmlFor="password">
+            Password
+          </label>
           <div className={styles.inputBox}>
             <FaLock className={styles.icon} />
             <input
+              id="password"
               className={styles.input}
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Create password"
+              required
             />
-            {password && <FaTimes className={styles.clear} onClick={() => setPassword("")} />}
+
+            <button
+              className={styles.clearBtn}
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+
+            {password && (
+              <button
+                className={styles.clearBtn}
+                type="button"
+                onClick={() => setPassword("")}
+                aria-label="Clear password"
+              >
+                <FaTimes />
+              </button>
+            )}
           </div>
 
-          {/* BUTTON */}
-          <button className={styles.button} onClick={register} disabled={loading}>
+          <button className={styles.button} type="submit" disabled={loading}>
+            <FaUserPlus />
             {loading ? "Creating..." : "Register"}
           </button>
 
           <p className={styles.linkText}>
             Already have account?{" "}
-            <span onClick={() => router.push("/login")} className={styles.link}>
+            <button
+              type="button"
+              onClick={() => router.push("/login")}
+              className={styles.link}
+            >
               Login
-            </span>
+            </button>
           </p>
-        </div>
-      </div>
-    </div>
+        </form>
+      </section>
+    </main>
   );
 }

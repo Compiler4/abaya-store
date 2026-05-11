@@ -16,3 +16,5 @@ export async function POST(req: Request) {
 export async function GET() {
   return NextResponse.json({ messages });
 }
+
+export { GET, POST } from "../contact/route";

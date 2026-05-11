@@ -1,160 +1,93 @@
-/* APP ROOT */
-
-.app {
-    display: flex;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f4f6fb, #eef2ff);
-    overflow-x: hidden;
-}
-
-
-/* MOBILE HIDE */
-
-.sidebarClosed {
-    transform: translateX(-100%);
-}
-
-
-/* STAGE (RIGHT EMPTY CANVAS AREA) */
-
-.stage {
-    flex: 1;
-    padding: 25px;
-}
-
-
-/* OVERLAY */
-
-.overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 40;
-}
-
-
-/* CART DRAWER */
-
-.cartDrawer {
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 360px;
-    height: 100vh;
-    background: white;
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
-    z-index: 60;
-}
-
-
-/* CARDS */
-
-.cards {
+.adminShell {
+    max-height: 100vh;
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    grid-template-columns: 270px minmax(0, 1fr);
+    background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.14), transparent 28%), radial-gradient(circle at bottom right, rgba(99, 102, 241, 0.14), transparent 30%), linear-gradient(135deg, #f7f4ee 0%, #eef3ff 100%);
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 14px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+.adminShell * {
+    box-sizing: border-box;
 }
 
-
-/* CHART */
-
-.chart {
-    margin-top: 25px;
-    background: white;
-    padding: 20px;
-    border-radius: 14px;
-}
-
-
-/* RESPONSIVE */
-
-@media (max-width: 1024px) {
-    .cards {
-        grid-template-columns: 1fr 1fr;
-    }
-    .main {
-        margin-left: 0;
-    }
-    .sidebar {
-        transform: translateX(-100%);
-    }
-}
-
-@media (max-width: 600px) {
-    .cards {
-        grid-template-columns: 1fr;
-    }
-    .cartDrawer {
-        width: 100%;
-    }
-}
-
-
-/* ROOT */
-
-.container {
-    display: flex;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f4f6fb, #eef2ff);
-    overflow-x: hidden;
-}
-
-
-/* SIDEBAR */
-
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
+.leftPane {
     width: 270px;
+    min-width: 270px;
     height: 100vh;
     background: #111827;
-    color: white;
-    z-index: 50;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    z-index: 100;
+    box-shadow: 12px 0 40px rgba(17, 24, 39, 0.16);
 }
 
-
-/* MAIN AREA */
-
-.main {
-    margin-left: 20px;
-    flex: 1;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    /* center horizontally */
-    align-items: cent;
-    /* center vertically */
-    padding: 25px;
+.rightPane {
+    min-width: 0;
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 24px;
+    scroll-behavior: smooth;
 }
 
-
-/* CONTENT BOX */
-
-.content {
+.pageView {
     width: 100%;
-    max-width: 1200px;
-    background: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    min-width: 0;
+    padding-bottom: 24px;
 }
 
 
-/* RESPONSIVE */
+/* Tablet */
 
 @media (max-width: 1024px) {
-    .main {
-        margin-left: 0;
+    .adminShell {
+        grid-template-columns: 230px minmax(0, 1fr);
     }
-    .sidebar {
-        transform: translateX(-100%);
+    .leftPane {
+        width: 230px;
+        min-width: 230px;
+    }
+    .rightPane {
+        padding: 18px;
+    }
+}
+
+
+/* Phone */
+
+@media (max-width: 768px) {
+    .adminShell {
+        display: block;
+        height: 100vh;
+        overflow: hidden;
+    }
+    .leftPane {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        min-width: 0;
+        height: 70px;
+        z-index: 1000;
+    }
+    .rightPane {
+        height: 100vh;
+        padding: 86px 12px 18px;
+        overflow-y: auto;
+    }
+}
+
+
+/* Small phone */
+
+@media (max-width: 480px) {
+    .leftPane {
+        height: 64px;
+    }
+    .rightPane {
+        padding: 78px 8px 14px;
     }
 }

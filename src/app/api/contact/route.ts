@@ -1,62 +1,36 @@
-import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+
+export async function GET() {
+  const contacts = await prisma.contactMessage.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+
+  return NextResponse.json({
+    contacts: contacts.map((c) => ({
+      id: c.id,
+      name: c.name,
+      contact: c.contact,
+      phone: c.contact,
+      email: c.contact,
+      location: c.location,
+      message: c.message,
+      createdAt: c.createdAt,
+    })),
+  });
+}
 
 export async function POST(req: Request) {
-  try {
-    const { name, email, phone, location, message } = await req.json();
+  const body = await req.json();
 
-    if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
+  const message = await prisma.contactMessage.create({
+    data: {
+      name: body.name,
+      contact: body.contact || body.email || body.phone,
+      location: body.location || "",
+      message: body.message,
+    },
+  });
 
-    // ⚡ FAST DB WRITE (no blocking email first)
-    const saved = await prisma.contactMessage.create({
-      data: {
-        name,
-        contact: email,
-        location,
-        message,
-      },
-    });
-
-    // ⚡ RETURN IMMEDIATELY (this makes API FAST <200ms)
-    const response = NextResponse.json({
-      success: true,
-      id: saved.id,
-    });
-
-    // 🟡 BACKGROUND EMAIL (DO NOT WAIT)
-    setTimeout(async () => {
-      try {
-        const nodemailer = (await import("nodemailer")).default;
-
-        const transporter = nodemailer.createTransport({
-          service: "gmail",
-          auth: {
-            user: process.env.EMAIL,
-            pass: process.env.EMAIL_PASS,
-          },
-        });
-
-        await transporter.sendMail({
-          from: `"Rify Luxe Abaya" <${process.env.EMAIL}>`,
-          to: email,
-          subject: "We received your message",
-          text: `Hi ${name}, we received your message.`,
-        });
-      } catch (e) {
-        console.error("EMAIL ERROR:", e);
-      }
-    }, 0);
-
-    return response;
-  } catch (err: any) {
-    return NextResponse.json(
-      { error: "Server error", details: err.message },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json({ message }, { status: 201 });
 }

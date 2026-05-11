@@ -1,57 +1,37 @@
-/* 🌐 ROOT VARIABLES */
-
-:root {
-    --primary: #0b3c91;
-    --primary-dark: #072a66;
-    --hover-glass: rgba(255, 255, 255, 0.12);
-    --active-glass: rgba(255, 255, 255, 0.25);
-    --text: #ffffff;
-    --shadow: rgba(0, 0, 0, 0.25);
-}
-
-
-/* 📦 SIDEBAR */
-
 .sidebar {
-    width: 240px;
-    height: 100vh;
-    background: #111827;
-    color: var(--text);
-    padding: 15px;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top left, rgba(37, 211, 102, 0.16), transparent 34%), #111827;
+    color: white;
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    position: fixed;
-    left: 0;
-    top: 0;
-    /* ✅ Safari FIX */
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    box-shadow: 4px 0 20px var(--shadow);
-    transition: all 0.3s ease;
-    z-index: 1000;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: width 0.28s ease;
 }
-
-
-/* 🔝 TOP */
 
 .top {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 22px;
 }
 
-
-/* 📸 PROFILE */
-
 .profile {
-    width: 42px;
-    height: 42px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
-    border: 2px solid white;
-    transition: 0.3s;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    flex: 0 0 auto;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.profile:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 5px rgba(37, 211, 102, 0.18);
 }
 
 .profile img {
@@ -60,215 +40,192 @@
     object-fit: cover;
 }
 
-.profile:hover {
-    transform: scale(1.1);
-}
-
-
-/* 🧾 TITLE */
-
-.title {
-    font-size: 18px;
-    font-weight: 700;
-    /* ✅ bold */
-    margin-left: 10px;
+.titleBox {
+    min-width: 0;
     flex: 1;
 }
 
+.titleBox h2,
+.titleBox p {
+    margin: 0;
+}
 
-/* ☰ TOGGLE */
+.titleBox h2 {
+    font-size: 18px;
+}
+
+.titleBox p {
+    color: #9ca3af;
+    font-size: 12px;
+}
 
 .toggle {
-    background: transparent;
+    width: 38px;
+    height: 38px;
     border: none;
+    border-radius: 12px;
     color: white;
-    font-size: 22px;
+    background: rgba(255, 255, 255, 0.08);
     cursor: pointer;
+    transition: background 0.25s ease, transform 0.25s ease;
 }
 
-
-/* 📋 MENU */
+.toggle:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: scale(1.05);
+}
 
 .menu {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 8px;
+    min-width: 0;
 }
 
-
-/* 🔘 BUTTON */
-
-.menu button {
+.menu button,
+.logout {
+    width: 100%;
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: 12px;
-    width: 100%;
     padding: 12px;
     border: none;
-    background: transparent;
-    color: var(--text);
-    font-weight: 600;
-    /* ✅ bold text */
+    border-radius: 14px;
+    color: white;
+    font-weight: 700;
     cursor: pointer;
-    border-radius: 10px;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 
-
-/* 📦 ICON */
-
-.icon {
-    font-size: 18px;
-    min-width: 20px;
-    text-align: center;
+.menu button {
+    background: transparent;
 }
-
-
-/* ✨ HOVER */
 
 .menu button:hover {
-    background: var(--hover-glass);
+    background: rgba(255, 255, 255, 0.12);
     transform: translateX(5px);
 }
 
-
-/* 💡 GLOW */
-
-.menu button::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient( 120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    opacity: 0;
-    transition: 0.4s;
-}
-
-.menu button:hover::before {
-    opacity: 1;
-}
-
-
-/* ✅ ACTIVE */
-
 .menu button.active {
-    background: var(--active-glass);
-    transform: scale(1.03);
+    background: linear-gradient(135deg, rgba(37, 211, 102, 0.24), rgba(99, 102, 241, 0.22));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
-
-
-/* 🎯 ACTIVE BORDER */
 
 .menu button.active::after {
     content: "";
     position: absolute;
     left: 0;
-    top: 15%;
-    height: 70%;
+    top: 18%;
+    height: 64%;
     width: 4px;
-    background: #fff;
-    border-radius: 4px;
+    background: #22c55e;
+    border-radius: 999px;
 }
 
-
-/* 🚪 LOGOUT (FIXED POSITION) */
+.icon {
+    font-size: 18px;
+    min-width: 22px;
+    text-align: center;
+}
 
 .logout {
-    margin-top: 10px;
-    /* ✅ BELOW PROFILE */
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    background: rgba(255, 0, 0, 0.2);
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: 0.3s;
+    background: rgba(187, 5, 5, 0.18);
 }
 
 .logout:hover {
-    background: rgba(255, 0, 0, 0.5);
-    transform: scale(1.05);
+    background: rgba(202, 8, 8, 0.42);
+    transform: translateY(-2px);
 }
-
-
-/* 🔒 COLLAPSED */
 
 .collapsed {
-    width: 80px;
+    width: 84px;
 }
 
-
-/* hide text */
-
-.collapsed .title,
-.collapsed .menu button span:last-child,
-.collapsed .logout span:last-child {
-    display: none;
+.collapsed .top {
+    justify-content: center;
+    flex-wrap: wrap;
 }
-
-
-/* center icons */
 
 .collapsed .menu button,
 .collapsed .logout {
     justify-content: center;
 }
 
-
-/* 🧊 CONTENT */
-
-.content {
-    margin-left: 240px;
-    padding: 20px;
-    min-height: 100vh;
-    background: #f4f6f9;
-    transition: all 0.3s ease;
-}
-
-
-/* 👉 SHIFT */
-
-.collapsed+.content {
-    margin-left: 80px;
-}
-
-
-/* 🌫️ CARD */
-
-.card {
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    /* ✅ Safari FIX */
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-
-/* 📱 TABLET */
-
 @media (max-width: 1024px) {
     .sidebar {
-        width: 200px;
+        width: 230px;
     }
-    .content {
-        margin-left: 200px;
+    .collapsed {
+        width: 78px;
     }
 }
 
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        width: 100%;
+        height: 70px;
+        flex-direction: row;
+        align-items: center;
+        padding: 10px;
+        z-index: 1000;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+    .top {
+        margin-bottom: 0;
+        flex: 0 0 auto;
+    }
+    .titleBox,
+    .toggle {
+        display: none;
+    }
+    .menu {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        overflow-x: auto;
+        flex: 1;
+    }
+    .menu button {
+        width: auto;
+        flex: 0 0 auto;
+        padding: 10px 12px;
+    }
+    .menu button:hover {
+        transform: translateY(-2px);
+    }
+    .menu button.active::after {
+        left: 16%;
+        top: auto;
+        bottom: 0;
+        width: 68%;
+        height: 3px;
+    }
+    .logout {
+        display: none;
+    }
+    .collapsed {
+        width: 100%;
+    }
+}
 
-/* 📱 MOBILE */
+@media (max-width: 480px) {
+    .sidebar {
+        height: 64px;
+        padding: 8px;
+    }
+    .profile {
+        width: 38px;
+        height: 38px;
+    }
+    .menu button {
+        font-size: 13px;
+        padding: 9px 10px;
+    }
+}
 
 @media (max-width: 768px) {
     .sidebar {
@@ -277,33 +234,7 @@
         flex-direction: row;
         align-items: center;
         padding: 10px;
-    }
-    .menu {
-        flex-direction: row;
         overflow-x: auto;
-        width: 100%;
-    }
-    .menu button {
-        width: auto;
-        font-size: 14px;
-    }
-    .logout {
-        display: none;
-    }
-    .content {
-        margin-left: 0;
-        margin-top: 70px;
-    }
-}
-
-
-/* 📱 SMALL */
-
-@media (max-width: 480px) {
-    .sidebar {
-        height: 60px;
-    }
-    .content {
-        margin-top: 60px;
+        overflow-y: hidden;
     }
 }
