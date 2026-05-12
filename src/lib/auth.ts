@@ -8,7 +8,7 @@ const SECRET = process.env.JWT_SECRET!;
 export type UserPayload = JwtPayload & {
   id: number;
   email?: string;
-  role: "user" | "admin";
+  role: string;
 };
 
 /**

@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
 type Params = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 function toUserResponse(user: any) {
@@ -23,8 +23,9 @@ function toUserResponse(user: any) {
   };
 }
 
-export async function GET(_req: Request, { params }: Params) {
-  const id = Number(params.id);
+export async function GET(_req: NextRequest, context: Params) {
+  const { id: routeId } = await context.params;
+  const id = Number(routeId);
 
   if (!id) {
     return NextResponse.json({ error: "Invalid user id" }, { status: 400 });
@@ -45,9 +46,10 @@ export async function GET(_req: Request, { params }: Params) {
   return NextResponse.json({ user: toUserResponse(user) });
 }
 
-export async function PUT(req: Request, { params }: Params) {
+export async function PUT(req: NextRequest, context: Params) {
   try {
-    const id = Number(params.id);
+    const { id: routeId } = await context.params;
+    const id = Number(routeId);
 
     if (!id) {
       return NextResponse.json({ error: "Invalid user id" }, { status: 400 });
@@ -140,9 +142,10 @@ export async function PUT(req: Request, { params }: Params) {
   }
 }
 
-export async function DELETE(_req: Request, { params }: Params) {
+export async function DELETE(_req: NextRequest, context: Params) {
   try {
-    const id = Number(params.id);
+    const { id: routeId } = await context.params;
+    const id = Number(routeId);
 
     if (!id) {
       return NextResponse.json({ error: "Invalid user id" }, { status: 400 });
