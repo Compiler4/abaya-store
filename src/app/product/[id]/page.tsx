@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import styles from "../product.module.css";
+import styles from "./product.module.css";
 
 export default function ProductPage({ params }: any) {
   const [product, setProduct] = useState<any>(null);
