@@ -1,17 +1,47 @@
 import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(_: Request, { params }) {
+type RouteContext = {
+  params: Promise<{
+    id: string;
+  }>;
+};
+
+function parseProductId(id: string) {
+  const productId = Number(id);
+
+  if (Number.isNaN(productId)) {
+    return null;
+  }
+
+  return productId;
+}
+
+export async function GET(_req: NextRequest, context: RouteContext) {
+  const { id } = await context.params;
+  const productId = parseProductId(id);
+
+  if (productId === null) {
+    return NextResponse.json({ error: "Invalid product id" }, { status: 400 });
+  }
+
   const product = await prisma.product.findUnique({
-    where: { id: params.id },
+    where: { id: productId },
   });
 
   return NextResponse.json(product);
 }
 
-export async function DELETE(_: Request, { params }) {
+export async function DELETE(_req: NextRequest, context: RouteContext) {
+  const { id } = await context.params;
+  const productId = parseProductId(id);
+
+  if (productId === null) {
+    return NextResponse.json({ error: "Invalid product id" }, { status: 400 });
+  }
+
   await prisma.product.delete({
-    where: { id: params.id },
+    where: { id: productId },
   });
 
   return NextResponse.json({ success: true });
