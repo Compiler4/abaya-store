@@ -11,6 +11,7 @@ import {
   Search,
   Shirt,
   Tags,
+  Trash2,
 } from "lucide-react";
 import { useEffect, useId, useMemo, useState } from "react";
 import styles from "../sharedAdmin.module.css";
@@ -99,6 +100,20 @@ export default function ProductsPage() {
 
     await fetchProducts();
     setLoading(false);
+  };
+
+  const deleteProduct = async (id: string | number) => {
+    const confirmed = window.confirm("Delete this product?");
+
+    if (!confirmed) {
+      return;
+    }
+
+    await fetch(`/api/products/delete/${id}`, {
+      method: "DELETE",
+    });
+
+    await fetchProducts();
   };
 
   return (
@@ -239,6 +254,15 @@ export default function ProductsPage() {
                   </p>
 
                   <strong>{Number(p.price || 0).toLocaleString()} TZS</strong>
+
+                  <button
+                    className={`${styles.iconAction} ${styles.dangerAction}`}
+                    onClick={() => deleteProduct(p.id)}
+                    title="Delete product"
+                    type="button"
+                  >
+                    <Trash2 size={18} />
+                  </button>
                 </div>
               ))}
 
@@ -257,6 +281,7 @@ export default function ProductsPage() {
                     <th>Category</th>
                     <th>Price</th>
                     <th>Stock</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
 
@@ -275,12 +300,22 @@ export default function ProductsPage() {
                       <td>{p.category || "No category"}</td>
                       <td>{Number(p.price || 0).toLocaleString()} TZS</td>
                       <td>{p.stock || 0}</td>
+                      <td>
+                        <button
+                          className={`${styles.iconAction} ${styles.dangerAction}`}
+                          onClick={() => deleteProduct(p.id)}
+                          title="Delete product"
+                          type="button"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </td>
                     </tr>
                   ))}
 
                   {filteredProducts.length === 0 && (
                     <tr>
-                      <td colSpan={6}>No products found.</td>
+                      <td colSpan={7}>No products found.</td>
                     </tr>
                   )}
                 </tbody>
