@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
+<<<<<<< HEAD
         "dev": "next dev",
         "build": "prisma generate && next build",
         "start": "next start",
@@ -12,10 +13,27 @@
     "dependencies": {
         "@prisma/adapter-better-sqlite3": "^7.8.0",
         "@prisma/client": "^5.22.0",
+=======
+        "predev": "prisma generate",
+        "dev": "next dev",
+        "dev:fresh": "node scripts/clean-next.mjs && prisma generate && next dev",
+        "build": "prisma generate && next build",
+        "start": "next start",
+        "postinstall": "prisma generate",
+        "lint": "eslint",
+        "studio": "prisma studio",
+        "db:push": "prisma db push",
+        "db:seed": "prisma db seed",
+        "db:setup": "prisma generate && prisma db push && prisma db seed"
+    },
+    "dependencies": {
+        "@prisma/client": "5.22.0",
+>>>>>>> 2090a59 (new changes)
         "bcrypt": "^6.0.0",
         "bcryptjs": "^3.0.3",
         "chart.js": "^4.5.1",
         "cloudinary": "^2.10.0",
+<<<<<<< HEAD
         "framer-motion": "^12.38.0",
         "jsonwebtoken": "^9.0.3",
         "jspdf": "^4.2.1",
@@ -23,6 +41,15 @@
         "next": "16.2.4",
         "nodemailer": "^8.0.7",
         "prisma": "^5.22.0",
+=======
+        "framer-motion": "^12.43.0",
+        "jsonwebtoken": "^9.0.3",
+        "jspdf": "^4.2.1",
+        "lucide-react": "^1.30.0",
+        "next": "16.2.4",
+        "nodemailer": "^8.0.7",
+        "prisma": "5.22.0",
+>>>>>>> 2090a59 (new changes)
         "react": "19.2.4",
         "react-chartjs-2": "^5.3.1",
         "react-dom": "19.2.4",
@@ -49,6 +76,12 @@
         "typescript": "^5.9.3"
     },
     "prisma": {
+<<<<<<< HEAD
         "seed": "node prisma/seed.ts"
     }
 }
+=======
+        "seed": "tsx prisma/seed.ts"
+    }
+}
+>>>>>>> 2090a59 (new changes)

@@ -5,6 +5,10 @@
 .navbar {
     position: sticky;
     top: 0;
+<<<<<<< HEAD
+=======
+    width: 100%;
+>>>>>>> 2090a59 (new changes)
     background: rgba(0, 0, 0, 0.65);
     -webkit-backdrop-filter: blur(18px);
     backdrop-filter: blur(18px);
@@ -15,6 +19,10 @@
     align-items: center;
     padding: 15px 35px;
     z-index: 1000;
+<<<<<<< HEAD
+=======
+    box-sizing: border-box;
+>>>>>>> 2090a59 (new changes)
 }
 
 
@@ -26,6 +34,19 @@
     display: flex;
     align-items: center;
     gap: 10px;
+<<<<<<< HEAD
+=======
+    min-width: 0;
+}
+
+.logoImg {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.25);
+>>>>>>> 2090a59 (new changes)
 }
 
 .logoCircle {
@@ -35,12 +56,20 @@
     background: linear-gradient(45deg, gold, #f5e6a3);
     animation: pulse 3s infinite ease-in-out;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.25);
+<<<<<<< HEAD
+=======
+    flex-shrink: 0;
+>>>>>>> 2090a59 (new changes)
 }
 
 .brand {
     font-weight: bold;
     letter-spacing: 1px;
     color: white;
+<<<<<<< HEAD
+=======
+    white-space: nowrap;
+>>>>>>> 2090a59 (new changes)
 }
 
 
@@ -54,9 +83,12 @@
     align-items: center;
 }
 
+<<<<<<< HEAD
 
 /* NAV LINK STYLE */
 
+=======
+>>>>>>> 2090a59 (new changes)
 .link {
     display: flex;
     align-items: center;
@@ -68,10 +100,24 @@
     border-radius: 8px;
     transition: all 0.25s ease;
     position: relative;
+<<<<<<< HEAD
 }
 
 
 /* HOVER */
+=======
+    white-space: nowrap;
+}
+
+.link svg,
+.loginBtn svg,
+.registerBtn svg,
+.drawer a svg,
+.menuBtn svg,
+.close svg {
+    flex-shrink: 0;
+}
+>>>>>>> 2090a59 (new changes)
 
 .link:hover {
     color: gold;
@@ -79,9 +125,12 @@
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
 }
 
+<<<<<<< HEAD
 
 /* ACTIVE LINK */
 
+=======
+>>>>>>> 2090a59 (new changes)
 .active {
     background: rgba(255, 215, 0, 0.1);
     color: gold;
@@ -90,7 +139,11 @@
 
 
 /* =========================
+<<<<<<< HEAD
    LOGIN BUTTON
+=======
+   LOGIN / REGISTER BUTTONS
+>>>>>>> 2090a59 (new changes)
 ========================= */
 
 .loginBtn {
@@ -104,11 +157,17 @@
     text-decoration: none;
     transition: all 0.3s ease;
     font-weight: 500;
+<<<<<<< HEAD
 }
 
 
 /* LOGIN HOVER */
 
+=======
+    white-space: nowrap;
+}
+
+>>>>>>> 2090a59 (new changes)
 .loginBtn:hover {
     transform: scale(1.08);
     box-shadow: 0 0 18px rgba(255, 215, 0, 0.45);
@@ -126,11 +185,17 @@
     text-decoration: none;
     transition: all 0.3s ease;
     font-weight: 500;
+<<<<<<< HEAD
 }
 
 
 /* HOVER EFFECT */
 
+=======
+    white-space: nowrap;
+}
+
+>>>>>>> 2090a59 (new changes)
 .registerBtn:hover {
     background: rgba(255, 215, 0, 0.1);
     color: gold;
@@ -140,6 +205,102 @@
 
 
 /* =========================
+<<<<<<< HEAD
+=======
+   MOBILE MENU BUTTON
+========================= */
+
+.menuBtn {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    border-radius: 14px;
+    background: rgba(255, 215, 0, 0.08);
+    color: white;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+}
+
+.menuBtn:hover {
+    color: gold;
+    background: rgba(255, 215, 0, 0.16);
+    box-shadow: 0 0 16px rgba(255, 215, 0, 0.25);
+}
+
+
+/* =========================
+   MOBILE DRAWER
+========================= */
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: min(280px, 72vw);
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.92);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    color: white;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: right 0.35s ease;
+    z-index: 2000;
+    box-sizing: border-box;
+    border-left: 1px solid rgba(255, 215, 0, 0.18);
+    box-shadow: -18px 0 40px rgba(0, 0, 0, 0.45);
+}
+
+.drawer a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+}
+
+.drawer a:hover {
+    color: gold;
+    background: rgba(255, 215, 0, 0.1);
+    transform: translateX(-2px);
+}
+
+.open {
+    right: 0;
+}
+
+.close {
+    align-self: flex-end;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    color: white;
+    background: rgba(255, 215, 0, 0.08);
+    transition: all 0.25s ease;
+}
+
+.close:hover {
+    color: gold;
+    background: rgba(255, 215, 0, 0.16);
+}
+
+
+/* =========================
+>>>>>>> 2090a59 (new changes)
    ANIMATIONS
 ========================= */
 
@@ -160,6 +321,7 @@
 
 
 /* =========================
+<<<<<<< HEAD
    RESPONSIVE
 ========================= */
 
@@ -226,10 +388,43 @@
 /* 📱 RESPONSIVE */
 
 @media (max-width: 768px) {
+=======
+   TABLET
+========================= */
+
+@media (max-width: 1024px) {
+    .navbar {
+        padding: 13px 22px;
+    }
+    .links {
+        gap: 10px;
+    }
+    .link {
+        font-size: 13px;
+        padding: 6px 8px;
+    }
+    .loginBtn,
+    .registerBtn {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+}
+
+
+/* =========================
+   PHONE
+========================= */
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 14px;
+    }
+>>>>>>> 2090a59 (new changes)
     .links {
         display: none;
     }
     .menuBtn {
+<<<<<<< HEAD
         display: block;
     }
 }
@@ -237,4 +432,46 @@
 .logoImg {
     border-radius: 50%;
     object-fit: cover;
+=======
+        display: inline-flex;
+    }
+    .logoImg {
+        width: 44px;
+        height: 44px;
+    }
+    .brand {
+        max-width: 155px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 14px;
+    }
+}
+
+
+/* =========================
+   SMALL PHONE
+========================= */
+
+@media (max-width: 420px) {
+    .navbar {
+        padding: 8px 10px;
+    }
+    .logoImg {
+        width: 40px;
+        height: 40px;
+    }
+    .brand {
+        max-width: 120px;
+        font-size: 13px;
+    }
+    .menuBtn {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+    }
+    .drawer {
+        width: min(245px, 70vw);
+        padding: 16px;
+    }
+>>>>>>> 2090a59 (new changes)
 }

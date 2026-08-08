@@ -1,5 +1,9 @@
 .sidebar {
+<<<<<<< HEAD
     width: 100%;
+=======
+    width: 260px;
+>>>>>>> 2090a59 (new changes)
     height: 100%;
     background: radial-gradient(circle at top left, rgba(37, 211, 102, 0.16), transparent 34%), #111827;
     color: white;
@@ -8,7 +12,12 @@
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
+<<<<<<< HEAD
     transition: width 0.28s ease;
+=======
+    transition: width 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
+    z-index: 1100;
+>>>>>>> 2090a59 (new changes)
 }
 
 .top {
@@ -52,14 +61,27 @@
 
 .titleBox h2 {
     font-size: 18px;
+<<<<<<< HEAD
+=======
+    white-space: nowrap;
+>>>>>>> 2090a59 (new changes)
 }
 
 .titleBox p {
     color: #9ca3af;
     font-size: 12px;
+<<<<<<< HEAD
 }
 
 .toggle {
+=======
+    white-space: nowrap;
+}
+
+.toggle,
+.closeMobile,
+.mobileToggle {
+>>>>>>> 2090a59 (new changes)
     width: 38px;
     height: 38px;
     border: none;
@@ -70,15 +92,33 @@
     transition: background 0.25s ease, transform 0.25s ease;
 }
 
+<<<<<<< HEAD
 .toggle:hover {
+=======
+.toggle:hover,
+.closeMobile:hover,
+.mobileToggle:hover {
+>>>>>>> 2090a59 (new changes)
     background: rgba(255, 255, 255, 0.18);
     transform: scale(1.05);
 }
 
+<<<<<<< HEAD
+=======
+.closeMobile,
+.mobileToggle {
+    display: none;
+}
+
+>>>>>>> 2090a59 (new changes)
 .menu {
     display: grid;
     gap: 8px;
     min-width: 0;
+<<<<<<< HEAD
+=======
+    flex: 1;
+>>>>>>> 2090a59 (new changes)
 }
 
 .menu button,
@@ -96,6 +136,10 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
+<<<<<<< HEAD
+=======
+    text-align: left;
+>>>>>>> 2090a59 (new changes)
     transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -128,10 +172,24 @@
     font-size: 18px;
     min-width: 22px;
     text-align: center;
+<<<<<<< HEAD
+=======
+    flex: 0 0 auto;
+}
+
+.label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+>>>>>>> 2090a59 (new changes)
 }
 
 .logout {
     background: rgba(187, 5, 5, 0.18);
+<<<<<<< HEAD
+=======
+    margin-top: 14px;
+>>>>>>> 2090a59 (new changes)
 }
 
 .logout:hover {
@@ -153,9 +211,19 @@
     justify-content: center;
 }
 
+<<<<<<< HEAD
 @media (max-width: 1024px) {
     .sidebar {
         width: 230px;
+=======
+.backdrop {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 240px;
+>>>>>>> 2090a59 (new changes)
     }
     .collapsed {
         width: 78px;
@@ -163,6 +231,7 @@
 }
 
 @media (max-width: 768px) {
+<<<<<<< HEAD
     .sidebar {
         position: fixed;
         width: 100%;
@@ -209,10 +278,97 @@
     }
     .collapsed {
         width: 100%;
+=======
+    .mobileToggle {
+        display: grid;
+        place-items: center;
+        position: fixed;
+        top: 14px;
+        left: 14px;
+        z-index: 1200;
+        background: #111827;
+        box-shadow: 0 14px 32px rgba(17, 24, 39, 0.25);
+    }
+    .backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 1050;
+        border: none;
+        background: rgba(15, 23, 42, 0.5);
+        -webkit-backdrop-filter: blur(3px);
+        backdrop-filter: blur(3px);
+    }
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: min(84vw, 300px);
+        height: 100dvh;
+        padding: 16px;
+        transform: translateX(-105%);
+        box-shadow: none;
+    }
+    .sidebar.mobileOpen {
+        transform: translateX(0);
+        box-shadow: 24px 0 70px rgba(15, 23, 42, 0.35);
+    }
+    .collapsed {
+        width: min(84vw, 300px);
+    }
+    .collapsed .top {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+    }
+    .collapsed .menu button,
+    .collapsed .logout {
+        justify-content: flex-start;
+    }
+    .collapsed .titleBox,
+    .collapsed .label {
+        display: block;
+    }
+    .toggle {
+        display: none;
+    }
+    .closeMobile {
+        display: grid;
+        place-items: center;
+        margin-left: auto;
+        font-size: 24px;
+        line-height: 1;
+    }
+    .top {
+        margin-bottom: 20px;
+    }
+    .menu {
+        display: grid;
+        gap: 8px;
+        overflow: visible;
+    }
+    .menu button,
+    .logout {
+        padding: 12px;
+        border-radius: 14px;
+    }
+    .menu button:hover {
+        transform: translateX(5px);
+    }
+    .menu button.active::after {
+        left: 0;
+        top: 18%;
+        bottom: auto;
+        width: 4px;
+        height: 64%;
+    }
+    .logout {
+        display: flex;
+>>>>>>> 2090a59 (new changes)
     }
 }
 
 @media (max-width: 480px) {
+<<<<<<< HEAD
     .sidebar {
         height: 64px;
         padding: 8px;
@@ -236,5 +392,34 @@
         padding: 10px;
         overflow-x: auto;
         overflow-y: hidden;
+=======
+    .mobileToggle {
+        top: 10px;
+        left: 10px;
+        width: 36px;
+        height: 36px;
+    }
+    .sidebar {
+        width: min(88vw, 290px);
+        padding: 14px;
+    }
+    .collapsed {
+        width: min(88vw, 290px);
+    }
+    .profile {
+        width: 42px;
+        height: 42px;
+    }
+    .titleBox h2 {
+        font-size: 16px;
+    }
+    .titleBox p {
+        font-size: 11px;
+    }
+    .menu button,
+    .logout {
+        padding: 11px;
+        font-size: 14px;
+>>>>>>> 2090a59 (new changes)
     }
 }

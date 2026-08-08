@@ -4,6 +4,7 @@ import * as bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
+<<<<<<< HEAD
   console.log("🌱 Seeding database...");
 
   const hashedPassword = await bcrypt.hash("123456", 10);
@@ -12,6 +13,16 @@ async function main() {
   await prisma.user.upsert({
     where: { email: "admin@abaya.com" },
     update: {},
+=======
+  const hashedPassword = await bcrypt.hash("123456", 10);
+
+  const admin = await prisma.user.upsert({
+    where: { email: "admin@abaya.com" },
+    update: {
+      password: hashedPassword,
+      role: "ADMIN",
+    },
+>>>>>>> 2090a59 (new changes)
     create: {
       email: "admin@abaya.com",
       password: hashedPassword,
@@ -19,6 +30,7 @@ async function main() {
     },
   });
 
+<<<<<<< HEAD
   // 👤 Normal user
   await prisma.user.upsert({
     where: { email: "user@abaya.com" },
@@ -81,8 +93,20 @@ async function main() {
 main()
   .catch((e) => {
     console.error("❌ Seed error:", e);
+=======
+  console.log(`Admin seed completed: ${admin.email}`);
+}
+
+main()
+  .catch((error) => {
+    console.error("Admin seed failed:", error);
+>>>>>>> 2090a59 (new changes)
     process.exit(1);
   })
   .finally(async () => {
     await prisma.$disconnect();
+<<<<<<< HEAD
   });
+=======
+  });
+>>>>>>> 2090a59 (new changes)

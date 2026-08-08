@@ -13,16 +13,32 @@
 
 .imageWrapper {
     flex: 1;
+<<<<<<< HEAD
     display: flex;
     justify-content: center;
+=======
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    justify-content: center;
+    align-items: start;
+>>>>>>> 2090a59 (new changes)
 }
 
 .image {
     width: 100%;
     max-width: 400px;
+<<<<<<< HEAD
     border-radius: 18px;
     object-fit: cover;
     transition: transform 0.4s ease;
+=======
+    aspect-ratio: 1 / 1.2;
+    border-radius: 18px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    margin: auto;
+>>>>>>> 2090a59 (new changes)
 }
 
 .image:hover {
@@ -38,14 +54,22 @@
 }
 
 .title {
+<<<<<<< HEAD
     font-size: 42px;
+=======
+    font-size: clamp(30px, 4vw, 42px);
+>>>>>>> 2090a59 (new changes)
     margin-bottom: 15px;
     line-height: 1.2;
 }
 
 .price {
     color: #c9a24e;
+<<<<<<< HEAD
     font-size: 24px;
+=======
+    font-size: clamp(20px, 2.4vw, 24px);
+>>>>>>> 2090a59 (new changes)
     margin-bottom: 20px;
     font-weight: 500;
 }
@@ -87,6 +111,7 @@
 }
 
 
+<<<<<<< HEAD
 /* RESPONSIVE */
 
 @media (max-width: 768px) {
@@ -97,6 +122,46 @@
     }
     .image {
         max-width: 280px;
+=======
+/* TABLET: 4 PHOTOS PER ROW */
+
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 36px;
+        padding: 40px 24px;
+    }
+    .imageWrapper {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+    }
+    .image {
+        max-width: none;
+        aspect-ratio: 1 / 1.25;
+    }
+    .details {
+        min-width: 0;
+        text-align: center;
+    }
+}
+
+
+/* PHONE: 2 PHOTOS PER ROW */
+
+@media (max-width: 600px) {
+    .container {
+        padding: 30px 16px;
+        gap: 28px;
+    }
+    .imageWrapper {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+    .image {
+        border-radius: 14px;
+        aspect-ratio: 1 / 1.25;
+>>>>>>> 2090a59 (new changes)
     }
     .title {
         font-size: 30px;
@@ -108,4 +173,19 @@
         width: 100%;
         max-width: 250px;
     }
+<<<<<<< HEAD
+=======
+}
+
+
+/* VERY SMALL PHONE */
+
+@media (max-width: 340px) {
+    .container {
+        padding: 24px 12px;
+    }
+    .imageWrapper {
+        gap: 10px;
+    }
+>>>>>>> 2090a59 (new changes)
 }

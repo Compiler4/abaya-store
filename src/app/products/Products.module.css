@@ -478,6 +478,19 @@
     color: #64748b;
 }
 
+<<<<<<< HEAD
+=======
+.cartImage {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #f8fafc;
+    padding: 5px;
+    flex: 0 0 auto;
+}
+
+>>>>>>> 2090a59 (new changes)
 .removeBtn {
     width: 38px;
     height: 38px;
@@ -626,7 +639,37 @@
     color: #334155;
 }
 
+<<<<<<< HEAD
 @media (max-width: 900px) {
+=======
+.categoryCount {
+    min-width: 22px;
+    height: 22px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 999px;
+    background: rgba(15, 118, 110, 0.12);
+    color: #0f766e;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 0 6px;
+}
+
+.activeCategory .categoryCount,
+.categoryBtn:hover .categoryCount {
+    background: rgba(255, 255, 255, 0.22);
+    color: white;
+}
+
+.animatedCard {
+    animation: cardUp 0.45s ease both;
+}
+
+
+/* TABLET: 4 PHOTOS PER ROW */
+
+@media (min-width: 601px) and (max-width: 1024px) {
+>>>>>>> 2090a59 (new changes)
     .hero {
         align-items: flex-start;
         flex-direction: column;
@@ -634,8 +677,38 @@
     .heroCart {
         width: 100%;
     }
+<<<<<<< HEAD
 }
 
+=======
+    .grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        padding: 16px;
+    }
+    .productImage {
+        height: clamp(150px, 22vw, 220px);
+        padding: 9px;
+    }
+    .actions {
+        flex-direction: column;
+    }
+    .btn {
+        font-size: 11px;
+        padding: 9px 7px;
+    }
+    .productName {
+        font-size: 13px;
+    }
+    .desc {
+        font-size: 11px;
+    }
+}
+
+
+/* PHONE: 2 PHOTOS PER ROW */
+
+>>>>>>> 2090a59 (new changes)
 @media (max-width: 600px) {
     .page {
         padding-top: 62px;
@@ -644,6 +717,14 @@
         width: min(100% - 20px, 1600px);
         margin-top: 14px;
         border-radius: 20px;
+<<<<<<< HEAD
+=======
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .heroCart {
+        width: 100%;
+>>>>>>> 2090a59 (new changes)
     }
     .header {
         top: 62px;
@@ -659,6 +740,13 @@
     .resultBar {
         width: min(100% - 20px, 1600px);
     }
+<<<<<<< HEAD
+=======
+    .categorySection {
+        padding: 14px;
+        border-radius: 18px;
+    }
+>>>>>>> 2090a59 (new changes)
     .resultBar {
         align-items: flex-start;
         flex-direction: column;
@@ -668,24 +756,86 @@
         gap: 12px;
         padding: 12px;
     }
+<<<<<<< HEAD
     .productImage {
         height: 190px;
     }
     .actions {
         flex-direction: column;
+=======
+    .card {
+        border-radius: 15px;
+    }
+    .productImage {
+        height: clamp(145px, 46vw, 190px);
+        padding: 8px;
+    }
+    .previewHint {
+        display: none;
+    }
+    .cardBody {
+        padding: 10px 9px 2px;
+    }
+    .categoryPill {
+        font-size: 10px;
+        padding: 5px 7px;
+    }
+    .productName {
+        font-size: 12px;
+    }
+    .desc {
+        font-size: 11px;
+        line-height: 1.45;
+    }
+    .actions {
+        flex-direction: column;
+        gap: 7px;
+        padding: 9px;
+    }
+    .btn {
+        font-size: 11px;
+        padding: 9px 6px;
+        border-radius: 10px;
+>>>>>>> 2090a59 (new changes)
     }
     .drawer {
         width: 100%;
     }
 }
 
+<<<<<<< HEAD
 @media (max-width: 380px) {
     .grid {
         grid-template-columns: 1fr;
+=======
+
+/* VERY SMALL PHONE: KEEP 2 PER ROW */
+
+@media (max-width: 380px) {
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        padding: 10px;
+>>>>>>> 2090a59 (new changes)
     }
     .hero h1 {
         font-size: 28px;
     }
+<<<<<<< HEAD
+=======
+    .productImage {
+        height: 140px;
+    }
+    .categoryPill {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .btn {
+        font-size: 10px;
+    }
+>>>>>>> 2090a59 (new changes)
 }
 
 @keyframes pageFade {
@@ -735,6 +885,7 @@
     to {
         transform: translateX(0);
     }
+<<<<<<< HEAD
 }
 
 .categoryCount {
@@ -787,4 +938,6 @@
 .categoryBtn:hover .categoryCount {
     background: rgba(255, 255, 255, 0.22);
     color: white;
+=======
+>>>>>>> 2090a59 (new changes)
 }

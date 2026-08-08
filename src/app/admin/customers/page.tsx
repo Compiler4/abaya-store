@@ -7,6 +7,10 @@ import {
   MessageCircle,
   Phone,
   Search,
+<<<<<<< HEAD
+=======
+  Trash2,
+>>>>>>> 2090a59 (new changes)
   UserRound,
   UsersRound,
 } from "lucide-react";
@@ -24,11 +28,20 @@ type Customer = {
   createdAt?: string;
 };
 
+<<<<<<< HEAD
+=======
+type ApiResponse = {
+  error?: string;
+  success?: boolean;
+};
+
+>>>>>>> 2090a59 (new changes)
 export default function CustomersPage() {
   const searchId = useId();
 
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [search, setSearch] = useState("");
+<<<<<<< HEAD
 
   useEffect(() => {
     fetch("/api/contact", { cache: "no-store" })
@@ -38,6 +51,27 @@ export default function CustomersPage() {
           Array.isArray(data) ? data : data.contacts || data.data || []
         )
       );
+=======
+  const [deleting, setDeleting] = useState(false);
+
+  const readJsonSafely = async (res: Response): Promise<ApiResponse> => {
+    try {
+      return await res.json();
+    } catch {
+      return {};
+    }
+  };
+
+  const fetchCustomers = async () => {
+    const res = await fetch("/api/contact", { cache: "no-store" });
+    const data = await res.json();
+
+    setCustomers(Array.isArray(data) ? data : data.contacts || data.data || []);
+  };
+
+  useEffect(() => {
+    fetchCustomers();
+>>>>>>> 2090a59 (new changes)
   }, []);
 
   const filteredCustomers = useMemo(() => {
@@ -59,6 +93,71 @@ export default function CustomersPage() {
     });
   }, [customers, search]);
 
+<<<<<<< HEAD
+=======
+  const deleteCustomer = async (id: string | number) => {
+    const confirmed = window.confirm("Delete this customer contact?");
+
+    if (!confirmed) {
+      return;
+    }
+
+    setDeleting(true);
+
+    try {
+      const res = await fetch(`/api/contact?id=${id}`, {
+        method: "DELETE",
+      });
+
+      const data = await readJsonSafely(res);
+
+      if (!res.ok) {
+        alert(data.error || "Failed to delete customer");
+        return;
+      }
+
+      await fetchCustomers();
+    } catch (error) {
+      console.error("DELETE CUSTOMER CLIENT ERROR:", error);
+      alert("Failed to delete customer");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const deleteAllCustomers = async () => {
+    const confirmed = window.confirm(
+      "Delete all customer contacts? This cannot be undone."
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    setDeleting(true);
+
+    try {
+      const res = await fetch("/api/contact?all=true", {
+        method: "DELETE",
+      });
+
+      const data = await readJsonSafely(res);
+
+      if (!res.ok) {
+        alert(data.error || "Failed to delete all customers");
+        return;
+      }
+
+      await fetchCustomers();
+    } catch (error) {
+      console.error("DELETE ALL CUSTOMERS CLIENT ERROR:", error);
+      alert("Failed to delete all customers");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+>>>>>>> 2090a59 (new changes)
   return (
     <main className={styles.page}>
       <div className={styles.header}>
@@ -69,9 +168,27 @@ export default function CustomersPage() {
           </h1>
         </div>
 
+<<<<<<< HEAD
         <span className={styles.status}>
           {filteredCustomers.length} Customers
         </span>
+=======
+        <div className={styles.actionGroup}>
+          <span className={styles.status}>
+            {filteredCustomers.length} Customers
+          </span>
+
+          <button
+            className={`${styles.primaryBtn} ${styles.dangerAction}`}
+            onClick={deleteAllCustomers}
+            disabled={deleting || customers.length === 0}
+            type="button"
+          >
+            <Trash2 size={18} />
+            Delete All
+          </button>
+        </div>
+>>>>>>> 2090a59 (new changes)
       </div>
 
       <section className={styles.card}>
@@ -100,7 +217,23 @@ export default function CustomersPage() {
                   {c.name || "Unknown Customer"}
                 </h2>
 
+<<<<<<< HEAD
                 <span className={styles.status}>#{c.id}</span>
+=======
+                <div className={styles.actionGroup}>
+                  <span className={styles.status}>#{c.id}</span>
+
+                  <button
+                    className={`${styles.iconAction} ${styles.dangerAction}`}
+                    onClick={() => deleteCustomer(c.id)}
+                    disabled={deleting}
+                    title="Delete customer"
+                    type="button"
+                  >
+                    <Trash2 size={17} />
+                  </button>
+                </div>
+>>>>>>> 2090a59 (new changes)
               </div>
 
               <p>
@@ -125,7 +258,13 @@ export default function CustomersPage() {
 
               <small className={styles.metaLine}>
                 <CalendarDays size={14} />
+<<<<<<< HEAD
                 {c.createdAt ? new Date(c.createdAt).toLocaleString() : "Recent"}
+=======
+                {c.createdAt
+                  ? new Date(c.createdAt).toLocaleString()
+                  : "Recent"}
+>>>>>>> 2090a59 (new changes)
               </small>
             </article>
           );

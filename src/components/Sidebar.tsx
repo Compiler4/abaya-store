@@ -27,6 +27,10 @@ const menuItems = [
 
 export default function Sidebar({ setPage, activePage }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
+<<<<<<< HEAD
+=======
+  const [mobileOpen, setMobileOpen] = useState(false);
+>>>>>>> 2090a59 (new changes)
   const [image, setImage] = useState<string | null>(null);
 
   const router = useRouter();
@@ -54,6 +58,17 @@ export default function Sidebar({ setPage, activePage }: SidebarProps) {
     };
   }, []);
 
+<<<<<<< HEAD
+=======
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
+>>>>>>> 2090a59 (new changes)
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
@@ -65,6 +80,14 @@ export default function Sidebar({ setPage, activePage }: SidebarProps) {
     localStorage.setItem(PROFILE_PHOTO_KEY, url);
   };
 
+<<<<<<< HEAD
+=======
+  const handleMenuClick = (page: string) => {
+    setPage(page);
+    setMobileOpen(false);
+  };
+
+>>>>>>> 2090a59 (new changes)
   const handleLogout = () => {
     const savedProfilePhoto = localStorage.getItem(PROFILE_PHOTO_KEY);
 
@@ -78,6 +101,7 @@ export default function Sidebar({ setPage, activePage }: SidebarProps) {
   };
 
   return (
+<<<<<<< HEAD
     <div className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""}`}>
       <div className={styles.top}>
         <label className={styles.profile}>
@@ -124,5 +148,88 @@ export default function Sidebar({ setPage, activePage }: SidebarProps) {
         {!collapsed && <span>Logout</span>}
       </button>
     </div>
+=======
+    <>
+      <button
+        className={styles.mobileToggle}
+        onClick={() => setMobileOpen((v) => !v)}
+        type="button"
+        aria-label="Open admin menu"
+        title="Open admin menu"
+      >
+        ☰
+      </button>
+
+      {mobileOpen && (
+        <button
+          className={styles.backdrop}
+          onClick={() => setMobileOpen(false)}
+          type="button"
+          aria-label="Close menu"
+        />
+      )}
+
+      <aside
+        className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""} ${
+          mobileOpen ? styles.mobileOpen : ""
+        }`}
+      >
+        <div className={styles.top}>
+          <label className={styles.profile}>
+            <input type="file" onChange={handleImageUpload} hidden />
+            <img src={image || "/default-avatar.png"} alt="Admin profile" />
+          </label>
+
+          {!collapsed && (
+            <div className={styles.titleBox}>
+              <h2>Rify Admin</h2>
+              <p>E-commerce Control</p>
+            </div>
+          )}
+
+          <button
+            className={styles.toggle}
+            onClick={() => setCollapsed((v) => !v)}
+            type="button"
+            aria-label="Toggle sidebar"
+            title="Toggle sidebar"
+          >
+            ☰
+          </button>
+
+          <button
+            className={styles.closeMobile}
+            onClick={() => setMobileOpen(false)}
+            type="button"
+            aria-label="Close sidebar"
+            title="Close sidebar"
+          >
+            ×
+          </button>
+        </div>
+
+        <nav className={styles.menu}>
+          {menuItems.map((item) => (
+            <button
+              key={item.name}
+              className={activePage === item.name ? styles.active : ""}
+              onClick={() => handleMenuClick(item.name)}
+              type="button"
+              aria-label={item.label}
+              title={item.label}
+            >
+              <span className={styles.icon}>{item.icon}</span>
+              {!collapsed && <span className={styles.label}>{item.label}</span>}
+            </button>
+          ))}
+        </nav>
+
+        <button className={styles.logout} onClick={handleLogout} type="button">
+          <span className={styles.icon}>🚪</span>
+          {!collapsed && <span className={styles.label}>Logout</span>}
+        </button>
+      </aside>
+    </>
+>>>>>>> 2090a59 (new changes)
   );
 }

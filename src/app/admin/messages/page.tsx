@@ -11,6 +11,11 @@ import {
   Reply,
   Search,
   Send,
+<<<<<<< HEAD
+=======
+  Trash2,
+  UserPlus,
+>>>>>>> 2090a59 (new changes)
   UserRound,
   UsersRound,
 } from "lucide-react";
@@ -30,6 +35,10 @@ type Message = {
 
 type MessageReply = {
   id: number;
+<<<<<<< HEAD
+=======
+  contactMessageId?: number | null;
+>>>>>>> 2090a59 (new changes)
   customerName: string;
   customerContact: string;
   message: string;
@@ -64,9 +73,26 @@ function getContact(msg: Message) {
   return msg.contact || msg.phone || msg.email || "";
 }
 
+<<<<<<< HEAD
 export default function MessagesPage() {
   const searchId = useId();
   const replyId = useId();
+=======
+async function readJsonSafely(res: Response) {
+  try {
+    return await res.json();
+  } catch {
+    return {};
+  }
+}
+
+export default function MessagesPage() {
+  const searchId = useId();
+  const replyId = useId();
+  const startNameId = useId();
+  const startContactId = useId();
+  const startMessageId = useId();
+>>>>>>> 2090a59 (new changes)
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [replies, setReplies] = useState<MessageReply[]>([]);
@@ -75,21 +101,46 @@ export default function MessagesPage() {
   const [replyText, setReplyText] = useState(defaultReply);
   const [sending, setSending] = useState(false);
 
+<<<<<<< HEAD
   const fetchMessages = async () => {
     const res = await fetch("/api/messages", { cache: "no-store" });
     const data = await res.json();
     setMessages(data.contacts || data.data || []);
+=======
+  const [startForm, setStartForm] = useState({
+    name: "",
+    contact: "",
+    message: "",
+  });
+
+  const fetchMessages = async () => {
+    const res = await fetch("/api/messages", { cache: "no-store" });
+    const data = await res.json();
+    setMessages(data.contacts || data.messages || data.data || []);
+>>>>>>> 2090a59 (new changes)
   };
 
   const fetchReplies = async () => {
     const res = await fetch("/api/messages/replies", { cache: "no-store" });
     const data = await res.json();
+<<<<<<< HEAD
     setReplies(data.replies || []);
   };
 
   useEffect(() => {
     fetchMessages();
     fetchReplies();
+=======
+    setReplies(data.replies || data.data || []);
+  };
+
+  const refreshData = async () => {
+    await Promise.all([fetchMessages(), fetchReplies()]);
+  };
+
+  useEffect(() => {
+    refreshData();
+>>>>>>> 2090a59 (new changes)
   }, []);
 
   const groupedMessages = useMemo<MessageGroup[]>(() => {
@@ -123,12 +174,34 @@ export default function MessagesPage() {
       }
     });
 
+<<<<<<< HEAD
+=======
+    replies.forEach((reply) => {
+      const key = `${reply.customerName || "Customer"}-${
+        reply.customerContact || reply.id
+      }`;
+
+      if (!map.has(key)) {
+        map.set(key, {
+          key,
+          name: reply.customerName || "Customer",
+          contact: reply.customerContact,
+          messages: [],
+        });
+      }
+    });
+
+>>>>>>> 2090a59 (new changes)
     return Array.from(map.values()).sort((a, b) => {
       const aTime = new Date(a.latestMessage?.createdAt || 0).getTime();
       const bTime = new Date(b.latestMessage?.createdAt || 0).getTime();
       return bTime - aTime;
     });
+<<<<<<< HEAD
   }, [messages]);
+=======
+  }, [messages, replies]);
+>>>>>>> 2090a59 (new changes)
 
   const filteredGroups = useMemo(() => {
     const term = search.toLowerCase().trim();
@@ -156,20 +229,33 @@ export default function MessagesPage() {
   );
 
   const canReplyByEmail = isEmail(activeContact);
+<<<<<<< HEAD
   const canReplyByWhatsApp = Boolean(cleanPhone(activeContact)) && !canReplyByEmail;
+=======
+  const canReplyByWhatsApp =
+    Boolean(cleanPhone(activeContact)) && !canReplyByEmail;
+>>>>>>> 2090a59 (new changes)
 
   const sendToDashboard = async () => {
     if (!activeGroup || !replyText.trim()) return;
 
     setSending(true);
 
+<<<<<<< HEAD
     await fetch("/api/messages/replies", {
+=======
+    const res = await fetch("/api/messages/replies", {
+>>>>>>> 2090a59 (new changes)
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+<<<<<<< HEAD
         contactMessageId: activeGroup.latestMessage?.id,
+=======
+        contactMessageId: activeGroup.latestMessage?.id || null,
+>>>>>>> 2090a59 (new changes)
         customerName: activeGroup.name,
         customerContact: activeContact,
         message: replyText,
@@ -177,11 +263,101 @@ export default function MessagesPage() {
       }),
     });
 
+<<<<<<< HEAD
     setReplyText(defaultReply);
     await fetchReplies();
     setSending(false);
   };
 
+=======
+    const data = await readJsonSafely(res);
+
+    if (!res.ok) {
+      alert(data.error || "Failed to send reply");
+      setSending(false);
+      return;
+    }
+
+    setReplyText(defaultReply);
+    await refreshData();
+    setSending(false);
+  };
+
+  const startConversation = async () => {
+    if (!startForm.name.trim() || !startForm.contact.trim() || !startForm.message.trim()) {
+      alert("Name, contact and message are required");
+      return;
+    }
+
+    setSending(true);
+
+    const res = await fetch("/api/messages/replies", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        contactMessageId: null,
+        customerName: startForm.name,
+        customerContact: startForm.contact,
+        message: startForm.message,
+        channel: "DASHBOARD",
+      }),
+    });
+
+    const data = await readJsonSafely(res);
+
+    if (!res.ok) {
+      alert(data.error || "Failed to start conversation");
+      setSending(false);
+      return;
+    }
+
+    setStartForm({
+      name: "",
+      contact: "",
+      message: "",
+    });
+
+    await refreshData();
+    setSending(false);
+  };
+
+  const deleteMessage = async (id: number) => {
+    if (!window.confirm("Delete this customer message?")) return;
+
+    const res = await fetch(`/api/messages?id=${id}`, {
+      method: "DELETE",
+    });
+
+    const data = await readJsonSafely(res);
+
+    if (!res.ok) {
+      alert(data.error || "Failed to delete message");
+      return;
+    }
+
+    await refreshData();
+  };
+
+  const deleteReply = async (id: number) => {
+    if (!window.confirm("Delete this admin message?")) return;
+
+    const res = await fetch(`/api/messages/replies?id=${id}`, {
+      method: "DELETE",
+    });
+
+    const data = await readJsonSafely(res);
+
+    if (!res.ok) {
+      alert(data.error || "Failed to delete reply");
+      return;
+    }
+
+    await refreshData();
+  };
+
+>>>>>>> 2090a59 (new changes)
   const openWhatsAppReply = () => {
     const phone = cleanPhone(activeContact);
     if (!phone) return;
@@ -219,7 +395,11 @@ export default function MessagesPage() {
         </div>
 
         <span className={styles.status}>
+<<<<<<< HEAD
           {filteredGroups.length} Customers • {messages.length} Messages
+=======
+          {filteredGroups.length} Customers - {messages.length} Messages
+>>>>>>> 2090a59 (new changes)
         </span>
       </div>
 
@@ -261,7 +441,11 @@ export default function MessagesPage() {
                   <span>
                     <strong>{group.name}</strong>
                     <small>{group.contact || "No contact"}</small>
+<<<<<<< HEAD
                     <small>{group.messages.length} messages</small>
+=======
+                    <small>{group.messages.length} customer messages</small>
+>>>>>>> 2090a59 (new changes)
                   </span>
                 </button>
               );
@@ -309,6 +493,18 @@ export default function MessagesPage() {
                         <CalendarDays size={14} />
                         {new Date(msg.createdAt).toLocaleString()}
                       </small>
+<<<<<<< HEAD
+=======
+
+                      <button
+                        className={`${styles.iconAction} ${styles.dangerAction}`}
+                        type="button"
+                        onClick={() => deleteMessage(msg.id)}
+                        title="Delete customer message"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+>>>>>>> 2090a59 (new changes)
                     </article>
                   ))}
 
@@ -318,9 +514,24 @@ export default function MessagesPage() {
 
                     <small className={styles.metaLine}>
                       <Send size={14} />
+<<<<<<< HEAD
                       Sent to customer dashboard •{" "}
                       {new Date(reply.createdAt).toLocaleString()}
                     </small>
+=======
+                      Sent to customer dashboard -{" "}
+                      {new Date(reply.createdAt).toLocaleString()}
+                    </small>
+
+                    <button
+                      className={`${styles.iconAction} ${styles.dangerAction}`}
+                      type="button"
+                      onClick={() => deleteReply(reply.id)}
+                      title="Delete admin message"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+>>>>>>> 2090a59 (new changes)
                   </article>
                 ))}
               </div>
@@ -332,6 +543,63 @@ export default function MessagesPage() {
 
         <aside className={styles.card}>
           <h2>
+<<<<<<< HEAD
+=======
+            <UserPlus size={22} /> Start Conversation
+          </h2>
+
+          <label className={styles.fieldLabel} htmlFor={startNameId}>
+            <UserRound size={14} /> Customer name
+          </label>
+          <input
+            id={startNameId}
+            className={styles.input}
+            placeholder="Customer name"
+            value={startForm.name}
+            onChange={(e) =>
+              setStartForm({ ...startForm, name: e.target.value })
+            }
+          />
+
+          <label className={styles.fieldLabel} htmlFor={startContactId}>
+            <Phone size={14} /> Phone or email
+          </label>
+          <input
+            id={startContactId}
+            className={styles.input}
+            placeholder="Phone number or email"
+            value={startForm.contact}
+            onChange={(e) =>
+              setStartForm({ ...startForm, contact: e.target.value })
+            }
+          />
+
+          <label className={styles.fieldLabel} htmlFor={startMessageId}>
+            <MessageCircle size={14} /> Message
+          </label>
+          <textarea
+            id={startMessageId}
+            className={styles.input}
+            rows={5}
+            placeholder="Start a conversation..."
+            value={startForm.message}
+            onChange={(e) =>
+              setStartForm({ ...startForm, message: e.target.value })
+            }
+          />
+
+          <button
+            className={styles.primaryBtn}
+            type="button"
+            onClick={startConversation}
+            disabled={sending}
+          >
+            <Send size={17} />
+            Start Conversation
+          </button>
+
+          <h2>
+>>>>>>> 2090a59 (new changes)
             <Send size={22} /> Reply Direct
           </h2>
 
@@ -344,7 +612,11 @@ export default function MessagesPage() {
               <textarea
                 id={replyId}
                 className={styles.input}
+<<<<<<< HEAD
                 rows={9}
+=======
+                rows={7}
+>>>>>>> 2090a59 (new changes)
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
               />
@@ -357,7 +629,11 @@ export default function MessagesPage() {
                   disabled={sending || !replyText.trim()}
                 >
                   <Send size={17} />
+<<<<<<< HEAD
                   {sending ? "Sending..." : "Send to Dashboard"}
+=======
+                  {sending ? "Sending..." : "Send"}
+>>>>>>> 2090a59 (new changes)
                 </button>
 
                 <button
