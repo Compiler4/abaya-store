@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-import jwt, { JwtPayload } from "jsonwebtoken";
-
-const SECRET = process.env.JWT_SECRET!;
-
-/**
- * ✅ USER PAYLOAD TYPE (IMPORTANT)
- */
-export type UserPayload = JwtPayload & {
-  id: number;
-  email?: string;
-  role: string;
-};
-
-/**
- * 🔐 SIGN TOKEN
- */
-export function signToken(user: UserPayload) {
-=======
 import jwt, { type JwtPayload } from "jsonwebtoken";
 
 const TOKEN_ISSUER = "rify-luxe-abaya";
@@ -55,25 +36,12 @@ export function assertAuthConfigured() {
 }
 
 export function signToken(user: Pick<UserPayload, "id" | "email" | "role">) {
->>>>>>> 2090a59 (new changes)
   return jwt.sign(
     {
       id: user.id,
       email: user.email,
       role: user.role,
     },
-<<<<<<< HEAD
-    SECRET,
-    { expiresIn: "1d" }
-  );
-}
-
-/**
- * 🔍 VERIFY TOKEN (TYPE SAFE)
- */
-export function verifyToken(token: string): UserPayload {
-  return jwt.verify(token, SECRET) as UserPayload;
-=======
     getJwtSecret(),
     {
       algorithm: "HS256",
@@ -90,5 +58,4 @@ export function verifyToken(token: string): UserPayload {
     audience: TOKEN_AUDIENCE,
     issuer: TOKEN_ISSUER,
   }) as UserPayload;
->>>>>>> 2090a59 (new changes)
 }

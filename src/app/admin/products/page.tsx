@@ -5,10 +5,7 @@ import {
   DollarSign,
   Grid3X3,
   ImagePlus,
-<<<<<<< HEAD
-=======
   Images,
->>>>>>> 2090a59 (new changes)
   Layers,
   List,
   PackagePlus,
@@ -26,9 +23,6 @@ type Product = {
   category: string;
   price: number;
   image: string;
-<<<<<<< HEAD
-  stock?: number;
-=======
   description: string;
   stock?: number;
   sizes?: string[];
@@ -49,7 +43,6 @@ type GalleryItem = {
 type ApiResponse = {
   error?: string;
   success?: boolean;
->>>>>>> 2090a59 (new changes)
 };
 
 export default function ProductsPage() {
@@ -57,22 +50,15 @@ export default function ProductsPage() {
   const categoryId = useId();
   const priceId = useId();
   const stockId = useId();
-<<<<<<< HEAD
-=======
   const descriptionId = useId();
   const sizesId = useId();
   const colorsId = useId();
->>>>>>> 2090a59 (new changes)
   const imageId = useId();
   const searchId = useId();
 
   const [products, setProducts] = useState<Product[]>([]);
-<<<<<<< HEAD
-  const [view, setView] = useState<"grid" | "table">("grid");
-=======
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [view, setView] = useState<"grid" | "table">("table");
->>>>>>> 2090a59 (new changes)
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
 
@@ -81,19 +67,6 @@ export default function ProductsPage() {
     category: "",
     price: "",
     stock: "",
-<<<<<<< HEAD
-    image: null as File | null,
-  });
-
-  const fetchProducts = async () => {
-    const res = await fetch("/api/products", { cache: "no-store" });
-    const data = await res.json();
-    setProducts(Array.isArray(data) ? data : data.products || data.data || []);
-  };
-
-  useEffect(() => {
-    fetchProducts();
-=======
     description: "",
     sizes: "",
     colors: "",
@@ -136,7 +109,6 @@ export default function ProductsPage() {
 
   useEffect(() => {
     fetchData();
->>>>>>> 2090a59 (new changes)
   }, []);
 
   const filteredProducts = useMemo(() => {
@@ -148,18 +120,13 @@ export default function ProductsPage() {
       return (
         product.name?.toLowerCase().includes(term) ||
         product.category?.toLowerCase().includes(term) ||
-<<<<<<< HEAD
-=======
         product.description?.toLowerCase().includes(term) ||
->>>>>>> 2090a59 (new changes)
         String(product.price || "").includes(term) ||
         String(product.stock || "").includes(term)
       );
     });
   }, [products, search]);
 
-<<<<<<< HEAD
-=======
   const splitValues = (value: string) => {
     return value
       .split(",")
@@ -167,38 +134,10 @@ export default function ProductsPage() {
       .filter(Boolean);
   };
 
->>>>>>> 2090a59 (new changes)
   const addProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-<<<<<<< HEAD
-    const body = new FormData();
-    body.append("name", form.name);
-    body.append("category", form.category);
-    body.append("price", form.price);
-    body.append("stock", form.stock);
-
-    if (form.image) {
-      body.append("image", form.image);
-    }
-
-    await fetch("/api/products", {
-      method: "POST",
-      body,
-    });
-
-    setForm({
-      name: "",
-      category: "",
-      price: "",
-      stock: "",
-      image: null,
-    });
-
-    await fetchProducts();
-    setLoading(false);
-=======
     try {
       const body = new FormData();
 
@@ -250,7 +189,6 @@ export default function ProductsPage() {
     } finally {
       setLoading(false);
     }
->>>>>>> 2090a59 (new changes)
   };
 
   const deleteProduct = async (id: string | number) => {
@@ -260,13 +198,6 @@ export default function ProductsPage() {
       return;
     }
 
-<<<<<<< HEAD
-    await fetch(`/api/products/delete/${id}`, {
-      method: "DELETE",
-    });
-
-    await fetchProducts();
-=======
     try {
       const res = await fetch(`/api/products/${id}`, {
         method: "DELETE",
@@ -284,7 +215,6 @@ export default function ProductsPage() {
       console.error("DELETE PRODUCT CLIENT ERROR:", error);
       alert("Failed to delete product");
     }
->>>>>>> 2090a59 (new changes)
   };
 
   return (
@@ -349,10 +279,7 @@ export default function ProductsPage() {
             id={priceId}
             className={styles.input}
             type="number"
-<<<<<<< HEAD
-=======
             min="0"
->>>>>>> 2090a59 (new changes)
             placeholder="Price"
             value={form.price}
             onChange={(e) => setForm({ ...form, price: e.target.value })}
@@ -366,19 +293,12 @@ export default function ProductsPage() {
             id={stockId}
             className={styles.input}
             type="number"
-<<<<<<< HEAD
-=======
             min="0"
->>>>>>> 2090a59 (new changes)
             placeholder="Stock"
             value={form.stock}
             onChange={(e) => setForm({ ...form, stock: e.target.value })}
           />
 
-<<<<<<< HEAD
-          <label className={styles.fieldLabel} htmlFor={imageId}>
-            <ImagePlus size={14} /> Product photo
-=======
           <label className={styles.fieldLabel} htmlFor={descriptionId}>
             <Layers size={14} /> Description
           </label>
@@ -417,7 +337,6 @@ export default function ProductsPage() {
 
           <label className={styles.fieldLabel} htmlFor={imageId}>
             <ImagePlus size={14} /> Upload product photo
->>>>>>> 2090a59 (new changes)
           </label>
           <input
             id={imageId}
@@ -425,17 +344,12 @@ export default function ProductsPage() {
             type="file"
             accept="image/*"
             onChange={(e) =>
-<<<<<<< HEAD
-              setForm({ ...form, image: e.target.files?.[0] || null })
-            }
-=======
               setForm({
                 ...form,
                 image: e.target.files?.[0] || null,
               })
             }
             required
->>>>>>> 2090a59 (new changes)
           />
 
           <button className={styles.primaryBtn} disabled={loading}>
@@ -447,11 +361,7 @@ export default function ProductsPage() {
         <div className={styles.card}>
           <div className={styles.rowBetween}>
             <h2>
-<<<<<<< HEAD
-              <Boxes size={22} /> All Products
-=======
               <Boxes size={22} /> Added Products
->>>>>>> 2090a59 (new changes)
             </h2>
 
             <span className={styles.status}>
@@ -465,11 +375,7 @@ export default function ProductsPage() {
           <input
             id={searchId}
             className={styles.input}
-<<<<<<< HEAD
-            placeholder="Search by name, category, price, or stock..."
-=======
             placeholder="Search by name, category, price, stock, or description..."
->>>>>>> 2090a59 (new changes)
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -490,11 +396,8 @@ export default function ProductsPage() {
                     <Layers size={14} /> Stock: {p.stock || 0}
                   </p>
 
-<<<<<<< HEAD
-=======
                   <p>{p.description}</p>
 
->>>>>>> 2090a59 (new changes)
                   <strong>{Number(p.price || 0).toLocaleString()} TZS</strong>
 
                   <button
@@ -509,62 +412,6 @@ export default function ProductsPage() {
               ))}
 
               {filteredProducts.length === 0 && (
-<<<<<<< HEAD
-                <p>No products found. Try another search or add your first product.</p>
-              )}
-            </div>
-          ) : (
-            <div className={styles.tableWrap}>
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>No.</th>
-                    <th>Photo</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Stock</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {filteredProducts.map((p, index) => (
-                    <tr key={p.id}>
-                      <td>{index + 1}</td>
-                      <td>
-                        <img
-                          className={styles.tableImg}
-                          src={p.image}
-                          alt={p.name}
-                        />
-                      </td>
-                      <td>{p.name}</td>
-                      <td>{p.category || "No category"}</td>
-                      <td>{Number(p.price || 0).toLocaleString()} TZS</td>
-                      <td>{p.stock || 0}</td>
-                      <td>
-                        <button
-                          className={`${styles.iconAction} ${styles.dangerAction}`}
-                          onClick={() => deleteProduct(p.id)}
-                          title="Delete product"
-                          type="button"
-                        >
-                          <Trash2 size={18} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-
-                  {filteredProducts.length === 0 && (
-                    <tr>
-                      <td colSpan={7}>No products found.</td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-=======
                 <p>
                   No products found. Try another search or add your first
                   product.
@@ -676,7 +523,6 @@ export default function ProductsPage() {
                 </table>
               </div>
             </>
->>>>>>> 2090a59 (new changes)
           )}
         </div>
       </section>

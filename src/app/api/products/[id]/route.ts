@@ -18,35 +18,6 @@ function parseProductId(id: string) {
 }
 
 export async function GET(_req: NextRequest, context: RouteContext) {
-<<<<<<< HEAD
-  const { id } = await context.params;
-  const productId = parseProductId(id);
-
-  if (productId === null) {
-    return NextResponse.json({ error: "Invalid product id" }, { status: 400 });
-  }
-
-  const product = await prisma.product.findUnique({
-    where: { id: productId },
-  });
-
-  return NextResponse.json(product);
-}
-
-export async function DELETE(_req: NextRequest, context: RouteContext) {
-  const { id } = await context.params;
-  const productId = parseProductId(id);
-
-  if (productId === null) {
-    return NextResponse.json({ error: "Invalid product id" }, { status: 400 });
-  }
-
-  await prisma.product.delete({
-    where: { id: productId },
-  });
-
-  return NextResponse.json({ success: true });
-=======
   try {
     const { id } = await context.params;
     const productId = parseProductId(id);
@@ -118,5 +89,4 @@ export async function DELETE(_req: NextRequest, context: RouteContext) {
       { status: 500 }
     );
   }
->>>>>>> 2090a59 (new changes)
 }

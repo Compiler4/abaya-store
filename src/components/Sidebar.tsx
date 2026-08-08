@@ -27,10 +27,7 @@ const menuItems = [
 
 export default function Sidebar({ setPage, activePage }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
-<<<<<<< HEAD
-=======
   const [mobileOpen, setMobileOpen] = useState(false);
->>>>>>> 2090a59 (new changes)
   const [image, setImage] = useState<string | null>(null);
 
   const router = useRouter();
@@ -58,8 +55,6 @@ export default function Sidebar({ setPage, activePage }: SidebarProps) {
     };
   }, []);
 
-<<<<<<< HEAD
-=======
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
 
@@ -68,7 +63,6 @@ export default function Sidebar({ setPage, activePage }: SidebarProps) {
     };
   }, [mobileOpen]);
 
->>>>>>> 2090a59 (new changes)
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
@@ -80,14 +74,11 @@ export default function Sidebar({ setPage, activePage }: SidebarProps) {
     localStorage.setItem(PROFILE_PHOTO_KEY, url);
   };
 
-<<<<<<< HEAD
-=======
   const handleMenuClick = (page: string) => {
     setPage(page);
     setMobileOpen(false);
   };
 
->>>>>>> 2090a59 (new changes)
   const handleLogout = () => {
     const savedProfilePhoto = localStorage.getItem(PROFILE_PHOTO_KEY);
 
@@ -101,54 +92,6 @@ export default function Sidebar({ setPage, activePage }: SidebarProps) {
   };
 
   return (
-<<<<<<< HEAD
-    <div className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""}`}>
-      <div className={styles.top}>
-        <label className={styles.profile}>
-          <input type="file" onChange={handleImageUpload} hidden />
-          <img src={image || "/default-avatar.png"} alt="Admin profile" />
-        </label>
-
-        {!collapsed && (
-          <div className={styles.titleBox}>
-            <h2>Rify Admin</h2>
-            <p>E-commerce Control</p>
-          </div>
-        )}
-
-        <button
-          className={styles.toggle}
-          onClick={() => setCollapsed((v) => !v)}
-          type="button"
-          aria-label="Toggle sidebar"
-          title="Toggle sidebar"
-        >
-          ☰
-        </button>
-      </div>
-
-      <nav className={styles.menu}>
-        {menuItems.map((item) => (
-          <button
-            key={item.name}
-            className={activePage === item.name ? styles.active : ""}
-            onClick={() => setPage(item.name)}
-            type="button"
-            aria-label={item.label}
-            title={item.label}
-          >
-            <span className={styles.icon}>{item.icon}</span>
-            {!collapsed && <span>{item.label}</span>}
-          </button>
-        ))}
-      </nav>
-
-      <button className={styles.logout} onClick={handleLogout} type="button">
-        <span>🚪</span>
-        {!collapsed && <span>Logout</span>}
-      </button>
-    </div>
-=======
     <>
       <button
         className={styles.mobileToggle}
@@ -230,6 +173,5 @@ export default function Sidebar({ setPage, activePage }: SidebarProps) {
         </button>
       </aside>
     </>
->>>>>>> 2090a59 (new changes)
   );
 }

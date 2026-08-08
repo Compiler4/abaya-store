@@ -22,10 +22,7 @@ import {
   LogOut,
   Mail,
   MapPin,
-<<<<<<< HEAD
-=======
   Menu,
->>>>>>> 2090a59 (new changes)
   MessageCircle,
   MessagesSquare,
   Package,
@@ -133,11 +130,6 @@ function saveIds(key: string, ids: string[]) {
   localStorage.setItem(key, JSON.stringify(Array.from(new Set(ids))));
 }
 
-<<<<<<< HEAD
-function normalizeList(data: any): Product[] {
-  if (Array.isArray(data)) return data;
-  return data?.products || data?.gallery || data?.data || [];
-=======
 function normalizeList(data: unknown): Product[] {
   if (Array.isArray(data)) return data as Product[];
   if (!data || typeof data !== "object") return [];
@@ -146,7 +138,6 @@ function normalizeList(data: unknown): Product[] {
   const list = record.products || record.gallery || record.data;
 
   return Array.isArray(list) ? (list as Product[]) : [];
->>>>>>> 2090a59 (new changes)
 }
 
 function inferCategory(product: Product) {
@@ -164,13 +155,9 @@ function inferCategory(product: Product) {
     return matched?.name || realCategory;
   }
 
-<<<<<<< HEAD
-  const text = `${product.name || ""} ${product.description || ""}`.toLowerCase();
-=======
   const text = `${product.name || ""} ${
     product.description || ""
   }`.toLowerCase();
->>>>>>> 2090a59 (new changes)
 
   return (
     categories.find(
@@ -228,10 +215,7 @@ export default function Dashboard() {
 
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [chatOpen, setChatOpen] = useState(false);
-<<<<<<< HEAD
-=======
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
->>>>>>> 2090a59 (new changes)
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -245,11 +229,7 @@ export default function Dashboard() {
       id: 1,
       sender: "bot",
       text: `Hello. I am Rify Luxe support bot. Ask me about products, orders, delivery, payment, sizes, or admin contact. For urgent help call or WhatsApp +${ADMIN_PHONE}.`,
-<<<<<<< HEAD
-      time: Date.now(),
-=======
       time: 0,
->>>>>>> 2090a59 (new changes)
     },
   ]);
 
@@ -279,49 +259,14 @@ export default function Dashboard() {
   });
   const [placingOrder, setPlacingOrder] = useState(false);
 
-<<<<<<< HEAD
-  const [replyNotifications, setReplyNotifications] = useState<ReplyNotification[]>([]);
-=======
   const [replyNotifications, setReplyNotifications] = useState<
     ReplyNotification[]
   >([]);
->>>>>>> 2090a59 (new changes)
   const [deletedReplyIds, setDeletedReplyIds] = useState<string[]>([]);
   const [readReplyIds, setReadReplyIds] = useState<string[]>([]);
   const [openNotifications, setOpenNotifications] = useState(false);
 
   useEffect(() => {
-<<<<<<< HEAD
-    const savedUser = localStorage.getItem("user");
-
-    if (savedUser) {
-      try {
-        const user = JSON.parse(savedUser);
-
-        const loadedProfile = {
-          id: Number(user.id || 0),
-          name: user.name || user.email?.split("@")[0] || "Logged User",
-          email: user.email || "user@example.com",
-          phone: user.phone || "",
-          photo: user.image || user.photo || "",
-          location: user.address || user.location || "",
-        };
-
-        setProfile(loadedProfile);
-        setOrderForm({
-          name: loadedProfile.name,
-          phone: loadedProfile.phone,
-          location: loadedProfile.location,
-          address: loadedProfile.location,
-        });
-      } catch {
-        // Keep default profile.
-      }
-    }
-
-    setDeletedReplyIds(loadSavedIds(DELETED_REPLIES_KEY));
-    setReadReplyIds(loadSavedIds(READ_REPLIES_KEY));
-=======
     const loadStoredDashboardState = () => {
       const savedUser = localStorage.getItem("user");
 
@@ -356,7 +301,6 @@ export default function Dashboard() {
 
     const timeout = window.setTimeout(loadStoredDashboardState, 0);
     return () => window.clearTimeout(timeout);
->>>>>>> 2090a59 (new changes)
   }, []);
 
   useEffect(() => {
@@ -394,18 +338,12 @@ export default function Dashboard() {
       try {
         const responses = await Promise.all(
           contacts.map((contact) =>
-<<<<<<< HEAD
-            fetch(`/api/messages/replies?contact=${encodeURIComponent(contact)}`, {
-              cache: "no-store",
-            })
-=======
             fetch(
               `/api/messages/replies?contact=${encodeURIComponent(contact)}`,
               {
                 cache: "no-store",
               }
             )
->>>>>>> 2090a59 (new changes)
           )
         );
 
@@ -474,8 +412,6 @@ export default function Dashboard() {
   const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
   const paginated = filtered.slice((page - 1) * perPage, page * perPage);
   const avatar = profile.name.charAt(0).toUpperCase();
-<<<<<<< HEAD
-=======
   const featuredProducts = products.slice(0, 4);
   const cartPreview = cart.slice(0, 3);
   const latestOrder = orders[0];
@@ -498,7 +434,6 @@ export default function Dashboard() {
     setChatOpen(true);
     setMobileNavOpen(false);
   };
->>>>>>> 2090a59 (new changes)
 
   const markReplyAsRead = (id: string) => {
     setReadReplyIds((prev) => {
@@ -653,11 +588,7 @@ export default function Dashboard() {
 
       setCart([]);
       setCheckoutOpen(false);
-<<<<<<< HEAD
-      setActiveTab("orders");
-=======
       openTab("orders");
->>>>>>> 2090a59 (new changes)
     } catch (error) {
       console.error("Order failed:", error);
     } finally {
@@ -707,15 +638,10 @@ export default function Dashboard() {
       <header className={styles.header}>
         <button
           className={styles.profile}
-<<<<<<< HEAD
-          onClick={() => setActiveTab("profile")}
-          type="button"
-=======
           onClick={() => openTab("profile")}
           type="button"
           aria-label="Open profile"
           title="Open profile"
->>>>>>> 2090a59 (new changes)
         >
           {profile.photo ? (
             <img
@@ -742,15 +668,6 @@ export default function Dashboard() {
           </span>
         </button>
 
-<<<<<<< HEAD
-        <nav className={styles.nav}>
-          <Nav icon={<Home />} label="Home" active={activeTab === "home"} onClick={() => setActiveTab("home")} />
-          <Nav icon={<MessageCircle />} label="Chat" active={chatOpen} onClick={() => setChatOpen(true)} />
-          <Nav icon={<ShoppingCart />} label={`Cart (${cart.length})`} active={activeTab === "cart"} onClick={() => setActiveTab("cart")} />
-          <Nav icon={<ClipboardList />} label="Orders" active={activeTab === "orders"} onClick={() => setActiveTab("orders")} />
-          <Nav icon={<Package />} label="Products" active={activeTab === "products"} onClick={() => setActiveTab("products")} />
-          <Nav icon={<User />} label="Profile" active={activeTab === "profile"} onClick={() => setActiveTab("profile")} />
-=======
         <button
           className={styles.mobileMenuBtn}
           onClick={() => setMobileNavOpen((prev) => !prev)}
@@ -815,7 +732,6 @@ export default function Dashboard() {
             active={activeTab === "profile"}
             onClick={() => openTab("profile")}
           />
->>>>>>> 2090a59 (new changes)
         </nav>
 
         <div className={styles.rightActions}>
@@ -941,22 +857,6 @@ export default function Dashboard() {
             transition={{ duration: 0.25 }}
           >
             {activeTab === "home" && (
-<<<<<<< HEAD
-              <div className={styles.homeGrid}>
-                <div>
-                  <p className={styles.kicker}>
-                    <Sparkles size={14} />
-                    Dashboard
-                  </p>
-                  <h2>
-                    <Home size={28} />
-                    Welcome back, {profile.name}
-                  </h2>
-                  <p className={styles.muted}>
-                    Shop products, chat with support, place orders, and update your profile.
-                  </p>
-                </div>
-=======
               <div className={styles.customerDashboard}>
                 <section className={styles.dashboardHero}>
                   <div className={styles.heroCopy}>
@@ -1005,14 +905,11 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </section>
->>>>>>> 2090a59 (new changes)
 
                 <div className={styles.statsGrid}>
                   <Stat icon={<Boxes />} label="Products" value={products.length} />
                   <Stat icon={<ShoppingCart />} label="Cart Items" value={cart.length} />
                   <Stat icon={<ReceiptText />} label="Orders" value={orders.length} />
-<<<<<<< HEAD
-=======
                   <Stat icon={<MessagesSquare />} label="Admin Replies" value={unreadReplyCount} />
                 </div>
 
@@ -1174,7 +1071,6 @@ export default function Dashboard() {
                       )}
                     </div>
                   </section>
->>>>>>> 2090a59 (new changes)
                 </div>
               </div>
             )}
@@ -1247,11 +1143,8 @@ export default function Dashboard() {
                         className={styles.imageButton}
                         onClick={() => setSelectedImage(p.image)}
                         type="button"
-<<<<<<< HEAD
-=======
                         aria-label={`Preview ${p.name}`}
                         title={`Preview ${p.name}`}
->>>>>>> 2090a59 (new changes)
                       >
                         <img src={p.image} alt={p.name} />
                         <span className={styles.imageHint}>
@@ -1291,11 +1184,8 @@ export default function Dashboard() {
                     onClick={() => page > 1 && setPage((prev) => prev - 1)}
                     disabled={page === 1}
                     type="button"
-<<<<<<< HEAD
-=======
                     aria-label="Previous page"
                     title="Previous page"
->>>>>>> 2090a59 (new changes)
                   >
                     <ChevronLeft />
                   </button>
@@ -1311,11 +1201,8 @@ export default function Dashboard() {
                     }
                     disabled={page === totalPages}
                     type="button"
-<<<<<<< HEAD
-=======
                     aria-label="Next page"
                     title="Next page"
->>>>>>> 2090a59 (new changes)
                   >
                     <ChevronRight />
                   </button>
@@ -1348,15 +1235,11 @@ export default function Dashboard() {
 
                 {cart.map((c, i) => (
                   <motion.div key={`${c.id}-${i}`} className={styles.cartItem}>
-<<<<<<< HEAD
-                    <img src={c.image} alt={c.name} className={styles.cartImg} />
-=======
                     <img
                       src={c.image}
                       alt={c.name}
                       className={styles.cartImg}
                     />
->>>>>>> 2090a59 (new changes)
 
                     <div className={styles.flexGrow}>
                       <p>
@@ -1371,11 +1254,6 @@ export default function Dashboard() {
 
                     <button
                       onClick={() =>
-<<<<<<< HEAD
-                        setCart((prev) => prev.filter((item) => item.id !== c.id))
-                      }
-                      type="button"
-=======
                         setCart((prev) =>
                           prev.filter((item) => item.id !== c.id)
                         )
@@ -1383,7 +1261,6 @@ export default function Dashboard() {
                       type="button"
                       aria-label={`Remove ${c.name} from cart`}
                       title={`Remove ${c.name} from cart`}
->>>>>>> 2090a59 (new changes)
                     >
                       <Trash size={16} />
                     </button>
@@ -1442,14 +1319,10 @@ export default function Dashboard() {
                       className={styles.input}
                       value={orderForm.location}
                       onChange={(e) =>
-<<<<<<< HEAD
-                        setOrderForm({ ...orderForm, location: e.target.value })
-=======
                         setOrderForm({
                           ...orderForm,
                           location: e.target.value,
                         })
->>>>>>> 2090a59 (new changes)
                       }
                     />
 
@@ -1462,14 +1335,10 @@ export default function Dashboard() {
                       className={styles.input}
                       value={orderForm.address}
                       onChange={(e) =>
-<<<<<<< HEAD
-                        setOrderForm({ ...orderForm, address: e.target.value })
-=======
                         setOrderForm({
                           ...orderForm,
                           address: e.target.value,
                         })
->>>>>>> 2090a59 (new changes)
                       }
                     />
 
@@ -1480,13 +1349,9 @@ export default function Dashboard() {
                       type="button"
                     >
                       <Send size={16} />
-<<<<<<< HEAD
-                      {placingOrder ? "Sending Order..." : "Send Order To Admin"}
-=======
                       {placingOrder
                         ? "Sending Order..."
                         : "Send Order To Admin"}
->>>>>>> 2090a59 (new changes)
                     </button>
                   </div>
                 )}
@@ -1516,29 +1381,15 @@ export default function Dashboard() {
                   <div key={order.id} className={styles.orderCard}>
                     <div className={styles.orderHeader}>
                       <strong>Order #{order.id}</strong>
-<<<<<<< HEAD
-                      <span className={`${styles.status} ${styles[order.status]}`}>
-=======
                       <span
                         className={`${styles.status} ${
                           styles[order.status]
                         }`}
                       >
->>>>>>> 2090a59 (new changes)
                         {order.status}
                       </span>
                     </div>
 
-<<<<<<< HEAD
-                    <p><strong>Customer:</strong> {order.customer}</p>
-                    <p><strong>Phone:</strong> {order.phone}</p>
-                    <p><strong>Location:</strong> {order.location}</p>
-                    <p><strong>Total:</strong> {order.total.toLocaleString()} TZS</p>
-
-                    <div className={styles.orderItems}>
-                      {order.items.map((item, i) => (
-                        <div key={`${item.id}-${i}`} className={styles.orderItem}>
-=======
                     <p>
                       <strong>Customer:</strong> {order.customer}
                     </p>
@@ -1558,7 +1409,6 @@ export default function Dashboard() {
                           key={`${item.id}-${i}`}
                           className={styles.orderItem}
                         >
->>>>>>> 2090a59 (new changes)
                           <img src={item.image} alt={item.name} />
                           <div>
                             <p>{item.name}</p>
@@ -1616,13 +1466,9 @@ export default function Dashboard() {
                   </b>
                 </label>
 
-<<<<<<< HEAD
-                <label htmlFor="name" className={styles.label}>Name</label>
-=======
                 <label htmlFor="name" className={styles.label}>
                   Name
                 </label>
->>>>>>> 2090a59 (new changes)
                 <input
                   id="name"
                   className={styles.input}
@@ -1632,13 +1478,9 @@ export default function Dashboard() {
                   }
                 />
 
-<<<<<<< HEAD
-                <label htmlFor="email" className={styles.label}>Email</label>
-=======
                 <label htmlFor="email" className={styles.label}>
                   Email
                 </label>
->>>>>>> 2090a59 (new changes)
                 <input
                   id="email"
                   className={styles.input}
@@ -1648,13 +1490,9 @@ export default function Dashboard() {
                   }
                 />
 
-<<<<<<< HEAD
-                <label htmlFor="phone" className={styles.label}>Phone</label>
-=======
                 <label htmlFor="phone" className={styles.label}>
                   Phone
                 </label>
->>>>>>> 2090a59 (new changes)
                 <input
                   id="phone"
                   className={styles.input}
@@ -1664,13 +1502,9 @@ export default function Dashboard() {
                   }
                 />
 
-<<<<<<< HEAD
-                <label htmlFor="location" className={styles.label}>Location</label>
-=======
                 <label htmlFor="location" className={styles.label}>
                   Location
                 </label>
->>>>>>> 2090a59 (new changes)
                 <input
                   id="location"
                   className={styles.input}
@@ -1750,11 +1584,7 @@ export default function Dashboard() {
                   <div className={styles.msgFooter}>
                     <small>
                       <Clock3 size={13} />
-<<<<<<< HEAD
-                      {new Date(m.time).toLocaleTimeString()}
-=======
                       {m.time ? new Date(m.time).toLocaleTimeString() : "Now"}
->>>>>>> 2090a59 (new changes)
                     </small>
 
                     <button
@@ -1770,13 +1600,9 @@ export default function Dashboard() {
               ))}
 
               {botTyping && (
-<<<<<<< HEAD
-                <div className={`${styles.msg} ${styles.botMsg} ${styles.typingMsg}`}>
-=======
                 <div
                   className={`${styles.msg} ${styles.botMsg} ${styles.typingMsg}`}
                 >
->>>>>>> 2090a59 (new changes)
                   <p>
                     <Bot size={15} />
                     Rify bot is typing...
@@ -1848,11 +1674,8 @@ function Nav({
       className={`${styles.iconBtn} ${active ? styles.activeNav : ""}`}
       onClick={onClick}
       type="button"
-<<<<<<< HEAD
-=======
       aria-label={label}
       title={label}
->>>>>>> 2090a59 (new changes)
     >
       {icon}
       <small>{label}</small>

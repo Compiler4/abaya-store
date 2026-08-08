@@ -5,10 +5,7 @@
 .navbar {
     position: sticky;
     top: 0;
-<<<<<<< HEAD
-=======
     width: 100%;
->>>>>>> 2090a59 (new changes)
     background: rgba(0, 0, 0, 0.65);
     -webkit-backdrop-filter: blur(18px);
     backdrop-filter: blur(18px);
@@ -19,10 +16,7 @@
     align-items: center;
     padding: 15px 35px;
     z-index: 1000;
-<<<<<<< HEAD
-=======
     box-sizing: border-box;
->>>>>>> 2090a59 (new changes)
 }
 
 
@@ -34,8 +28,6 @@
     display: flex;
     align-items: center;
     gap: 10px;
-<<<<<<< HEAD
-=======
     min-width: 0;
 }
 
@@ -46,7 +38,6 @@
     object-fit: cover;
     flex-shrink: 0;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.25);
->>>>>>> 2090a59 (new changes)
 }
 
 .logoCircle {
@@ -56,20 +47,14 @@
     background: linear-gradient(45deg, gold, #f5e6a3);
     animation: pulse 3s infinite ease-in-out;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.25);
-<<<<<<< HEAD
-=======
     flex-shrink: 0;
->>>>>>> 2090a59 (new changes)
 }
 
 .brand {
     font-weight: bold;
     letter-spacing: 1px;
     color: white;
-<<<<<<< HEAD
-=======
     white-space: nowrap;
->>>>>>> 2090a59 (new changes)
 }
 
 
@@ -83,12 +68,6 @@
     align-items: center;
 }
 
-<<<<<<< HEAD
-
-/* NAV LINK STYLE */
-
-=======
->>>>>>> 2090a59 (new changes)
 .link {
     display: flex;
     align-items: center;
@@ -100,12 +79,6 @@
     border-radius: 8px;
     transition: all 0.25s ease;
     position: relative;
-<<<<<<< HEAD
-}
-
-
-/* HOVER */
-=======
     white-space: nowrap;
 }
 
@@ -117,7 +90,6 @@
 .close svg {
     flex-shrink: 0;
 }
->>>>>>> 2090a59 (new changes)
 
 .link:hover {
     color: gold;
@@ -125,12 +97,6 @@
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
 }
 
-<<<<<<< HEAD
-
-/* ACTIVE LINK */
-
-=======
->>>>>>> 2090a59 (new changes)
 .active {
     background: rgba(255, 215, 0, 0.1);
     color: gold;
@@ -139,11 +105,7 @@
 
 
 /* =========================
-<<<<<<< HEAD
-   LOGIN BUTTON
-=======
    LOGIN / REGISTER BUTTONS
->>>>>>> 2090a59 (new changes)
 ========================= */
 
 .loginBtn {
@@ -157,17 +119,9 @@
     text-decoration: none;
     transition: all 0.3s ease;
     font-weight: 500;
-<<<<<<< HEAD
-}
-
-
-/* LOGIN HOVER */
-
-=======
     white-space: nowrap;
 }
 
->>>>>>> 2090a59 (new changes)
 .loginBtn:hover {
     transform: scale(1.08);
     box-shadow: 0 0 18px rgba(255, 215, 0, 0.45);
@@ -185,17 +139,9 @@
     text-decoration: none;
     transition: all 0.3s ease;
     font-weight: 500;
-<<<<<<< HEAD
-}
-
-
-/* HOVER EFFECT */
-
-=======
     white-space: nowrap;
 }
 
->>>>>>> 2090a59 (new changes)
 .registerBtn:hover {
     background: rgba(255, 215, 0, 0.1);
     color: gold;
@@ -205,8 +151,6 @@
 
 
 /* =========================
-<<<<<<< HEAD
-=======
    MOBILE MENU BUTTON
 ========================= */
 
@@ -300,7 +244,6 @@
 
 
 /* =========================
->>>>>>> 2090a59 (new changes)
    ANIMATIONS
 ========================= */
 
@@ -321,74 +264,6 @@
 
 
 /* =========================
-<<<<<<< HEAD
-   RESPONSIVE
-========================= */
-
-@media (max-width: 768px) {
-    .links {
-        gap: 10px;
-        font-size: 12px;
-    }
-    .navbar {
-        padding: 12px 18px;
-    }
-}
-
-
-/* 🍔 MOBILE BUTTON */
-
-.menuBtn {
-    display: none;
-    color: white;
-    cursor: pointer;
-}
-
-
-/* 🧊 DRAWER */
-
-.drawer {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 75%;
-    height: 100vh;
-    background: black;
-    color: white;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    transition: 0.4s ease;
-    z-index: 2000;
-}
-
-.drawer a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-
-/* OPEN STATE */
-
-.open {
-    right: 0;
-}
-
-
-/* CLOSE BUTTON */
-
-.close {
-    align-self: flex-end;
-    cursor: pointer;
-}
-
-
-/* 📱 RESPONSIVE */
-
-@media (max-width: 768px) {
-=======
    TABLET
 ========================= */
 
@@ -419,20 +294,10 @@
     .navbar {
         padding: 10px 14px;
     }
->>>>>>> 2090a59 (new changes)
     .links {
         display: none;
     }
     .menuBtn {
-<<<<<<< HEAD
-        display: block;
-    }
-}
-
-.logoImg {
-    border-radius: 50%;
-    object-fit: cover;
-=======
         display: inline-flex;
     }
     .logoImg {
@@ -473,5 +338,4 @@
         width: min(245px, 70vw);
         padding: 16px;
     }
->>>>>>> 2090a59 (new changes)
 }

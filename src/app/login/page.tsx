@@ -1,13 +1,5 @@
 "use client";
 
-<<<<<<< HEAD
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Navbar from "@/components/Navbar";
-import styles from "./login.module.css";
-import { FaEnvelope, FaLock } from "react-icons/fa";
-import toast from "react-hot-toast";
-=======
 import { type FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -29,7 +21,6 @@ import {
 
 import Navbar from "@/components/Navbar";
 import styles from "./login.module.css";
->>>>>>> 2090a59 (new changes)
 
 export default function LoginPage() {
   const router = useRouter();
@@ -37,14 +28,6 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-<<<<<<< HEAD
-
-  const login = async () => {
-    if (loading) return;
-
-    setLoading(true);
-    const toastId = toast.loading("Logging in...");
-=======
   const [showPassword, setShowPassword] = useState(false);
 
   const login = async (event?: FormEvent<HTMLFormElement>) => {
@@ -53,7 +36,6 @@ export default function LoginPage() {
 
     setLoading(true);
     const toastId = toast.loading("Signing in...");
->>>>>>> 2090a59 (new changes)
 
     try {
       const res = await fetch("/api/auth/login", {
@@ -76,22 +58,14 @@ export default function LoginPage() {
 
       localStorage.setItem("user", JSON.stringify(data.user));
 
-<<<<<<< HEAD
-      toast.success("Login successful 🎉", { id: toastId });
-=======
       toast.success("Login successful", { id: toastId });
->>>>>>> 2090a59 (new changes)
 
       if (data.user.role === "ADMIN") {
         router.replace("/admin");
       } else {
         router.replace("/dashboard");
       }
-<<<<<<< HEAD
-    } catch (err) {
-=======
     } catch {
->>>>>>> 2090a59 (new changes)
       toast.error("Server error", { id: toastId });
     }
 
@@ -102,73 +76,6 @@ export default function LoginPage() {
     <div className={styles.page}>
       <Navbar />
 
-<<<<<<< HEAD
-      <div className={styles.container}>
-        <div className={styles.card}>
-          <h1 className={styles.title}>Welcome Back</h1>
-          <p className={styles.subtitle}>Login to continue</p>
-
-          {/* EMAIL */}
-          <label className={styles.label} htmlFor="email">
-            Email
-          </label>
-          <div className={styles.inputBox}>
-            <FaEnvelope className={styles.icon} />
-            <input
-              id="email"
-              className={styles.input}
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              aria-label="Email"
-              autoComplete="email"
-            />
-          </div>
-
-          {/* PASSWORD */}
-          <label className={styles.label} htmlFor="password">
-            Password
-          </label>
-          <div className={styles.inputBox}>
-            <FaLock className={styles.icon} />
-            <input
-              id="password"
-              className={styles.input}
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              aria-label="Password"
-              autoComplete="current-password"
-            />
-          </div>
-
-          {/* BUTTON */}
-          <button
-            className={styles.button}
-            onClick={login}
-            disabled={loading}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-
-          {/* LINK */}
-          <p className={styles.linkText}>
-            Don’t have an account?{" "}
-            <span
-              className={styles.link}
-              onClick={() => router.push("/register")}
-            >
-              Create account
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-=======
       <main className={styles.container}>
         <motion.section
           className={styles.loginShell}
@@ -190,7 +97,7 @@ export default function LoginPage() {
                 <ShoppingBag size={15} />
                 Customer access
               </p>
-              
+              <h1>Elegant shopping, secured for you.</h1>
               <div className={styles.featureStrip}>
                 <span>
                   <PackageCheck size={15} />
@@ -301,4 +208,3 @@ export default function LoginPage() {
     </div>
   );
 }
->>>>>>> 2090a59 (new changes)

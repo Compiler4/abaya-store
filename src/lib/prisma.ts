@@ -4,11 +4,6 @@ const globalForPrisma = globalThis as unknown as {
   prisma?: PrismaClient;
 };
 
-<<<<<<< HEAD
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-=======
 function getDatabaseUrl() {
   const value = process.env.DATABASE_URL?.trim();
 
@@ -36,7 +31,6 @@ export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
     datasourceUrl: getDatabaseUrl(),
->>>>>>> 2090a59 (new changes)
     log: ["error", "warn"],
   });
 

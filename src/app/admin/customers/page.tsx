@@ -7,10 +7,7 @@ import {
   MessageCircle,
   Phone,
   Search,
-<<<<<<< HEAD
-=======
   Trash2,
->>>>>>> 2090a59 (new changes)
   UserRound,
   UsersRound,
 } from "lucide-react";
@@ -28,30 +25,16 @@ type Customer = {
   createdAt?: string;
 };
 
-<<<<<<< HEAD
-=======
 type ApiResponse = {
   error?: string;
   success?: boolean;
 };
 
->>>>>>> 2090a59 (new changes)
 export default function CustomersPage() {
   const searchId = useId();
 
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [search, setSearch] = useState("");
-<<<<<<< HEAD
-
-  useEffect(() => {
-    fetch("/api/contact", { cache: "no-store" })
-      .then((res) => res.json())
-      .then((data) =>
-        setCustomers(
-          Array.isArray(data) ? data : data.contacts || data.data || []
-        )
-      );
-=======
   const [deleting, setDeleting] = useState(false);
 
   const readJsonSafely = async (res: Response): Promise<ApiResponse> => {
@@ -71,7 +54,6 @@ export default function CustomersPage() {
 
   useEffect(() => {
     fetchCustomers();
->>>>>>> 2090a59 (new changes)
   }, []);
 
   const filteredCustomers = useMemo(() => {
@@ -93,8 +75,6 @@ export default function CustomersPage() {
     });
   }, [customers, search]);
 
-<<<<<<< HEAD
-=======
   const deleteCustomer = async (id: string | number) => {
     const confirmed = window.confirm("Delete this customer contact?");
 
@@ -157,7 +137,6 @@ export default function CustomersPage() {
     }
   };
 
->>>>>>> 2090a59 (new changes)
   return (
     <main className={styles.page}>
       <div className={styles.header}>
@@ -168,11 +147,6 @@ export default function CustomersPage() {
           </h1>
         </div>
 
-<<<<<<< HEAD
-        <span className={styles.status}>
-          {filteredCustomers.length} Customers
-        </span>
-=======
         <div className={styles.actionGroup}>
           <span className={styles.status}>
             {filteredCustomers.length} Customers
@@ -188,7 +162,6 @@ export default function CustomersPage() {
             Delete All
           </button>
         </div>
->>>>>>> 2090a59 (new changes)
       </div>
 
       <section className={styles.card}>
@@ -217,9 +190,6 @@ export default function CustomersPage() {
                   {c.name || "Unknown Customer"}
                 </h2>
 
-<<<<<<< HEAD
-                <span className={styles.status}>#{c.id}</span>
-=======
                 <div className={styles.actionGroup}>
                   <span className={styles.status}>#{c.id}</span>
 
@@ -233,7 +203,6 @@ export default function CustomersPage() {
                     <Trash2 size={17} />
                   </button>
                 </div>
->>>>>>> 2090a59 (new changes)
               </div>
 
               <p>
@@ -258,13 +227,9 @@ export default function CustomersPage() {
 
               <small className={styles.metaLine}>
                 <CalendarDays size={14} />
-<<<<<<< HEAD
-                {c.createdAt ? new Date(c.createdAt).toLocaleString() : "Recent"}
-=======
                 {c.createdAt
                   ? new Date(c.createdAt).toLocaleString()
                   : "Recent"}
->>>>>>> 2090a59 (new changes)
               </small>
             </article>
           );

@@ -576,13 +576,9 @@
         border-radius: 18px;
         padding: 16px;
     }
-<<<<<<< HEAD
-    .productGrid,
-=======
     .productGrid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
->>>>>>> 2090a59 (new changes)
     .grid {
         grid-template-columns: 1fr;
     }
@@ -597,8 +593,6 @@
     }
 }
 
-<<<<<<< HEAD
-=======
 
 /* Tablet: 4 products per row */
 
@@ -617,7 +611,6 @@
     }
 }
 
->>>>>>> 2090a59 (new changes)
 .header h1,
 .card h2,
 .formCard h2,
@@ -1062,8 +1055,6 @@
 
 .profilePhotoPicker:hover span {
     transform: scale(1.1) rotate(4deg);
-<<<<<<< HEAD
-=======
 }
 
 
@@ -1392,5 +1383,4 @@
 .messageBubble .iconAction,
 .adminBubble .iconAction {
     margin-top: 10px;
->>>>>>> 2090a59 (new changes)
 }

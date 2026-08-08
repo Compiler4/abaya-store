@@ -2,6 +2,9 @@
     "name": "rify-abaya-store",
     "version": "0.1.0",
     "private": true,
+    "engines": {
+        "node": ">=20.9.0"
+    },
     "scripts": {
         "predev": "prisma generate",
         "dev": "next dev",
@@ -12,6 +15,7 @@
         "lint": "eslint",
         "studio": "prisma studio",
         "db:push": "prisma db push",
+        "db:deploy": "prisma db push",
         "db:seed": "prisma db seed",
         "db:setup": "prisma generate && prisma db push && prisma db seed"
     },

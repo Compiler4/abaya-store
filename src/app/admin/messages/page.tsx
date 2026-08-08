@@ -11,11 +11,8 @@ import {
   Reply,
   Search,
   Send,
-<<<<<<< HEAD
-=======
   Trash2,
   UserPlus,
->>>>>>> 2090a59 (new changes)
   UserRound,
   UsersRound,
 } from "lucide-react";
@@ -35,10 +32,7 @@ type Message = {
 
 type MessageReply = {
   id: number;
-<<<<<<< HEAD
-=======
   contactMessageId?: number | null;
->>>>>>> 2090a59 (new changes)
   customerName: string;
   customerContact: string;
   message: string;
@@ -73,11 +67,6 @@ function getContact(msg: Message) {
   return msg.contact || msg.phone || msg.email || "";
 }
 
-<<<<<<< HEAD
-export default function MessagesPage() {
-  const searchId = useId();
-  const replyId = useId();
-=======
 async function readJsonSafely(res: Response) {
   try {
     return await res.json();
@@ -92,7 +81,6 @@ export default function MessagesPage() {
   const startNameId = useId();
   const startContactId = useId();
   const startMessageId = useId();
->>>>>>> 2090a59 (new changes)
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [replies, setReplies] = useState<MessageReply[]>([]);
@@ -101,12 +89,6 @@ export default function MessagesPage() {
   const [replyText, setReplyText] = useState(defaultReply);
   const [sending, setSending] = useState(false);
 
-<<<<<<< HEAD
-  const fetchMessages = async () => {
-    const res = await fetch("/api/messages", { cache: "no-store" });
-    const data = await res.json();
-    setMessages(data.contacts || data.data || []);
-=======
   const [startForm, setStartForm] = useState({
     name: "",
     contact: "",
@@ -117,20 +99,11 @@ export default function MessagesPage() {
     const res = await fetch("/api/messages", { cache: "no-store" });
     const data = await res.json();
     setMessages(data.contacts || data.messages || data.data || []);
->>>>>>> 2090a59 (new changes)
   };
 
   const fetchReplies = async () => {
     const res = await fetch("/api/messages/replies", { cache: "no-store" });
     const data = await res.json();
-<<<<<<< HEAD
-    setReplies(data.replies || []);
-  };
-
-  useEffect(() => {
-    fetchMessages();
-    fetchReplies();
-=======
     setReplies(data.replies || data.data || []);
   };
 
@@ -140,7 +113,6 @@ export default function MessagesPage() {
 
   useEffect(() => {
     refreshData();
->>>>>>> 2090a59 (new changes)
   }, []);
 
   const groupedMessages = useMemo<MessageGroup[]>(() => {
@@ -174,8 +146,6 @@ export default function MessagesPage() {
       }
     });
 
-<<<<<<< HEAD
-=======
     replies.forEach((reply) => {
       const key = `${reply.customerName || "Customer"}-${
         reply.customerContact || reply.id
@@ -191,17 +161,12 @@ export default function MessagesPage() {
       }
     });
 
->>>>>>> 2090a59 (new changes)
     return Array.from(map.values()).sort((a, b) => {
       const aTime = new Date(a.latestMessage?.createdAt || 0).getTime();
       const bTime = new Date(b.latestMessage?.createdAt || 0).getTime();
       return bTime - aTime;
     });
-<<<<<<< HEAD
-  }, [messages]);
-=======
   }, [messages, replies]);
->>>>>>> 2090a59 (new changes)
 
   const filteredGroups = useMemo(() => {
     const term = search.toLowerCase().trim();
@@ -229,33 +194,21 @@ export default function MessagesPage() {
   );
 
   const canReplyByEmail = isEmail(activeContact);
-<<<<<<< HEAD
-  const canReplyByWhatsApp = Boolean(cleanPhone(activeContact)) && !canReplyByEmail;
-=======
   const canReplyByWhatsApp =
     Boolean(cleanPhone(activeContact)) && !canReplyByEmail;
->>>>>>> 2090a59 (new changes)
 
   const sendToDashboard = async () => {
     if (!activeGroup || !replyText.trim()) return;
 
     setSending(true);
 
-<<<<<<< HEAD
-    await fetch("/api/messages/replies", {
-=======
     const res = await fetch("/api/messages/replies", {
->>>>>>> 2090a59 (new changes)
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-<<<<<<< HEAD
-        contactMessageId: activeGroup.latestMessage?.id,
-=======
         contactMessageId: activeGroup.latestMessage?.id || null,
->>>>>>> 2090a59 (new changes)
         customerName: activeGroup.name,
         customerContact: activeContact,
         message: replyText,
@@ -263,13 +216,6 @@ export default function MessagesPage() {
       }),
     });
 
-<<<<<<< HEAD
-    setReplyText(defaultReply);
-    await fetchReplies();
-    setSending(false);
-  };
-
-=======
     const data = await readJsonSafely(res);
 
     if (!res.ok) {
@@ -357,7 +303,6 @@ export default function MessagesPage() {
     await refreshData();
   };
 
->>>>>>> 2090a59 (new changes)
   const openWhatsAppReply = () => {
     const phone = cleanPhone(activeContact);
     if (!phone) return;
@@ -395,11 +340,7 @@ export default function MessagesPage() {
         </div>
 
         <span className={styles.status}>
-<<<<<<< HEAD
-          {filteredGroups.length} Customers • {messages.length} Messages
-=======
           {filteredGroups.length} Customers - {messages.length} Messages
->>>>>>> 2090a59 (new changes)
         </span>
       </div>
 
@@ -441,11 +382,7 @@ export default function MessagesPage() {
                   <span>
                     <strong>{group.name}</strong>
                     <small>{group.contact || "No contact"}</small>
-<<<<<<< HEAD
-                    <small>{group.messages.length} messages</small>
-=======
                     <small>{group.messages.length} customer messages</small>
->>>>>>> 2090a59 (new changes)
                   </span>
                 </button>
               );
@@ -493,8 +430,6 @@ export default function MessagesPage() {
                         <CalendarDays size={14} />
                         {new Date(msg.createdAt).toLocaleString()}
                       </small>
-<<<<<<< HEAD
-=======
 
                       <button
                         className={`${styles.iconAction} ${styles.dangerAction}`}
@@ -504,7 +439,6 @@ export default function MessagesPage() {
                       >
                         <Trash2 size={16} />
                       </button>
->>>>>>> 2090a59 (new changes)
                     </article>
                   ))}
 
@@ -514,11 +448,6 @@ export default function MessagesPage() {
 
                     <small className={styles.metaLine}>
                       <Send size={14} />
-<<<<<<< HEAD
-                      Sent to customer dashboard •{" "}
-                      {new Date(reply.createdAt).toLocaleString()}
-                    </small>
-=======
                       Sent to customer dashboard -{" "}
                       {new Date(reply.createdAt).toLocaleString()}
                     </small>
@@ -531,7 +460,6 @@ export default function MessagesPage() {
                     >
                       <Trash2 size={16} />
                     </button>
->>>>>>> 2090a59 (new changes)
                   </article>
                 ))}
               </div>
@@ -543,8 +471,6 @@ export default function MessagesPage() {
 
         <aside className={styles.card}>
           <h2>
-<<<<<<< HEAD
-=======
             <UserPlus size={22} /> Start Conversation
           </h2>
 
@@ -599,7 +525,6 @@ export default function MessagesPage() {
           </button>
 
           <h2>
->>>>>>> 2090a59 (new changes)
             <Send size={22} /> Reply Direct
           </h2>
 
@@ -612,11 +537,7 @@ export default function MessagesPage() {
               <textarea
                 id={replyId}
                 className={styles.input}
-<<<<<<< HEAD
-                rows={9}
-=======
                 rows={7}
->>>>>>> 2090a59 (new changes)
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
               />
@@ -629,11 +550,7 @@ export default function MessagesPage() {
                   disabled={sending || !replyText.trim()}
                 >
                   <Send size={17} />
-<<<<<<< HEAD
-                  {sending ? "Sending..." : "Send to Dashboard"}
-=======
                   {sending ? "Sending..." : "Send"}
->>>>>>> 2090a59 (new changes)
                 </button>
 
                 <button

@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-import { NextResponse } from "next/server";
-
-let messages: any[] = [];
-
-export async function POST(req: Request) {
-  const body = await req.json();
-
-  messages.push({
-    id: Date.now(),
-    text: body.message,
-  });
-
-  return NextResponse.json({ success: true });
-}
-
-export async function GET() {
-  return NextResponse.json({ messages });
-=======
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -115,5 +96,4 @@ export async function DELETE(req: Request) {
       { status: 500 }
     );
   }
->>>>>>> 2090a59 (new changes)
 }

@@ -13,32 +13,21 @@
 
 .imageWrapper {
     flex: 1;
-<<<<<<< HEAD
-    display: flex;
-    justify-content: center;
-=======
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 18px;
     justify-content: center;
     align-items: start;
->>>>>>> 2090a59 (new changes)
 }
 
 .image {
     width: 100%;
     max-width: 400px;
-<<<<<<< HEAD
-    border-radius: 18px;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-=======
     aspect-ratio: 1 / 1.2;
     border-radius: 18px;
     object-fit: cover;
     transition: transform 0.4s ease;
     margin: auto;
->>>>>>> 2090a59 (new changes)
 }
 
 .image:hover {
@@ -54,22 +43,14 @@
 }
 
 .title {
-<<<<<<< HEAD
-    font-size: 42px;
-=======
     font-size: clamp(30px, 4vw, 42px);
->>>>>>> 2090a59 (new changes)
     margin-bottom: 15px;
     line-height: 1.2;
 }
 
 .price {
     color: #c9a24e;
-<<<<<<< HEAD
-    font-size: 24px;
-=======
     font-size: clamp(20px, 2.4vw, 24px);
->>>>>>> 2090a59 (new changes)
     margin-bottom: 20px;
     font-weight: 500;
 }
@@ -111,18 +92,6 @@
 }
 
 
-<<<<<<< HEAD
-/* RESPONSIVE */
-
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        text-align: center;
-        padding: 30px 20px;
-    }
-    .image {
-        max-width: 280px;
-=======
 /* TABLET: 4 PHOTOS PER ROW */
 
 @media (max-width: 1024px) {
@@ -161,7 +130,6 @@
     .image {
         border-radius: 14px;
         aspect-ratio: 1 / 1.25;
->>>>>>> 2090a59 (new changes)
     }
     .title {
         font-size: 30px;
@@ -173,8 +141,6 @@
         width: 100%;
         max-width: 250px;
     }
-<<<<<<< HEAD
-=======
 }
 
 
@@ -187,5 +153,4 @@
     .imageWrapper {
         gap: 10px;
     }
->>>>>>> 2090a59 (new changes)
 }
