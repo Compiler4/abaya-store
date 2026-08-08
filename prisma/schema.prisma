@@ -25,23 +25,19 @@ model User {
   image     String?
   createdAt DateTime @default(now())
 
-  profile   Profile?
-  orders    Order[]
-  carts     Cart[]
+  profile Profile?
+  orders  Order[]
+  carts   Cart[]
 }
 
 model Profile {
-  id        Int     @id @default(autoincrement())
-  phone     String?
-  otp       String?
-  verified  Boolean @default(false)
+  id       Int     @id @default(autoincrement())
+  phone    String?
+  otp      String?
+  verified Boolean @default(false)
 
-  userId    Int     @unique
-<<<<<<< HEAD
-  user      User    @relation(fields: [userId], references: [id])
-=======
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
->>>>>>> 2090a59 (new changes)
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Product {
@@ -56,49 +52,40 @@ model Product {
   stock       Int
   createdAt   DateTime @default(now())
 
-  orderItems  OrderItem[]
-  cartItems   CartItem[]
+  orderItems OrderItem[]
+  cartItems  CartItem[]
 }
 
 model Order {
-  id        Int      @id @default(autoincrement())
-  total     Float
-  status    String   @default("PENDING")
+  id     Int    @id @default(autoincrement())
+  total  Float
+  status String @default("PENDING")
 
-  address   String
-  customer  String
-  phone     String
-  location  String
+  address  String
+  customer String
+  phone    String
+  location String
 
-  userId    Int
-<<<<<<< HEAD
-  user      User     @relation(fields: [userId], references: [id])
-=======
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
->>>>>>> 2090a59 (new changes)
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   quantity  Int
   createdAt DateTime @default(now())
 
-  payment   Payment?
-  items     OrderItem[]
+  payment Payment?
+  items   OrderItem[]
 }
 
 model OrderItem {
-  id        Int     @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   orderId   Int
   productId Int
-  quantity  Int     @default(1)
+  quantity  Int   @default(1)
   price     Float
 
-<<<<<<< HEAD
-  order     Order   @relation(fields: [orderId], references: [id])
-  product   Product @relation(fields: [productId], references: [id])
-=======
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
->>>>>>> 2090a59 (new changes)
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Payment {
@@ -108,40 +95,27 @@ model Payment {
   status    String   @default("UNPAID")
   createdAt DateTime @default(now())
 
-<<<<<<< HEAD
-  order     Order    @relation(fields: [orderId], references: [id])
-=======
-  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
->>>>>>> 2090a59 (new changes)
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
 model Cart {
-  id     String @id @default(cuid())
+  id String @id @default(cuid())
 
   userId Int
-<<<<<<< HEAD
-  user   User   @relation(fields: [userId], references: [id])
-=======
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
->>>>>>> 2090a59 (new changes)
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  items  CartItem[]
+  items CartItem[]
 }
 
 model CartItem {
-  id        String @id @default(cuid())
+  id String @id @default(cuid())
 
   cartId    String
   productId Int
-  quantity  Int @default(1)
+  quantity  Int    @default(1)
 
-<<<<<<< HEAD
-  cart      Cart     @relation(fields: [cartId], references: [id])
-  product   Product  @relation(fields: [productId], references: [id])
-=======
-  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
->>>>>>> 2090a59 (new changes)
+  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Setting {
@@ -161,8 +135,4 @@ model MessageReply {
   channel          String   @default("DASHBOARD")
   read             Boolean  @default(false)
   createdAt        DateTime @default(now())
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2090a59 (new changes)
