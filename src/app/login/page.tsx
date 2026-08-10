@@ -97,7 +97,7 @@ export default function LoginPage() {
                 <ShoppingBag size={15} />
                 Customer access
               </p>
-              <h1>Elegant shopping, secured for you.</h1>
+              <>Elegant shopping, secured for you.</
               <div className={styles.featureStrip}>
                 <span>
                   <PackageCheck size={15} />
