@@ -1,9 +1,17 @@
 import { prisma } from "@/lib/prisma";
+import { AuthConfigurationError, signToken } from "@/lib/auth";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
-import { signToken } from "@/lib/auth";
+
+export const runtime = "nodejs";
 
 const attempts = new Map<string, number>();
+
+type RegisterBody = {
+  email?: unknown;
+  password?: unknown;
+  phone?: unknown;
+};
 
 function isRateLimited(ip: string) {
   const now = Date.now();
@@ -19,10 +27,39 @@ function generateOTP() {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
+function getServerError(error: unknown) {
+  if (error instanceof AuthConfigurationError) {
+    return {
+      code: "AUTH_NOT_CONFIGURED",
+      message:
+        "Authentication is not configured. Add JWT_SECRET in your hosting environment.",
+    };
+  }
+
+  const message = error instanceof Error ? error.message : "";
+
+  if (
+    message.includes("DATABASE_URL") ||
+    message.includes("Can't reach database server") ||
+    message.includes("Environment variable not found")
+  ) {
+    return {
+      code: "DATABASE_NOT_CONFIGURED",
+      message:
+        "Database is not configured or reachable. Check DATABASE_URL in your hosting environment.",
+    };
+  }
+
+  return {
+    code: "REGISTRATION_FAILED",
+    message: "Server error. Please try again later.",
+  };
+}
+
 export async function POST(req: Request) {
   try {
     const ip =
-      req.headers.get("x-forwarded-for") ||
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
       req.headers.get("x-real-ip") ||
       "unknown";
 
@@ -33,16 +70,27 @@ export async function POST(req: Request) {
       );
     }
 
-    const { email, password, phone } = await req.json();
+    const body = (await req.json().catch(() => null)) as RegisterBody | null;
+    const email =
+      typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
+    const password =
+      typeof body?.password === "string" ? body.password : "";
+    const phone = typeof body?.phone === "string" ? body.phone.trim() : "";
 
     if (!email || !password) {
       return NextResponse.json(
-        { error: "Missing fields" },
+        { error: "Email and password are required" },
         { status: 400 }
       );
     }
 
-    // ⚡ CHECK USER (FAST SINGLE QUERY)
+    if (password.length < 6) {
+      return NextResponse.json(
+        { error: "Password must be at least 6 characters" },
+        { status: 400 }
+      );
+    }
+
     const existingUser = await prisma.user.findUnique({
       where: { email },
       select: { id: true },
@@ -56,49 +104,52 @@ export async function POST(req: Request) {
     }
 
     const otp = generateOTP();
-
-    // ⚡ FASTER HASH (reduce cost from 10 → 8)
     const hashed = await bcrypt.hash(password, 8);
 
-    // ⚡ SINGLE TRANSACTION (VERY IMPORTANT FOR SPEED)
-    const user = await prisma.$transaction(async (tx) => {
-      return tx.user.create({
-        data: {
-          email,
-          password: hashed,
-          role: "USER",
-          profile: {
-            create: {
-              phone: phone || "",
-              otp,
-              verified: false,
-            },
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password: hashed,
+        role: "USER",
+        profile: {
+          create: {
+            phone,
+            otp,
+            verified: false,
           },
         },
-        select: {
-          id: true,
-          email: true,
-          role: true,
-        },
-      });
+      },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+      },
     });
 
-    // ⚡ DO NOT BLOCK RESPONSE WITH LOGIC
-    // (run async side-effect outside critical path)
-    setTimeout(() => {
-      console.log(`OTP for ${email}: ${otp}`);
-    }, 0);
+    console.log(`OTP for ${email}: ${otp}`);
 
     const token = signToken(user);
-
-    return NextResponse.json({
+    const response = NextResponse.json({
       message: "OK",
       token,
       user,
     });
-  } catch (err) {
+
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      path: "/",
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+
+    return response;
+  } catch (error) {
+    console.error("REGISTER ERROR:", error);
+    const serverError = getServerError(error);
+
     return NextResponse.json(
-      { error: "Server error" },
+      { error: serverError.message, code: serverError.code },
       { status: 500 }
     );
   }

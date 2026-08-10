@@ -119,7 +119,8 @@ function loadSavedIds(key: string) {
   if (typeof window === "undefined") return [];
 
   try {
-    return JSON.parse(localStorage.getItem(key) || "[]");
+    const ids = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(ids) ? ids.map(String) : [];
   } catch {
     return [];
   }
@@ -348,9 +349,10 @@ export default function Dashboard() {
         );
 
         const data = await Promise.all(responses.map((res) => res.json()));
-        const replies: MessageReply[] = data.flatMap(
-          (item) => item.replies || item.data || []
-        );
+        const replies: MessageReply[] = data.flatMap((item) => {
+          const list = item?.replies || item?.data;
+          return Array.isArray(list) ? list : [];
+        });
 
         const deletedSet = new Set(deletedReplyIds);
         const readSet = new Set(readReplyIds);
@@ -1025,7 +1027,7 @@ export default function Dashboard() {
                           {latestOrder.status}
                         </span>
                         <strong>Order #{latestOrder.id}</strong>
-                        <small>{latestOrder.items.length} items - {latestOrder.total.toLocaleString()} TZS</small>
+                        <small>{(latestOrder.items || []).length} items - {latestOrder.total.toLocaleString()} TZS</small>
                       </div>
                     ) : (
                       <p className={styles.empty}>
@@ -1404,7 +1406,7 @@ export default function Dashboard() {
                     </p>
 
                     <div className={styles.orderItems}>
-                      {order.items.map((item, i) => (
+                      {(order.items || []).map((item, i) => (
                         <div
                           key={`${item.id}-${i}`}
                           className={styles.orderItem}

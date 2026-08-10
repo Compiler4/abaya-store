@@ -22,6 +22,20 @@ import {
 import Navbar from "@/components/Navbar";
 import styles from "./login.module.css";
 
+async function readJsonResponse(res: Response) {
+  const text = await res.text();
+
+  if (!text) return {};
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return {
+      error: res.ok ? "Unexpected server response" : "Server error",
+    };
+  }
+}
+
 export default function LoginPage() {
   const router = useRouter();
 
@@ -48,7 +62,7 @@ export default function LoginPage() {
         }),
       });
 
-      const data = await res.json();
+      const data = await readJsonResponse(res);
 
       if (!res.ok || !data?.user) {
         toast.error(data.error || "Login failed", { id: toastId });
@@ -97,7 +111,7 @@ export default function LoginPage() {
                 <ShoppingBag size={15} />
                 Customer access
               </p>
-              <>Elegant shopping, secured for you.</
+              <h1>Elegant shopping, secured for you.</h1>
               <div className={styles.featureStrip}>
                 <span>
                   <PackageCheck size={15} />

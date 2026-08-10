@@ -16,6 +16,20 @@ import {
   FaUserPlus,
 } from "react-icons/fa";
 
+async function readJsonResponse(res: Response) {
+  const text = await res.text();
+
+  if (!text) return {};
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return {
+      error: res.ok ? "Unexpected server response" : "Server error",
+    };
+  }
+}
+
 export default function RegisterPage() {
   const router = useRouter();
 
@@ -45,7 +59,7 @@ export default function RegisterPage() {
         body: JSON.stringify({ email, password, phone }),
       });
 
-      const data = await res.json();
+      const data = await readJsonResponse(res);
 
       if (!res.ok) {
         setMsg({ type: "error", text: data.error || "Registration failed" });
@@ -54,6 +68,7 @@ export default function RegisterPage() {
       }
 
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
       setMsg({ type: "success", text: "Account created successfully" });
 
       setTimeout(() => {

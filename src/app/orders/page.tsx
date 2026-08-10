@@ -70,7 +70,9 @@ const statusTabs: { key: OrderStatus; label: string; icon: React.ReactNode }[] =
 
 function normalizeOrders(data: any): Order[] {
   if (Array.isArray(data)) return data;
-  return data?.orders || data?.data || [];
+
+  const list = data?.orders || data?.data;
+  return Array.isArray(list) ? list : [];
 }
 
 function normalizeStatus(status?: string): OrderStatus {

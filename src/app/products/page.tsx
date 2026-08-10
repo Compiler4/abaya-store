@@ -129,7 +129,9 @@ const shopCategories: ShopCategory[] = [
 
 function normalizeProducts(data: any): Product[] {
   if (Array.isArray(data)) return data;
-  return data?.products || data?.gallery || data?.data || [];
+
+  const list = data?.products || data?.gallery || data?.data;
+  return Array.isArray(list) ? list : [];
 }
 
 function makeNumberId(id: number | string) {
