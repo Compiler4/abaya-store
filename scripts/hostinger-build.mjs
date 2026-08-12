@@ -119,4 +119,4 @@ normalizeTree(resolve(root, "public"));
 normalizeTree(resolve(root, "scripts"));
 
 run("prisma generate", ["node_modules/prisma/build/index.js", "generate"]);
-run("next build", ["node_modules/next/dist/bin/next", "build"]);
+run("next build --webpack", ["node_modules/next/dist/bin/next", "build", "--webpack"]);
