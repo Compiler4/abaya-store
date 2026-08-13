@@ -22,6 +22,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { readStoredJson } from "@/lib/safe-storage";
 import styles from "./orders.module.css";
 
 type OrderStatus = "all" | "pending" | "delivered" | "completed";
@@ -59,6 +60,10 @@ type Order = {
     email?: string;
   };
   items?: OrderItem[];
+};
+
+type StoredUser = {
+  id?: number | string;
 };
 
 const statusTabs: { key: OrderStatus; label: string; icon: React.ReactNode }[] = [
@@ -108,8 +113,9 @@ export default function OrdersPage() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const savedUser = localStorage.getItem("user");
-        const user = savedUser ? JSON.parse(savedUser) : null;
+        const user = readStoredJson<StoredUser | null>("user", null, {
+          clearInvalid: true,
+        });
 
         const res = await fetch("/api/orders", {
           cache: "no-store",

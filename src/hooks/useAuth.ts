@@ -1,16 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { readStoredJson } from "@/lib/safe-storage";
+
+type StoredUser = Record<string, unknown>;
 
 export function useAuth() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<StoredUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const stored = localStorage.getItem("user");
+    const storedUser = readStoredJson<StoredUser | null>("user", null, {
+      clearInvalid: true,
+    });
 
-    if (stored) {
-      setUser(JSON.parse(stored));
+    if (storedUser && typeof storedUser === "object") {
+      setUser(storedUser);
     }
 
     setLoading(false);

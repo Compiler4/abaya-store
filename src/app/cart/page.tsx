@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { readStoredJson } from "@/lib/safe-storage";
 import styles from "./cart.module.css";
 
 type Item = {
@@ -12,6 +13,14 @@ type Item = {
     price: number;
     image?: string;
   };
+};
+
+type StoredUser = {
+  id?: number | string;
+  address?: string;
+  location?: string;
+  email?: string;
+  phone?: string;
 };
 
 function toId(value: unknown, fallback: string): number | string {
@@ -83,8 +92,9 @@ export default function CartPage() {
   const checkout = async () => {
     if (!cart?.length) return;
 
-    const savedUser = localStorage.getItem("user");
-    const user = savedUser ? JSON.parse(savedUser) : null;
+    const user = readStoredJson<StoredUser | null>("user", null, {
+      clearInvalid: true,
+    });
 
     if (!user?.id) {
       alert("Please login before checkout.");

@@ -22,7 +22,7 @@ const colors = [
 ];
 
 export default function Home() {
-  const [color, setColor] = useState("default");
+  const [color, setColor] = useState("noir");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {

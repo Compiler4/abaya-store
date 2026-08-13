@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { readStoredJson } from "@/lib/safe-storage";
 import styles from "./dashboard.module.css";
 
 import {
@@ -97,6 +98,17 @@ type ReplyNotification = {
 type Category = {
   name: string;
   keywords: string[];
+};
+
+type StoredUser = {
+  id?: number | string;
+  name?: string;
+  email?: string;
+  phone?: string;
+  image?: string;
+  photo?: string;
+  address?: string;
+  location?: string;
 };
 
 const ADMIN_PHONE = "255713758200";
@@ -269,31 +281,28 @@ export default function Dashboard() {
 
   useEffect(() => {
     const loadStoredDashboardState = () => {
-      const savedUser = localStorage.getItem("user");
+      const user = readStoredJson<StoredUser | null>("user", null, {
+        clearInvalid: true,
+      });
 
-      if (savedUser) {
-        try {
-          const user = JSON.parse(savedUser);
+      if (user && typeof user === "object") {
+        const email = String(user.email || "user@example.com");
+        const loadedProfile = {
+          id: Number(user.id || 0),
+          name: String(user.name || email.split("@")[0] || "Logged User"),
+          email,
+          phone: String(user.phone || ""),
+          photo: String(user.image || user.photo || ""),
+          location: String(user.address || user.location || ""),
+        };
 
-          const loadedProfile = {
-            id: Number(user.id || 0),
-            name: user.name || user.email?.split("@")[0] || "Logged User",
-            email: user.email || "user@example.com",
-            phone: user.phone || "",
-            photo: user.image || user.photo || "",
-            location: user.address || user.location || "",
-          };
-
-          setProfile(loadedProfile);
-          setOrderForm({
-            name: loadedProfile.name,
-            phone: loadedProfile.phone,
-            location: loadedProfile.location,
-            address: loadedProfile.location,
-          });
-        } catch {
-          // Keep default profile.
-        }
+        setProfile(loadedProfile);
+        setOrderForm({
+          name: loadedProfile.name,
+          phone: loadedProfile.phone,
+          location: loadedProfile.location,
+          address: loadedProfile.location,
+        });
       }
 
       setDeletedReplyIds(loadSavedIds(DELETED_REPLIES_KEY));

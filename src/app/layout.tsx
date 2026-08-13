@@ -1,8 +1,134 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import Script from "next/script";
 import { Toaster } from "react-hot-toast";
 
 import "./globals.css";
+
+const clientRecoveryScript = `
+(function () {
+  var version = "rify-luxe-mobile-recovery-2026-08-13-1";
+  var versionKey = "rify_client_version";
+  var reloadKey = "rify_client_recovered_" + version;
+
+  function safely(work) {
+    try {
+      return work();
+    } catch (error) {
+      return undefined;
+    }
+  }
+
+  function removeInvalidJson(key) {
+    try {
+      var value = window.localStorage && window.localStorage.getItem(key);
+      if (value) JSON.parse(value);
+    } catch (error) {
+      safely(function () { window.localStorage.removeItem(key); });
+    }
+  }
+
+  function clearInvalidUser() {
+    try {
+      var value = window.localStorage && window.localStorage.getItem("user");
+      if (!value) return;
+      JSON.parse(value);
+    } catch (error) {
+      safely(function () { window.localStorage.removeItem("user"); });
+      safely(function () { window.localStorage.removeItem("token"); });
+    }
+  }
+
+  function waitForJobs(jobs) {
+    return Promise.all(
+      jobs.map(function (job) {
+        return Promise.resolve(job).catch(function () {
+          return undefined;
+        });
+      })
+    );
+  }
+
+  function clearAppCaches() {
+    var jobs = [];
+
+    if ("caches" in window) {
+      jobs.push(
+        window.caches.keys().then(function (keys) {
+          return Promise.all(keys.map(function (key) {
+            return window.caches.delete(key);
+          }));
+        })
+      );
+    }
+
+    if ("serviceWorker" in navigator) {
+      jobs.push(
+        navigator.serviceWorker.getRegistrations().then(function (registrations) {
+          return Promise.all(registrations.map(function (registration) {
+            return registration.unregister();
+          }));
+        })
+      );
+    }
+
+    return waitForJobs(jobs);
+  }
+
+  function shouldRecover(reason) {
+    var message = String(
+      (reason && (reason.message || reason.reason || reason.error)) || reason || ""
+    );
+
+    return /ChunkLoadError|Loading chunk|Cannot read properties of undefined|Minified React error|hydration/i.test(message);
+  }
+
+  function recover(reason) {
+    if (!shouldRecover(reason)) return;
+
+    try {
+      if (window.sessionStorage.getItem(reloadKey)) return;
+      window.sessionStorage.setItem(reloadKey, "1");
+    } catch (error) {
+      return;
+    }
+
+    clearInvalidUser();
+    clearAppCaches().finally(function () {
+      var separator = window.location.search ? "&" : "?";
+      window.location.replace(
+        window.location.pathname +
+          window.location.search +
+          separator +
+          "rify_recovered=1" +
+          window.location.hash
+      );
+    });
+  }
+
+  clearInvalidUser();
+  removeInvalidJson("customer_deleted_reply_notifications");
+  removeInvalidJson("customer_read_reply_notifications");
+  removeInvalidJson("admin_deleted_notifications");
+  removeInvalidJson("admin_read_notifications");
+
+  safely(function () {
+    var current = window.localStorage.getItem(versionKey);
+    if (current !== version) {
+      window.localStorage.setItem(versionKey, version);
+      clearAppCaches();
+    }
+  });
+
+  window.addEventListener("error", function (event) {
+    recover(event.error || event.message);
+  });
+
+  window.addEventListener("unhandledrejection", function (event) {
+    recover(event.reason);
+  });
+})();
+`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -56,6 +182,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
+        <Script
+          id="rify-client-recovery"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: clientRecoveryScript }}
+        />
         {children}
 
         <Toaster
